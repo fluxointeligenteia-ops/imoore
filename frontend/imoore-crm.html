@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CRM Imoore</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="header topbar">
+      <div>
+        <h1>CRM Imoore</h1>
+        <p>Gestão de leads com funil de vendas e histórico de contato.</p>
+      </div>
+      <button class="button logout" id="logoutBtn">Sair</button>
+    </header>
+
+    <section class="card crm-dashboard">
+      <div class="crm-summary crm-summary-top">
+        <div>
+          <h2>CRM Imoore</h2>
+          <p>Controle o fluxo de leads com um funil visual que mostra cada etapa de atendimento.</p>
+        </div>
+        <div class="crm-actions">
+          <button type="button" class="button button-small" id="newLeadBtn">Novo lead</button>
+          <span class="badge">CRM</span>
+          <span class="badge">Leads</span>
+          <span class="badge">Funil ativo</span>
+        </div>
+      </div>
+
+      <div class="overview-grid crm-overview-grid">
+        <div class="stat-card">
+          <p>Total de leads</p>
+          <h3 id="totalLeads">0</h3>
+        </div>
+        <div class="stat-card">
+          <p>Novos</p>
+          <h3 id="novoCount">0</h3>
+        </div>
+        <div class="stat-card">
+          <p>Em contato</p>
+          <h3 id="contatoCount">0</h3>
+        </div>
+        <div class="stat-card">
+          <p>Visitas agendadas</p>
+          <h3 id="visitaCount">0</h3>
+        </div>
+        <div class="stat-card">
+          <p>Propostas</p>
+          <h3 id="propostaCount">0</h3>
+        </div>
+        <div class="stat-card">
+          <p>Fechados</p>
+          <h3 id="fechadoCount">0</h3>
+        </div>
+      </div>
+
+      <div class="crm-highlight-grid">
+        <div class="crm-highlight-card">
+          <p>Leads captados nas últimas 24h</p>
+          <h3 id="recentLeadCount">0</h3>
+        </div>
+        <div class="crm-highlight-card crm-highlight-card-accent">
+          <p>Taxa de conversão</p>
+          <h3 id="conversionRate">0%</h3>
+        </div>
+      </div>
+    </section>
+
+    <section class="card crm-form-card">
+      <div class="form-card-header">
+        <div>
+          <h2>Registrar lead</h2>
+          <p>Adicione leads novos e acompanhe cada contato com histórico de atendimento.</p>
+        </div>
+      </div>
+      <form id="leadForm" class="grid-2">
+        <div>
+          <div class="form-group">
+            <label for="nome">Nome</label>
+            <input id="nome" required />
+          </div>
+          <div class="form-group">
+            <label for="telefone">Telefone</label>
+            <input id="telefone" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" type="email" />
+          </div>
+          <div class="form-group">
+            <label for="cidade">Cidade</label>
+            <input id="cidade" />
+          </div>
+          <div class="form-group">
+            <label for="interesse">Interesse</label>
+            <input id="interesse" />
+          </div>
+          <div class="form-group">
+            <label for="etapa">Etapa</label>
+            <select id="etapa">
+              <option value="novo">Novo</option>
+              <option value="contato">Contato</option>
+              <option value="visita">Visita</option>
+              <option value="proposta">Proposta</option>
+              <option value="fechado">Fechado</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <div class="form-group">
+            <label for="observacoes">Observações</label>
+            <textarea id="observacoes"></textarea>
+          </div>
+          <div class="form-footer">
+            <button class="button" type="submit">Salvar lead</button>
+          </div>
+          <div id="leadMessage" class="alert" style="display:none;"></div>
+        </div>
+      </form>
+    </section>
+
+    <section class="card board-section">
+      <div class="section-header board-header">
+        <div>
+          <h2>Funil de leads</h2>
+          <p>Controle cada etapa do atendimento com filtros, ações rápidas e histórico.</p>
+        </div>
+        <div class="filter-group">
+          <input id="leadSearch" type="search" placeholder="Buscar por nome, cidade ou interesse" />
+          <select id="leadStatusFilter">
+            <option value="todos">Todos</option>
+            <option value="novo">Novo</option>
+            <option value="contato">Contato</option>
+            <option value="visita">Visita</option>
+            <option value="proposta">Proposta</option>
+            <option value="fechado">Fechado</option>
+          </select>
+        </div>
+      </div>
+      <div class="kanban" id="kanban"></div>
+    </section>
+  </main>
+
+  <script src="utils.js"></script>
+  <script>
+    requireLogin();
+    requireRole('crm');
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+
+    const state = {
+      leads: [],
+      query: '',
+      etapa: 'todos',
+    };
+
+    const message = document.getElementById('leadMessage');
+    const leadSearch = document.getElementById('leadSearch');
+    const leadStatusFilter = document.getElementById('leadStatusFilter');
+    const newLeadBtn = document.getElementById('newLeadBtn');
+
+    newLeadBtn?.addEventListener('click', () => {
+      const nomeField = document.getElementById('nome');
+      if (nomeField) {
+        nomeField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        nomeField.focus();
+      }
+    });
+
+    document.getElementById('leadForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      message.style.display = 'none';
+
+      const data = {
+        nome: document.getElementById('nome').value.trim(),
+        telefone: document.getElementById('telefone').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        cidade: document.getElementById('cidade').value.trim(),
+        interesse: document.getElementById('interesse').value.trim(),
+        observacoes: document.getElementById('observacoes').value.trim(),
+        etapa: document.getElementById('etapa').value,
+      };
+
+      try {
+        await apiFetch('/leads', { method: 'POST', body: JSON.stringify(data) });
+        event.target.reset();
+        loadLeads();
+      } catch (error) {
+        message.style.display = 'block';
+        message.textContent = handleError(error);
+      }
+    });
+
+    leadSearch.addEventListener('input', () => {
+      state.query = leadSearch.value.toLowerCase();
+      renderLeads();
+    });
+
+    leadStatusFilter.addEventListener('change', () => {
+      state.etapa = leadStatusFilter.value;
+      renderLeads();
+    });
+
+    async function loadLeads() {
+      try {
+        state.leads = await apiFetch('/leads');
+        updateStats();
+        renderLeads();
+      } catch (error) {
+        alert(handleError(error));
+      }
+    }
+
+    function stageLabel(key) {
+      return {
+        novo: 'Novo',
+        contato: 'Contato',
+        visita: 'Visita',
+        proposta: 'Proposta',
+        fechado: 'Fechado',
+      }[key] || 'Sem etapa';
+    }
+
+    function filterLeads() {
+      return state.leads.filter((lead) => {
+        const query = state.query;
+        const matchedQuery =
+          !query ||
+          [lead.nome, lead.cidade, lead.interesse, lead.email]
+            .filter(Boolean)
+            .some((field) => field.toLowerCase().includes(query));
+
+        const matchedStage = state.etapa === 'todos' || lead.etapa === state.etapa;
+        return matchedQuery && matchedStage;
+      });
+    }
+
+    function updateStats() {
+      const total = state.leads.length;
+      const counts = {
+        novo: 0,
+        contato: 0,
+        visita: 0,
+        proposta: 0,
+        fechado: 0,
+      };
+
+      const recentLeadCount = state.leads.filter((lead) => {
+        const rawDate = lead.criado_em || lead.created_at || lead.createdAt || lead.data;
+        if (!rawDate) return false;
+        const date = new Date(rawDate);
+        return Number.isFinite(date.getTime()) && Date.now() - date.getTime() <= 24 * 60 * 60 * 1000;
+      }).length;
+
+      state.leads.forEach((lead) => {
+        if (counts[lead.etapa] !== undefined) {
+          counts[lead.etapa] += 1;
+        }
+      });
+
+      document.getElementById('totalLeads').textContent = total;
+      document.getElementById('novoCount').textContent = counts.novo;
+      document.getElementById('contatoCount').textContent = counts.contato;
+      document.getElementById('visitaCount').textContent = counts.visita;
+      document.getElementById('propostaCount').textContent = counts.proposta;
+      document.getElementById('fechadoCount').textContent = counts.fechado;
+      document.getElementById('recentLeadCount').textContent = recentLeadCount;
+      document.getElementById('conversionRate').textContent = `${total ? Math.round((counts.fechado / total) * 100) : 0}%`;
+    }
+
+    function renderLeads() {
+      const kanban = document.getElementById('kanban');
+      kanban.innerHTML = '';
+      const stages = [
+        { key: 'novo', label: 'Novo', description: 'Leads recém-captados a serem qualificados.' },
+        { key: 'contato', label: 'Contato', description: 'Em conversa com o cliente.' },
+        { key: 'visita', label: 'Visita', description: 'Visitas agendadas para apresentação.' },
+        { key: 'proposta', label: 'Proposta', description: 'Propostas enviadas ao cliente.' },
+        { key: 'fechado', label: 'Fechado', description: 'Negócios convertidos com sucesso.' },
+      ];
+
+      const filtered = filterLeads();
+
+      stages.forEach((stage) => {
+        const column = document.createElement('div');
+        column.className = 'column';
+        column.innerHTML = `
+          <h3>${stage.label}</h3>
+          <p>${stage.description}</p>
+        `;
+
+        const stageLeads = filtered.filter((lead) => lead.etapa === stage.key);
+        if (!stageLeads.length) {
+          const empty = document.createElement('div');
+          empty.className = 'empty-state';
+          empty.textContent = 'Nenhum lead nesta etapa.';
+          column.appendChild(empty);
+        }
+
+        stageLeads.forEach((lead) => column.appendChild(createLeadCard(lead)));
+        kanban.appendChild(column);
+      });
+    }
+
+    function createLeadCard(lead) {
+      const card = document.createElement('article');
+      card.className = 'lead-card';
+
+      const createdAt = new Date(lead.criado_em || lead.created_at || lead.createdAt || Date.now()).toLocaleDateString('pt-BR');
+      const historyItems = Array.isArray(lead.historico) ? lead.historico.slice(-2).reverse() : [];
+
+      card.innerHTML = `
+        <div class="lead-card-head">
+          <div>
+            <h3>${escapeHTML(lead.nome || 'Lead sem nome')}</h3>
+            <div class="meta-grid">
+              <span>${escapeHTML(lead.cidade || 'Cidade não informada')}</span>
+              <span>${escapeHTML(lead.interesse || 'Interesse não informado')}</span>
+              <span>${escapeHTML(lead.telefone || 'Telefone não informado')}</span>
+              <span>${escapeHTML(lead.email || 'E-mail não informado')}</span>
+            </div>
+          </div>
+          <span class="status-pill status-${lead.etapa}">${stageLabel(lead.etapa)}</span>
+        </div>
+        <div class="lead-card-body">
+          <p>${escapeHTML(lead.observacoes || 'Nenhuma observação cadastrada.')}</p>
+          <p class="hint-text">Criado em ${createdAt} · ${historyItems.length} histórico(s)</p>
+
+          <div class="lead-card-section">
+            <label for="stage-${lead.id}">Mover etapa</label>
+            <select id="stage-${lead.id}" class="lead-status-select"></select>
+          </div>
+
+          <div class="lead-card-section">
+            <label for="note-${lead.id}">Adicionar histórico</label>
+            <textarea id="note-${lead.id}" class="note-input" placeholder="Ex: contato feito, visita agendada, proposta enviada"></textarea>
+          </div>
+
+          <div class="card-actions">
+            <button type="button" class="button button-small" data-action="save-note">Salvar histórico</button>
+            ${(getUser() || {}).perfil === 'admin' ? '<button type="button" class="button button-small button-secondary" data-action="delete-lead">Excluir</button>' : ''}
+          </div>
+
+          <div class="history-list">
+            ${historyItems.length > 0 ? historyItems.map((item) => `<p>• ${new Date(item.criado_em).toLocaleDateString('pt-BR')} – ${escapeHTML(item.descricao)}</p>`).join('') : '<p class="hint-text">Sem histórico registrado.</p>'}
+          </div>
+        </div>
+      `;
+
+      const statusSelect = card.querySelector('.lead-status-select');
+      ['novo', 'contato', 'visita', 'proposta', 'fechado'].forEach((key) => {
+        const option = document.createElement('option');
+        option.value = key;
+        option.textContent = stageLabel(key);
+        statusSelect.appendChild(option);
+      });
+      statusSelect.value = lead.etapa;
+      statusSelect.addEventListener('change', async () => {
+        await handleStatusChange(lead.id, statusSelect.value);
+      });
+
+      const saveNoteButton = card.querySelector('[data-action="save-note"]');
+      saveNoteButton.addEventListener('click', async () => {
+        const noteField = card.querySelector('.note-input');
+        const descricao = noteField.value.trim();
+        if (!descricao) {
+          alert('Escreva uma observação antes de salvar.');
+          return;
+        }
+        try {
+          await addLeadHistory(lead.id, descricao);
+          noteField.value = '';
+        } catch (error) {
+          alert(handleError(error));
+        }
+      });
+
+      const deleteButton = card.querySelector('[data-action="delete-lead"]');
+      if (deleteButton) {
+        deleteButton.addEventListener('click', async () => {
+          if (!confirm('Tem certeza que deseja excluir este lead?')) return;
+          try {
+            await apiFetch(`/leads/${lead.id}`, { method: 'DELETE' });
+            state.leads = state.leads.filter((item) => item.id !== lead.id);
+            updateStats();
+            renderLeads();
+          } catch (error) {
+            alert(handleError(error));
+          }
+        });
+      }
+
+      return card;
+    }
+
+    async function handleStatusChange(id, etapa) {
+      try {
+        await updateLead(id, { etapa });
+      } catch (error) {
+        alert(handleError(error));
+      }
+    }
+
+    async function updateLead(id, updates) {
+      const updatedLead = await apiFetch(`/leads/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(updates),
+      });
+      const index = state.leads.findIndex((item) => item.id === id);
+      if (index !== -1) {
+        state.leads[index] = updatedLead;
+      }
+      updateStats();
+      renderLeads();
+      return updatedLead;
+    }
+
+    async function addLeadHistory(id, descricao) {
+      const updatedLead = await apiFetch(`/leads/${id}/historico`, {
+        method: 'POST',
+        body: JSON.stringify({ descricao }),
+      });
+      const index = state.leads.findIndex((item) => item.id === id);
+      if (index !== -1) {
+        state.leads[index] = updatedLead;
+      }
+      updateStats();
+      renderLeads();
+      return updatedLead;
+    }
+
+    function escapeHTML(text) {
+      return String(text || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    loadLeads();
+  </script>
+  <footer class="footer">
+    <p>Imoore © 2026 · Creci/SP Nº 52050-J · WhatsApp <a href="https://wa.me/5513991091887" target="_blank">+55 13 99109-1887</a></p>
+  </footer>
+</body>
+</html>

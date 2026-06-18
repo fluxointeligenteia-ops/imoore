@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>imoore — Painel Admin + CRM</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<style>
+:root{
+  --or:#F26522;--or2:#d95510;--orl:#FEF0E8;--orm:#FDDCC8;
+  --bg:#F5F4F1;--bg2:#FFFFFF;--bg3:#EDEBE6;
+  --ink:#1A1614;--ink2:#3D3530;--ink3:#6B6058;--ink4:#9C9188;
+  --bdr:#E2DDD7;--bdr2:#D4CFC9;
+  --ok:#1D9E75;--okl:#E1F5EE;
+  --warn:#BA7517;--warnl:#FAEEDA;
+  --err:#E24B4A;--errl:#FCEBEB;
+  --inf:#378ADD;--infl:#E6F1FB;
+  --sh:0 1px 3px rgba(26,22,20,.06),0 3px 12px rgba(26,22,20,.06);
+  --shm:0 4px 20px rgba(26,22,20,.10);
+  --f:'Plus Jakarta Sans',sans-serif;
+  --r:8px;--rl:12px;
+  --sidebar:220px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-thumb{background:var(--or);border-radius:4px}
+
+/* LAYOUT */
+.layout{display:flex;min-height:100vh}
+.sidebar{width:var(--sidebar);background:var(--ink);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.main{margin-left:var(--sidebar);flex:1;display:flex;flex-direction:column;min-height:100vh}
+.topbar{background:var(--bg2);border-bottom:1px solid var(--bdr);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:90}
+.content{padding:24px;flex:1}
+
+/* SIDEBAR */
+.sb-logo{padding:18px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-logo img{height:44px;width:auto}
+.sb-admin{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px}
+.sb-av{width:36px;height:36px;border-radius:50%;background:var(--or);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0}
+.sb-name{font-size:13px;font-weight:600;color:#fff}
+.sb-role{font-size:11px;color:rgba(255,255,255,.5)}
+.sb-section{padding:12px 16px 4px;font-size:10px;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:1px;text-transform:uppercase}
+.sb-item{display:flex;align-items:center;gap:10px;padding:9px 16px;font-size:13px;font-weight:500;color:rgba(255,255,255,.65);cursor:pointer;transition:all .15s;border-left:3px solid transparent;position:relative}
+.sb-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.sb-item.on{background:rgba(242,101,34,.12);color:var(--or);border-left-color:var(--or)}
+.sb-item i{font-size:18px;flex-shrink:0}
+.sb-badge{background:var(--or);color:#fff;font-size:10px;font-weight:700;padding:1px 7px;border-radius:20px;margin-left:auto}
+.sb-badge.warn{background:var(--warn)}
+
+/* TOPBAR */
+.tb-title{font-size:16px;font-weight:700;color:var(--ink)}
+.tb-right{display:flex;align-items:center;gap:12px}
+.tb-notif{position:relative;width:36px;height:36px;border-radius:var(--r);background:var(--bg3);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:var(--ink3)}
+.tb-notif .dot{position:absolute;top:6px;right:7px;width:8px;height:8px;border-radius:50%;background:var(--err);border:1.5px solid var(--bg2)}
+.btn{display:inline-flex;align-items:center;gap:6px;border:none;border-radius:50px;cursor:pointer;font-family:var(--f);font-weight:600;transition:all .15s;font-size:13px;padding:8px 16px}
+.btn-p{background:var(--or);color:#fff}
+.btn-p:hover{background:var(--or2)}
+.btn-o{background:var(--bg2);color:var(--ink);border:1px solid var(--bdr2)}
+.btn-o:hover{border-color:var(--or);color:var(--or)}
+.btn-ok{background:var(--ok);color:#fff}
+.btn-err{background:var(--err);color:#fff}
+.btn-sm{padding:5px 12px;font-size:12px}
+
+/* PAGES */
+.page{display:none}
+.page.on{display:block}
+
+/* METRIC CARDS */
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.mcard{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--rl);padding:16px;box-shadow:var(--sh)}
+.mcard-val{font-size:28px;font-weight:800;color:var(--ink);margin-bottom:3px;letter-spacing:-1px}
+.mcard-lbl{font-size:12px;color:var(--ink4);font-weight:500}
+.mcard-trend{font-size:11px;font-weight:600;margin-top:6px;display:flex;align-items:center;gap:3px}
+.t-up{color:var(--ok)}.t-dn{color:var(--err)}.t-neu{color:var(--ink4)}
+
+/* CARD */
+.card{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--rl);box-shadow:var(--sh);overflow:hidden}
+.card-hdr{padding:14px 18px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between}
+.card-hdr h3{font-size:14px;font-weight:700;color:var(--ink)}
+.card-body{padding:18px}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{font-size:11px;font-weight:600;color:var(--ink4);text-align:left;padding:8px 12px;border-bottom:1px solid var(--bdr);text-transform:uppercase;letter-spacing:.5px;background:var(--bg3)}
+.tbl td{padding:10px 12px;border-bottom:.5px solid var(--bdr);font-size:13px;vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:rgba(242,101,34,.03)}
+
+/* BADGE */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.b-ok{background:var(--okl);color:#085041}
+.b-warn{background:var(--warnl);color:#633806}
+.b-err{background:var(--errl);color:#501313}
+.b-inf{background:var(--infl);color:#042C53}
+.b-gray{background:var(--bg3);color:var(--ink3)}
+.b-or{background:var(--orl);color:#8a3000}
+
+/* FUNIL CRM */
+.funil{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:0}
+.col-funil{background:var(--bg3);border-radius:var(--rl);padding:10px;min-height:400px;display:flex;flex-direction:column}
+.col-funil-hdr{font-size:12px;font-weight:700;color:var(--ink2);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
+.col-funil-count{background:var(--bg2);border:1px solid var(--bdr);border-radius:20px;padding:2px 8px;font-size:11px;font-weight:700;color:var(--ink3)}
+.lead-card{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);padding:10px;margin-bottom:7px;cursor:pointer;transition:all .2s}
+.lead-card:hover{border-color:var(--or);box-shadow:var(--sh)}
+.lead-name{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.lead-info{font-size:11px;color:var(--ink4);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lead-meta{display:flex;align-items:center;justify-content:space-between}
+.lead-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.lead-time{font-size:10px;color:var(--ink4)}
+.add-lead{width:100%;padding:7px;background:transparent;border:1.5px dashed var(--bdr2);border-radius:var(--r);font-size:12px;color:var(--ink4);cursor:pointer;font-family:var(--f);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:5px;margin-top:auto}
+.add-lead:hover{border-color:var(--or);color:var(--or)}
+
+/* FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.ff{display:flex;flex-direction:column;gap:4px}
+.ff label{font-size:11px;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.5px}
+.ff input,.ff select,.ff textarea{background:var(--bg);border:1.5px solid var(--bdr);border-radius:var(--r);padding:9px 12px;font-size:13px;color:var(--ink);font-family:var(--f);outline:none;transition:border-color .2s;-webkit-appearance:none}
+.ff input:focus,.ff select:focus,.ff textarea:focus{border-color:var(--or);background:var(--bg2)}
+.ff input::placeholder,.ff textarea::placeholder{color:var(--ink4)}
+.ff select option{background:var(--bg2)}
+
+/* IMOVEL REVIEW CARD */
+.icard-rev{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--rl);overflow:hidden;margin-bottom:12px;box-shadow:var(--sh)}
+.icard-rev-img{height:140px;display:flex;align-items:center;justify-content:center;position:relative}
+.icard-rev-body{padding:14px}
+.icard-rev-price{font-size:18px;font-weight:800;color:var(--ink);margin-bottom:3px}
+.icard-rev-sub{font-size:12px;color:var(--ink4);margin-bottom:10px}
+.icard-rev-meta{display:flex;gap:12px;font-size:12px;color:var(--ink3);margin-bottom:12px}
+.icard-rev-meta span{display:flex;align-items:center;gap:3px}
+.icard-rev-meta i{font-size:13px;color:var(--or)}
+.icard-rev-acts{display:flex;gap:8px}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(26,22,20,.5);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-bg.on{display:flex}
+.modal{background:var(--bg2);border-radius:16px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;margin:16px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal-hdr{padding:18px 22px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--bg2);z-index:1}
+.modal-hdr h3{font-size:16px;font-weight:700;color:var(--ink)}
+.modal-close{background:var(--bg3);border:none;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:var(--ink3);font-size:17px;cursor:pointer}
+.modal-body{padding:22px}
+
+/* TABS */
+.tabs{display:flex;gap:4px;background:var(--bg3);border-radius:50px;padding:4px;margin-bottom:18px;width:fit-content}
+.tab{padding:7px 16px;border-radius:50px;font-size:13px;font-weight:600;color:var(--ink3);cursor:pointer;transition:all .2s}
+.tab.on{background:var(--bg2);color:var(--or);box-shadow:var(--sh)}
+
+/* NOTIF DOT */
+.notif-row{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-bottom:.5px solid var(--bdr);cursor:pointer}
+.notif-row:hover{background:var(--bg3)}
+.notif-row:last-child{border-bottom:none}
+.notif-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.notif-text{font-size:13px;color:var(--ink2);line-height:1.5}
+.notif-time{font-size:11px;color:var(--ink4);margin-top:2px}
+
+/* CHARTS PLACEHOLDER */
+.chart-bar{display:flex;align-items:flex-end;gap:6px;height:120px;padding:0 4px}
+.bar{flex:1;border-radius:4px 4px 0 0;background:var(--or);opacity:.8;min-width:0;transition:all .3s;cursor:pointer;position:relative}
+.bar:hover{opacity:1}
+.bar-lbl{text-align:center;font-size:10px;color:var(--ink4);margin-top:4px}
+
+@media(max-width:768px){
+  :root{--sidebar:0px}
+  .sidebar{display:none}
+  .main{margin-left:0}
+  .metrics{grid-template-columns:1fr 1fr}
+  .funil{grid-template-columns:1fr;overflow-x:auto}
+  .form-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sb-logo"><img src="assets/imoore-logo-oficial-horizontal.jpeg" alt="imoore admin"/></div>
+  <div class="sb-admin">
+    <div class="sb-av">R</div>
+    <div><div class="sb-name">Rodrigo</div><div class="sb-role">Administrador</div></div>
+  </div>
+  <div class="sb-section">Principal</div>
+  <div class="sb-item on" onclick="goPage('dashboard')"><i class="ti ti-layout-dashboard" aria-hidden="true"></i> Dashboard</div>
+  <div class="sb-item" onclick="goPage('aprovacao')"><i class="ti ti-building-check" aria-hidden="true"></i> Aprovação <span class="sb-badge" id="menu-pendentes">0</span></div>
+  <div class="sb-item" onclick="goPage('imoveis')"><i class="ti ti-building" aria-hidden="true"></i> Imóveis</div>
+  <div class="sb-section">CRM</div>
+  <div class="sb-item" onclick="goPage('crm')"><i class="ti ti-users" aria-hidden="true"></i> Leads & Funil</div>
+  <div class="sb-item" onclick="goPage('corretores')"><i class="ti ti-id-badge" aria-hidden="true"></i> Corretores</div>
+  <div class="sb-section">Sistema</div>
+  <div class="sb-item" onclick="goPage('configuracoes')"><i class="ti ti-settings" aria-hidden="true"></i> Configurações</div>
+  <div class="sb-item" onclick="window.open('teste-claude.html','_blank')"><i class="ti ti-external-link" aria-hidden="true"></i> Ver site</div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="tb-title" id="tb-title">Dashboard</div>
+  <div class="tb-right">
+    <div class="tb-notif" onclick="goPage('notificacoes')"><i class="ti ti-bell" aria-hidden="true"></i><div class="dot"></div></div>
+    <button class="btn btn-p" onclick="abrirNovoImovel()"><i class="ti ti-plus" aria-hidden="true"></i> Novo imóvel</button>
+    <button class="btn btn-o" onclick="sair()"><i class="ti ti-logout" aria-hidden="true"></i> Sair</button>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ══ DASHBOARD ══ -->
+<div class="page on" id="page-dashboard">
+  <div class="metrics">
+    <div class="mcard">
+      <div class="mcard-val" id="card-imoveis">0</div>
+      <div class="mcard-lbl">Imóveis ativos</div>
+      <div class="mcard-trend t-up"><i class="ti ti-trending-up" aria-hidden="true"></i> +3 este mês</div>
+    </div>
+    <div class="mcard">
+      <div class="mcard-val" id="card-leads">0</div>
+      <div class="mcard-lbl">Leads no CRM</div>
+      <div class="mcard-trend t-up"><i class="ti ti-trending-up" aria-hidden="true"></i> +8 esta semana</div>
+    </div>
+    <div class="mcard">
+      <div class="mcard-val" id="card-pendentes" style="color:var(--warn)">0</div>
+      <div class="mcard-lbl">Aguardando aprovação</div>
+      <div class="mcard-trend t-neu"><i class="ti ti-clock" aria-hidden="true"></i> Revisar agora</div>
+    </div>
+    <div class="mcard">
+      <div class="mcard-val" id="card-fechados" style="color:var(--ok)">0</div>
+      <div class="mcard-lbl">Negócios fechados</div>
+      <div class="mcard-trend t-up"><i class="ti ti-trending-up" aria-hidden="true"></i> +2 este mês</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:14px">
+    <div class="card">
+      <div class="card-hdr">
+        <h3><i class="ti ti-chart-bar" style="color:var(--or);margin-right:6px" aria-hidden="true"></i>Leads por mês</h3>
+        <span class="badge b-inf">2026</span>
+      </div>
+      <div class="card-body">
+        <div class="chart-bar" id="chart-leads"></div>
+        <div style="display:flex;gap:4px;margin-top:2px" id="chart-labels"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-hdr"><h3><i class="ti ti-map-pin" style="color:var(--or);margin-right:6px" aria-hidden="true"></i>Por cidade</h3></div>
+      <div class="card-body" style="padding:12px 18px">
+        <div id="cidade-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hdr">
+      <h3><i class="ti ti-activity" style="color:var(--or);margin-right:6px" aria-hidden="true"></i>Atividade recente</h3>
+      <button class="btn btn-o btn-sm" onclick="goPage('crm')">Ver CRM</button>
+    </div>
+    <table class="tbl">
+      <thead><tr><th>Lead</th><th>Interesse</th><th>Cidade</th><th>Status</th><th>Data</th><th>Ação</th></tr></thead>
+      <tbody id="atividade-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ APROVAÇÃO ══ -->
+<div class="page" id="page-aprovacao">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+    <div>
+      <h2 style="font-size:18px;font-weight:800;color:var(--ink);margin-bottom:4px">Aprovação de imóveis</h2>
+      <p style="font-size:13px;color:var(--ink4)">Revise e aprove os imóveis submetidos pelos corretores antes de publicar no site.</p>
+    </div>
+    <div class="tabs">
+      <div class="tab on" onclick="selTab(this,'tab-pendentes')">Pendentes <span id="tab-pendentes-count" style="background:var(--or);color:#fff;padding:1px 7px;border-radius:20px;font-size:10px;margin-left:4px">0</span></div>
+      <div class="tab" onclick="selTab(this,'tab-aprovados')">Aprovados</div>
+      <div class="tab" onclick="selTab(this,'tab-rejeitados')">Rejeitados</div>
+    </div>
+  </div>
+
+  <div id="tab-pendentes">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px" id="pendentes-grid"></div>
+  </div>
+  <div id="tab-aprovados" style="display:none">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px" id="aprovados-grid"></div>
+  </div>
+  <div id="tab-rejeitados" style="display:none">
+    <p style="font-size:14px;color:var(--ink4);padding:32px;text-align:center"><i class="ti ti-check" style="display:block;font-size:36px;opacity:.3;margin-bottom:8px" aria-hidden="true"></i>Nenhum imóvel rejeitado.</p>
+  </div>
+</div>
+
+<!-- ══ IMÓVEIS ══ -->
+<div class="page" id="page-imoveis">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+    <h2 style="font-size:18px;font-weight:800;color:var(--ink)">Imóveis cadastrados</h2>
+    <button class="btn btn-p" onclick="abrirNovoImovel()"><i class="ti ti-plus" aria-hidden="true"></i> Cadastrar imóvel</button>
+  </div>
+  <div class="card">
+    <table class="tbl">
+      <thead><tr><th>Imóvel</th><th>Cidade</th><th>Tipo</th><th>Preço</th><th>Status</th><th>Corretor</th><th>Ações</th></tr></thead>
+      <tbody id="imoveis-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ CRM ══ -->
+<div class="page" id="page-crm">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+    <div>
+      <h2 style="font-size:18px;font-weight:800;color:var(--ink);margin-bottom:4px">CRM — Funil de Leads</h2>
+      <p style="font-size:13px;color:var(--ink4)">Atualize os leads entre as etapas do funil conforme o andamento.</p>
+    </div>
+    <button class="btn btn-p" onclick="abrirNovoLead()"><i class="ti ti-plus" aria-hidden="true"></i> Novo lead</button>
+  </div>
+  <div class="funil" id="funil-board"></div>
+</div>
+
+<!-- ══ CORRETORES ══ -->
+<div class="page" id="page-corretores">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+    <div>
+      <h2 style="font-size:18px;font-weight:800;color:var(--ink);margin-bottom:4px">Corretores cadastrados</h2>
+      <p style="font-size:13px;color:var(--ink4)">Modo demonstração. Integração definitiva de corretores será conectada ao backend em versão futura.</p>
+    </div>
+    <button class="btn btn-p" onclick="abrirNovoCorretor()"><i class="ti ti-plus" aria-hidden="true"></i> Novo Corretor</button>
+  </div>
+  <div class="card">
+    <table class="tbl">
+      <thead><tr><th>Nome</th><th>E-mail</th><th>Telefone</th><th>CRECI</th><th>Cidade</th><th>Ações</th></tr></thead>
+      <tbody id="corretores-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ CONFIGURAÇÕES ══ -->
+<div class="page" id="page-configuracoes">
+  <h2 style="font-size:18px;font-weight:800;color:var(--ink);margin-bottom:18px">Configurações</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+    <div class="card">
+      <div class="card-hdr"><h3>Dados da empresa</h3></div>
+      <div class="card-body">
+        <div style="display:flex;flex-direction:column;gap:11px">
+          <div class="ff"><label>Nome</label><input type="text" value="imoore Gestão de Negócios Imobiliários Ltda"/></div>
+          <div class="ff"><label>CNPJ</label><input type="text" value="61.788.646/0001-70"/></div>
+          <div class="ff"><label>Creci/SP</label><input type="text" value="52050-J"/></div>
+          <div class="ff"><label>WhatsApp</label><input type="text" value="(13) 99109-1887"/></div>
+          <div class="ff"><label>E-mail</label><input type="email" value="contato@imoore.com.br"/></div>
+          <div class="ff"><label>Endereço</label><input type="text" value="Rua Letônia, 34 — Peruíbe/SP"/></div>
+          <button class="btn btn-o" style="width:100%;justify-content:center;margin-top:4px" disabled>Sem endpoint de configurações</button>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="card">
+        <div class="card-hdr"><h3>Aprovação de imóveis</h3></div>
+        <div class="card-body">
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:10px">
+            <input type="checkbox" checked style="accent-color:var(--or);width:16px;height:16px"/>
+            <span style="font-size:13px;color:var(--ink2)">Exigir aprovação antes de publicar</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:10px">
+            <input type="checkbox" checked style="accent-color:var(--or);width:16px;height:16px"/>
+            <span style="font-size:13px;color:var(--ink2)">Notificar por WhatsApp ao receber imóvel</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer">
+            <input type="checkbox" style="accent-color:var(--or);width:16px;height:16px"/>
+            <span style="font-size:13px;color:var(--ink2)">Notificar corretor ao aprovar/rejeitar</span>
+          </label>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hdr"><h3>Integrações</h3></div>
+        <div class="card-body">
+          <div style="display:flex;flex-direction:column;gap:11px">
+            <div class="ff"><label>Google Analytics ID</label><input type="text" placeholder="G-XXXXXXXXXX"/></div>
+            <div class="ff"><label>Pixel Facebook</label><input type="text" placeholder="000000000000000"/></div>
+            <div class="ff"><label>API ZAP Imóveis</label><input type="text" placeholder="Chave da API"/></div>
+            <button class="btn btn-o" style="width:100%;justify-content:center;margin-top:4px" disabled>Sem endpoint de integrações</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ NOTIFICAÇÕES ══ -->
+<div class="page" id="page-notificacoes">
+  <h2 style="font-size:18px;font-weight:800;color:var(--ink);margin-bottom:18px">Notificações</h2>
+  <div class="card">
+    <div id="notif-list"></div>
+  </div>
+</div>
+
+</div><!-- /content -->
+</div><!-- /main -->
+</div><!-- /layout -->
+
+<!-- MODAL APROVAÇÃO / DETALHES -->
+<div class="modal-bg" id="modal-aprovacao">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h3>Revisar imóvel</h3>
+      <button class="modal-close" onclick="fecharModal('modal-aprovacao')"><i class="ti ti-x" aria-hidden="true"></i></button>
+    </div>
+    <div class="modal-body" id="modal-aprovacao-body"></div>
+  </div>
+</div>
+
+<!-- MODAL NOVO IMÓVEL -->
+<div class="modal-bg" id="modal-imovel">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h3>Cadastrar imóvel</h3>
+      <button class="modal-close" onclick="fecharModal('modal-imovel')"><i class="ti ti-x" aria-hidden="true"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="ff"><label>Título</label><input type="text" placeholder="Ex: Apto 2 quartos em Santos" id="im-titulo"/></div>
+        <div class="ff"><label>Tipo</label><select id="im-tipo"><option>Apartamento</option><option>Casa</option><option>Terreno</option><option>Cobertura</option><option>Comercial</option></select></div>
+        <div class="ff"><label>Preço</label><input type="text" placeholder="R$ 350.000" id="im-preco"/></div>
+        <div class="ff"><label>Finalidade</label><select id="im-finalidade"><option>Venda</option><option>Aluguel</option><option>Lançamento</option></select></div>
+        <div class="ff"><label>Cidade</label><select id="im-cidade"><option>Santos</option><option>São Vicente</option><option>Guarujá</option><option>Praia Grande</option><option>Peruíbe</option><option>Itanhaém</option><option>Mongaguá</option><option>Bertioga</option><option>Cubatão</option><option>Itariri</option><option>Pedro de Toledo</option><option>Ana Dias</option></select></div>
+        <div class="ff"><label>Bairro</label><input type="text" placeholder="Ex: Gonzaga" id="im-bairro"/></div>
+        <div class="ff"><label>Quartos</label><input type="number" min="0" placeholder="2" id="im-quartos"/></div>
+        <div class="ff"><label>Área (m²)</label><input type="number" min="0" placeholder="65" id="im-area"/></div>
+      </div>
+      <div class="ff" style="margin-bottom:12px"><label>Descrição</label><textarea rows="3" placeholder="Descreva o imóvel..." id="im-descricao"></textarea></div>
+      <div class="ff" style="margin-bottom:12px"><label>Fotos (até 5)</label><input type="file" id="im-fotos" multiple accept="image/*" onchange="previewFotosImovel(this)"/></div>
+      <div id="im-fotos-preview" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"></div>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-p" style="flex:1;justify-content:center" onclick="salvarImovel()"><i class="ti ti-check" aria-hidden="true"></i> Enviar para aprovação</button>
+        <button class="btn btn-o" onclick="fecharModal('modal-imovel')">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL NOVO CORRETOR -->
+<div class="modal-bg" id="modal-corretor">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h3>Novo Corretor</h3>
+      <button class="modal-close" onclick="fecharModal('modal-corretor')"><i class="ti ti-x" aria-hidden="true"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="ff"><label>Nome</label><input type="text" id="c-nome" placeholder="Nome completo"/></div>
+        <div class="ff"><label>E-mail</label><input type="email" id="c-email" placeholder="corretor@email.com"/></div>
+        <div class="ff"><label>Telefone</label><input type="text" id="c-telefone" placeholder="(13) 99999-9999"/></div>
+        <div class="ff"><label>CRECI</label><input type="text" id="c-creci" placeholder="SP-000000"/></div>
+        <div class="ff"><label>Cidade</label><input type="text" id="c-cidade" placeholder="Cidade de atuação"/></div>
+      </div>
+      <p style="font-size:12px;color:var(--ink4);margin:-2px 0 14px">Modo demonstração. Este cadastro fica salvo apenas neste navegador.</p>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-p" style="flex:1;justify-content:center" onclick="salvarCorretor()"><i class="ti ti-check" aria-hidden="true"></i> Salvar corretor</button>
+        <button class="btn btn-o" onclick="fecharModal('modal-corretor')">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DETALHES CORRETOR -->
+<div class="modal-bg" id="modal-corretor-detalhes">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h3>Corretor</h3>
+      <button class="modal-close" onclick="fecharModal('modal-corretor-detalhes')"><i class="ti ti-x" aria-hidden="true"></i></button>
+    </div>
+    <div class="modal-body" id="modal-corretor-detalhes-body"></div>
+  </div>
+</div>
+
+<!-- MODAL NOVO LEAD -->
+<div class="modal-bg" id="modal-lead">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h3>Novo lead</h3>
+      <button class="modal-close" onclick="fecharModal('modal-lead')"><i class="ti ti-x" aria-hidden="true"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="ff"><label>Nome</label><input type="text" placeholder="João Silva" id="l-nome"/></div>
+        <div class="ff"><label>WhatsApp</label><input type="text" placeholder="(13) 99999-9999" id="l-tel"/></div>
+        <div class="ff"><label>E-mail</label><input type="email" placeholder="joao@email.com" id="l-email"/></div>
+        <div class="ff"><label>Cidade</label><select id="l-cidade"><option>Santos</option><option>Guarujá</option><option>Praia Grande</option><option>Peruíbe</option><option>Itanhaém</option><option>São Vicente</option></select></div>
+        <div class="ff"><label>Interesse</label><select id="l-interesse"><option>Comprar</option><option>Alugar</option><option>Investir</option></select></div>
+        <div class="ff"><label>Etapa</label><select id="l-etapa"><option>novo</option><option>contato</option><option>visita</option><option>proposta</option><option>fechado</option></select></div>
+      </div>
+      <div class="ff" style="margin-bottom:14px"><label>Observação</label><textarea rows="2" placeholder="Detalhes do interesse..." id="l-obs"></textarea></div>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-p" style="flex:1;justify-content:center" onclick="salvarLead()"><i class="ti ti-plus" aria-hidden="true"></i> Adicionar lead</button>
+        <button class="btn btn-o" onclick="fecharModal('modal-lead')">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="api-config.js"></script>
+<script>
+const authToken = localStorage.getItem('imoore_token');
+function getStoredUser() {
+  try {
+    return JSON.parse(localStorage.getItem('imoore_user') || 'null');
+  } catch (error) {
+    localStorage.removeItem('imoore_token');
+    localStorage.removeItem('imoore_user');
+    return null;
+  }
+}
+const authUser = getStoredUser();
+const pageAuthorized = !!(authToken && authUser && authUser.perfil === 'admin');
+if (!pageAuthorized) {
+  window.location.href = 'imoore-entrar.html';
+}
+function sair() {
+  localStorage.removeItem('imoore_token');
+  localStorage.removeItem('imoore_user');
+  sessionStorage.removeItem('imoore_token');
+  sessionStorage.removeItem('imoore_user');
+  window.location.href = 'imoore-entrar.html';
+}
+const API_BASE = window.IMOORE_API_BASE || window.API_BASE || '/api';
+async function apiRequest(path, options = {}) {
+  if (!pageAuthorized) {
+    throw new Error('Sessao invalida');
+  }
+  const isFormData = options.body instanceof FormData;
+
+  const response = await fetch(`${API_BASE}${path}`, {
+    ...options,
+    headers: {
+      ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
+      Authorization: `Bearer ${authToken}`,
+      ...(options.headers || {}),
+    },
+  });
+
+  if (response.status === 401) {
+    localStorage.removeItem('imoore_token');
+    localStorage.removeItem('imoore_user');
+    window.location.href = 'imoore-entrar.html';
+    throw new Error('Sessao expirada');
+  }
+
+  if (!response.ok) {
+    const body = await response.json().catch(() => ({}));
+    throw new Error(body.error || `HTTP ${response.status}`);
+  }
+
+  return response.json().catch(() => ({}));
+}
+const currentUser = authUser || {};
+document.querySelector('.sb-av').textContent = (currentUser.nome || currentUser.email || 'A')[0].toUpperCase();
+document.querySelector('.sb-name').textContent = currentUser.nome || currentUser.email || 'Admin';
+
+// ── DATA ──
+const WPP = '5513991091887';
+
+let imoveis = [];
+let pendentes = [];
+let aprovados = [];
+let rejeitados = [];
+let leads = [];
+
+function escapeHtml(value){
+  return String(value ?? '').replace(/[&<>"']/g, char => ({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#39;'
+  }[char]));
+}
+
+function formatMoney(value){
+  const number=Number(value || 0);
+  return Number.isFinite(number) ? `R$ ${number.toLocaleString('pt-BR')}` : 'R$ 0';
+}
+
+function statusClass(status){
+  if(status==='publicado')return 'b-ok';
+  if(status==='rejeitado')return 'b-err';
+  if(status==='pendente')return 'b-warn';
+  return 'b-gray';
+}
+
+function emptyState(text){
+  return `<p style="font-size:14px;color:var(--ink4);padding:32px;text-align:center">${escapeHtml(text)}</p>`;
+}
+
+function normalizeFotos(fotos){
+  if(Array.isArray(fotos))return fotos.filter(Boolean);
+  if(typeof fotos==='string'){
+    try{
+      const parsed=JSON.parse(fotos);
+      return Array.isArray(parsed)?parsed.filter(Boolean):(fotos?[fotos]:[]);
+    }catch(error){
+      return fotos?[fotos]:[];
+    }
+  }
+  return [];
+}
+
+function abrirFotoAmpliada(url){
+  const overlay=document.createElement('div');
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px';
+  overlay.innerHTML=`
+    <button type="button" aria-label="Fechar" style="position:absolute;top:18px;right:18px;width:38px;height:38px;border:none;border-radius:50%;background:#fff;color:var(--ink);font-size:22px;cursor:pointer">×</button>
+    <img src="${url}" alt="Foto ampliada" style="max-width:96vw;max-height:90vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.35);object-fit:contain;background:#fff"/>
+  `;
+  overlay.addEventListener('click',event=>{
+    if(event.target===overlay || event.target.tagName==='BUTTON')overlay.remove();
+  });
+  document.body.appendChild(overlay);
+}
+
+function fotosThumbsHtml(fotos){
+  const lista=normalizeFotos(fotos);
+  if(!lista.length)return '<p style="font-size:12px;color:var(--ink4);margin:12px 0">Nenhuma foto enviada.</p>';
+  return `<div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 16px">${lista.map((foto,index)=>`
+    <button type="button" onclick="abrirFotoAmpliada('${foto}')" title="Ampliar foto ${index+1}" style="width:74px;height:74px;border-radius:8px;background:url('${foto}') center/cover;border:1px solid var(--bdr);cursor:pointer;padding:0"></button>
+  `).join('')}</div>`;
+}
+
+// Leads dashboard
+const meses = ['Jan','Fev','Mar','Abr','Mai','Jun'];
+function renderChartLeads(){
+  const vals=Array(6).fill(0);
+  leads.forEach(lead=>{
+    const date=new Date(lead.criado_em || lead.created_at || Date.now());
+    if(Number.isFinite(date.getTime())){
+      const index=Math.max(0,Math.min(5,date.getMonth()));
+      vals[index]+=1;
+    }
+  });
+  const maxV=Math.max(1,...vals);
+  const cb=document.getElementById('chart-leads');
+  const cl=document.getElementById('chart-labels');
+  cb.innerHTML='';
+  cl.innerHTML='';
+  vals.forEach((v,i)=>{
+    const b=document.createElement('div');
+    b.className='bar';
+    b.style.height=Math.round((v/maxV)*100)+'%';
+    b.title=meses[i]+': '+v+' leads';
+    cb.appendChild(b);
+    const l=document.createElement('div');
+    l.className='bar-lbl';l.style.flex='1';l.textContent=meses[i];
+    cl.appendChild(l);
+  });
+}
+
+function renderCidadeList(){
+  const counts={};
+  leads.forEach(lead=>{
+    const cidade=lead.cidade || 'Nao informada';
+    counts[cidade]=(counts[cidade] || 0)+1;
+  });
+  const cdiv=document.getElementById('cidade-list');
+  cdiv.innerHTML='';
+  Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,5).forEach(([c,n])=>{
+    cdiv.innerHTML+=`<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:.5px solid var(--bdr);font-size:13px"><span style="color:var(--ink2)">${c}</span><span style="font-weight:700;color:var(--or)">${n}</span></div>`;
+  });
+}
+
+// ── ATIVIDADE ──
+const statusBadge={novo:'b-inf',contato:'b-warn',visita:'b-or',proposta:'b-err',fechado:'b-ok'};
+const statusLabel={novo:'Novo',contato:'Contato',visita:'Visita',proposta:'Proposta',fechado:'Fechado'};
+const leadColors=['#F26522','#2BBDAD','#BA7517','#378ADD','#639922'];
+
+function leadInfo(lead){
+  return `${lead.interesse || 'Interesse nao informado'} · ${lead.cidade || 'Cidade nao informada'}`;
+}
+
+function leadPhone(lead){
+  return String(lead.telefone || lead.tel || '').replace(/\D/g,'');
+}
+
+function whatsappNumber(lead){
+  const phone=leadPhone(lead);
+  if(!phone)return WPP;
+  return phone.startsWith('55') ? phone : `55${phone}`;
+}
+
+function leadColor(lead,index){
+  return lead.cor || leadColors[index % leadColors.length];
+}
+
+function formatLeadDate(lead){
+  const raw=lead.criado_em || lead.created_at || lead.data;
+  if(!raw)return '-';
+  const date=new Date(raw);
+  return Number.isFinite(date.getTime()) ? date.toLocaleDateString('pt-BR') : raw;
+}
+
+function renderAtividades(){
+const tb=document.getElementById('atividade-tbody');
+tb.innerHTML='';
+leads.slice(0,5).forEach((a,index)=>{
+  tb.innerHTML+=`<tr>
+    <td><div style="display:flex;align-items:center;gap:8px"><div style="width:30px;height:30px;border-radius:50%;background:var(--orl);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--or);flex-shrink:0">${escapeHtml((a.nome || 'L')[0])}</div><span style="font-weight:600">${escapeHtml(a.nome || 'Lead sem nome')}</span></div></td>
+    <td style="color:var(--ink3)">${escapeHtml(a.interesse || '-')}</td>
+    <td><span class="badge b-gray">${escapeHtml(a.cidade || '-')}</span></td>
+    <td><span class="badge ${statusBadge[a.etapa] || 'b-gray'}">${statusLabel[a.etapa] || 'Sem etapa'}</span></td>
+    <td style="color:var(--ink4)">${escapeHtml(formatLeadDate(a))}</td>
+    <td><button class="btn btn-o btn-sm" onclick="window.open('https://wa.me/${whatsappNumber(a)}','_blank')"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i></button></td>
+  </tr>`;
+});
+}
+
+// ── IMÓVEIS TBODY ──
+async function carregarImoveis(){
+  if (!pageAuthorized) return;
+
+  try{
+
+    imoveis = await apiRequest('/imoveis');
+    pendentes = imoveis.filter(im => (im.status || 'pendente') === 'pendente');
+    aprovados = imoveis.filter(im => im.status === 'publicado');
+    rejeitados = imoveis.filter(im => im.status === 'rejeitado');
+
+    const itb = document.getElementById('imoveis-tbody');
+    itb.innerHTML = '';
+
+    if(imoveis.length===0){
+      itb.innerHTML = `<tr><td colspan="7">${emptyState('Nenhum imóvel cadastrado.')}</td></tr>`;
+    }
+
+    imoveis.forEach(im => {
+
+      itb.innerHTML += `
+        <tr>
+          <td>
+            <div style="font-weight:600;color:var(--ink)">
+              ${escapeHtml(im.titulo || '')}
+            </div>
+            <div style="font-size:11px;color:var(--ink4)">
+              ${escapeHtml(im.area || 0)}m² · ${escapeHtml(im.quartos || 0)} quartos
+            </div>
+          </td>
+
+          <td>${escapeHtml(im.cidade || '')}</td>
+
+          <td>
+            <span class="badge b-gray">
+              ${escapeHtml(im.tipo || '')}
+            </span>
+          </td>
+
+          <td style="font-weight:700;color:var(--or)">
+            ${formatMoney(im.preco)}
+          </td>
+
+          <td>
+            <span class="badge ${statusClass(im.status || 'pendente')}">
+              ${escapeHtml(im.status || 'pendente')}
+            </span>
+          </td>
+
+          <td>-</td>
+
+          <td>
+            <button class="btn btn-o btn-sm" onclick="abrirDetalhes('${im.id}')">
+              <i class="ti ti-eye"></i>
+            </button>
+          </td>
+        </tr>
+
+      `;
+
+    });
+    atualizarResumoImoveis();
+    renderPendentes();
+    renderAprovados();
+    renderRejeitados();
+    renderNotificacoes();
+
+  }catch(err){
+    console.error('Erro ao carregar imóveis:', err);
+  }
+
+}
+
+carregarImoveis();
+
+function atualizarResumoImoveis(){
+  const cardImoveis=document.getElementById('card-imoveis');
+  const cardPendentes=document.getElementById('card-pendentes');
+  const menuPendentes=document.getElementById('menu-pendentes');
+  const tabPendentes=document.getElementById('tab-pendentes-count');
+  if(cardImoveis)cardImoveis.textContent=aprovados.length;
+  if(cardPendentes)cardPendentes.textContent=pendentes.length;
+  if(menuPendentes)menuPendentes.textContent=pendentes.length;
+  if(tabPendentes)tabPendentes.textContent=pendentes.length;
+}
+
+
+// ── PENDENTES GRID ──
+function imovelCard(im,status){
+  const badgeClass=status==='publicado'?'b-ok':status==='rejeitado'?'b-err':'b-warn';
+  const badgeLabel=status==='publicado'?'Publicado':status==='rejeitado'?'Rejeitado':'Pendente';
+  const fotos=normalizeFotos(im.fotos);
+  const capa=fotos[0];
+  const actions=status==='pendente' ? `
+          <button class="btn btn-ok btn-sm" style="flex:1;justify-content:center" onclick="aprovarImovel('${im.id}')"><i class="ti ti-check" aria-hidden="true"></i> Aprovar</button>
+          <button class="btn btn-err btn-sm" style="flex:1;justify-content:center" onclick="rejeitarImovel('${im.id}')"><i class="ti ti-x" aria-hidden="true"></i> Rejeitar</button>
+          <button class="btn btn-o btn-sm" onclick="abrirDetalhes('${im.id}')"><i class="ti ti-eye" aria-hidden="true"></i></button>
+        ` : `
+          <button class="btn btn-o btn-sm" style="flex:1;justify-content:center" onclick="abrirDetalhes('${im.id}')"><i class="ti ti-eye" aria-hidden="true"></i> Ver detalhes</button>
+        `;
+
+  return `<div class="icard-rev">
+      <div class="icard-rev-img" style="${capa?`background:url('${capa}') center/cover`:'background:linear-gradient(135deg,#F8E2D4,#F2A36E)'}">
+        ${capa?'':'<i class="ti ti-home-2" style="font-size:44px;opacity:.18;color:#8a3000" aria-hidden="true"></i>'}
+        <span class="badge ${badgeClass}" style="position:absolute;top:10px;left:10px">${badgeLabel}</span>
+      </div>
+      <div class="icard-rev-body">
+        <div class="icard-rev-price">${formatMoney(im.preco)}</div>
+        <div class="icard-rev-sub">${escapeHtml(im.tipo || '-')} · ${escapeHtml(im.cidade || '-')}</div>
+        <div style="font-weight:700;color:var(--ink);margin-bottom:8px">${escapeHtml(im.titulo || 'Imóvel sem título')}</div>
+        <div class="icard-rev-meta">
+          ${Number(im.quartos || 0)>0?`<span><i class="ti ti-bed" aria-hidden="true"></i>${escapeHtml(im.quartos)}q</span>`:''}
+          <span><i class="ti ti-ruler" aria-hidden="true"></i>${escapeHtml(im.area || 0)}m²</span>
+        </div>
+        <div class="icard-rev-acts">${actions}</div>
+      </div>
+    </div>`;
+}
+
+function renderPendentes(){
+  const g=document.getElementById('pendentes-grid');
+  g.innerHTML='';
+  if(pendentes.length===0){g.innerHTML=emptyState('Nenhum imóvel pendente.');return;}
+  pendentes.forEach(im=>{g.innerHTML+=imovelCard(im,'pendente');});
+
+}
+
+// ── APROVADOS GRID ──
+function renderAprovados(){
+  const g=document.getElementById('aprovados-grid');
+  g.innerHTML='';
+  if(aprovados.length===0){g.innerHTML=emptyState('Nenhum imóvel aprovado.');return;}
+  aprovados.forEach(im=>{g.innerHTML+=imovelCard(im,'publicado');});
+}
+
+function renderRejeitados(){
+  const tab=document.getElementById('tab-rejeitados');
+  if(!tab)return;
+  if(rejeitados.length===0){
+    tab.innerHTML=emptyState('Nenhum imóvel rejeitado.');
+    return;
+  }
+  tab.innerHTML=`<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px" id="rejeitados-grid"></div>`;
+  const g=document.getElementById('rejeitados-grid');
+  rejeitados.forEach(im=>{g.innerHTML+=imovelCard(im,'rejeitado');});
+}
+
+// ── APROVAR IMÓVEL ──
+async function aprovarImovel(id){
+  try {
+    await apiRequest(`/imoveis/${id}/aprovar`, { method: 'POST' });
+  } catch (error) {
+    alert(error.message || 'Erro ao aprovar imovel');
+    return;
+  }
+
+  await carregarImoveis();
+  alert('Imóvel aprovado e publicado no site!');
+}
+
+async function rejeitarImovel(id){
+  if(!confirm('Tem certeza que deseja rejeitar este imóvel?')) return;
+  try {
+    await apiRequest(`/imoveis/${id}/rejeitar`, { method: 'POST' });
+  } catch (error) {
+    alert(error.message || 'Erro ao rejeitar imovel');
+    return;
+  }
+
+  await carregarImoveis();
+  alert('Imovel rejeitado.');
+}
+
+// ── DETALHES MODAL ──
+
+// ── DETALHES MODAL ──
+async function abrirDetalhes(id){
+  try{
+
+    const im = await apiRequest(`/imoveis/${id}`);
+    document.getElementById('modal-aprovacao-body').innerHTML = `
+      <h2>${escapeHtml(im.titulo || '')}</h2>
+
+      ${fotosThumbsHtml(im.fotos)}
+
+      <p><strong>Tipo:</strong> ${escapeHtml(im.tipo || '-')}</p>
+
+      <p><strong>Cidade:</strong> ${escapeHtml(im.cidade || '-')}</p>
+
+      <p><strong>Bairro:</strong> ${escapeHtml(im.bairro || '-')}</p>
+
+      <p>
+        <strong>Preço:</strong>
+        ${formatMoney(im.preco)}
+      </p>
+
+      <p><strong>Status:</strong> ${escapeHtml(im.status || '-')}</p>
+
+      <hr style="margin:15px 0">
+
+      <p>${escapeHtml(im.descricao || '')}</p>
+    `;
+
+    document
+      .getElementById('modal-aprovacao')
+      .classList.add('on');
+
+  }catch(err){
+
+    console.error(err);
+
+    alert('Erro ao abrir imóvel');
+
+  }
+
+}
+
+function fecharModal(id){
+  document.getElementById(id).classList.remove('on');
+}
+
+// ── FUNIL CRM ──
+const colunas=[
+  {key:'novo',label:'Novo',cor:'var(--inf)'},
+  {key:'contato',label:'Contato',cor:'var(--warn)'},
+  {key:'visita',label:'Visita',cor:'var(--or)'},
+  {key:'proposta',label:'Proposta',cor:'#7B3FA0'},
+  {key:'fechado',label:'Fechado',cor:'var(--ok)'},
+];
+function renderFunil(){
+  const board=document.getElementById('funil-board');
+  board.innerHTML='';
+  colunas.forEach(col=>{
+    const lista=leads.filter(lead=>lead.etapa===col.key);
+    const div=document.createElement('div');
+    div.className='col-funil';
+    div.innerHTML=`<div class="col-funil-hdr"><span style="color:${col.cor}">${col.label}</span><span class="col-funil-count">${lista.length}</span></div>`;
+    lista.forEach((l,i)=>{
+      const card=document.createElement('div');
+      card.className='lead-card';
+      card.innerHTML=`
+        <div class="lead-name">${escapeHtml(l.nome || 'Lead sem nome')}</div>
+        <div class="lead-info">${escapeHtml(leadInfo(l))}</div>
+        <div class="lead-meta">
+          <div class="lead-avatar" style="background:${leadColor(l,i)}">${escapeHtml((l.nome || 'L')[0])}</div>
+          <span class="lead-time">${escapeHtml(formatLeadDate(l))}</span>
+          <button style="background:none;border:none;cursor:pointer;color:#25D366;font-size:18px;padding:2px" onclick="event.stopPropagation();window.open('https://wa.me/${whatsappNumber(l)}?text=Olá ${encodeURIComponent(l.nome || 'Lead')}, vim falar sobre o imóvel de seu interesse.','_blank')" aria-label="WhatsApp"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i></button>
+        </div>`;
+      const stageSelect=document.createElement('select');
+      stageSelect.className='lead-stage-select';
+      stageSelect.style.cssText='margin-top:8px;width:100%;background:var(--bg);border:1px solid var(--bdr);border-radius:var(--r);padding:7px;font-size:12px';
+      colunas.forEach(stage=>{
+        const option=document.createElement('option');
+        option.value=stage.key;
+        option.textContent=stage.label;
+        option.selected=l.etapa===stage.key;
+        stageSelect.appendChild(option);
+      });
+      stageSelect.addEventListener('change',()=>atualizarEtapaLead(l.id,stageSelect.value));
+      card.appendChild(stageSelect);
+      div.appendChild(card);
+    });
+    const addBtn=document.createElement('button');
+    addBtn.className='add-lead';
+    addBtn.innerHTML='<i class="ti ti-plus" aria-hidden="true"></i> Adicionar lead';
+    addBtn.onclick=()=>{document.getElementById('l-etapa').value=col.key;document.getElementById('modal-lead').classList.add('on')};
+    div.appendChild(addBtn);
+    board.appendChild(div);
+  });
+}
+renderFunil();
+
+async function carregarLeads(){
+  if(!pageAuthorized)return;
+  try{
+    leads=await apiRequest('/leads');
+    renderFunil();
+    renderAtividades();
+    atualizarResumoLeads();
+    renderNotificacoes();
+  }catch(error){
+    console.error('Erro ao carregar leads:',error);
+  }
+}
+
+async function atualizarEtapaLead(id,etapa){
+  try{
+    const updated=await apiRequest(`/leads/${id}`,{
+      method:'PUT',
+      body:JSON.stringify({etapa})
+    });
+    const index=leads.findIndex(lead=>lead.id===id);
+    if(index>=0)leads[index]=updated;
+    renderFunil();
+    renderAtividades();
+    atualizarResumoLeads();
+  }catch(error){
+    alert(error.message || 'Erro ao atualizar lead');
+    carregarLeads();
+  }
+}
+
+function atualizarResumoLeads(){
+  const total=leads.length;
+  const fechados=leads.filter(lead=>lead.etapa==='fechado').length;
+  const cardLeads=document.getElementById('card-leads');
+  const cardFechados=document.getElementById('card-fechados');
+  if(cardLeads)cardLeads.textContent=total;
+  if(cardFechados)cardFechados.textContent=fechados;
+  renderChartLeads();
+  renderCidadeList();
+}
+
+carregarLeads();
+
+// ── CORRETORES ──
+const CORRETORES_STORAGE_KEY = 'imoore_demo_corretores';
+
+function carregarCorretoresDemo(){
+  try{
+    const saved=JSON.parse(localStorage.getItem(CORRETORES_STORAGE_KEY) || '[]');
+    return Array.isArray(saved) ? saved : [];
+  }catch(error){
+    localStorage.removeItem(CORRETORES_STORAGE_KEY);
+    return [];
+  }
+}
+
+let corretoresDemo = carregarCorretoresDemo();
+
+function salvarCorretoresDemo(){
+  localStorage.setItem(CORRETORES_STORAGE_KEY, JSON.stringify(corretoresDemo));
+}
+
+function renderCorretores(){
+  const ctb=document.getElementById('corretores-tbody');
+  ctb.innerHTML='';
+  if(corretoresDemo.length===0){
+    ctb.innerHTML=`<tr><td colspan="6">${emptyState('Nenhum corretor cadastrado no modo demonstração.')}</td></tr>`;
+    return;
+  }
+
+  corretoresDemo.forEach(c=>{
+    ctb.innerHTML+=`<tr>
+      <td><div style="display:flex;align-items:center;gap:8px"><div style="width:30px;height:30px;border-radius:50%;background:var(--orl);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--or)">${escapeHtml((c.nome || 'C')[0])}</div><span style="font-weight:600">${escapeHtml(c.nome)}</span></div></td>
+      <td style="font-size:12px;color:var(--ink3)">${escapeHtml(c.email || '-')}</td>
+      <td>${escapeHtml(c.telefone || '-')}</td>
+      <td><span class="badge b-gray">${escapeHtml(c.creci || '-')}</span></td>
+      <td>${escapeHtml(c.cidade || '-')}</td>
+      <td>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-o btn-sm" onclick="visualizarCorretor('${c.id}')"><i class="ti ti-eye" aria-hidden="true"></i></button>
+          <button class="btn btn-err btn-sm" onclick="removerCorretor('${c.id}')"><i class="ti ti-trash" aria-hidden="true"></i></button>
+        </div>
+      </td>
+    </tr>`;
+  });
+}
+renderCorretores();
+
+function abrirNovoCorretor(){
+  document.getElementById('modal-corretor').classList.add('on');
+}
+
+function limparFormularioCorretor(){
+  ['c-nome','c-email','c-telefone','c-creci','c-cidade'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+}
+
+function salvarCorretor(){
+  const nome=document.getElementById('c-nome').value.trim();
+  const email=document.getElementById('c-email').value.trim();
+  const telefone=document.getElementById('c-telefone').value.trim();
+  const creci=document.getElementById('c-creci').value.trim();
+  const cidade=document.getElementById('c-cidade').value.trim();
+  if(!nome || !email){alert('Preencha nome e e-mail do corretor.');return;}
+
+  const id=(window.crypto && window.crypto.randomUUID) ? window.crypto.randomUUID() : String(Date.now());
+  corretoresDemo.unshift({id,nome,email,telefone,creci,cidade,criado_em:new Date().toISOString()});
+  salvarCorretoresDemo();
+  renderCorretores();
+  limparFormularioCorretor();
+  fecharModal('modal-corretor');
+}
+
+function visualizarCorretor(id){
+  const corretor=corretoresDemo.find(c=>c.id===id);
+  if(!corretor)return;
+  document.getElementById('modal-corretor-detalhes-body').innerHTML=`
+    <h2 style="font-size:18px;margin-bottom:12px">${escapeHtml(corretor.nome)}</h2>
+    <p><strong>E-mail:</strong> ${escapeHtml(corretor.email || '-')}</p>
+    <p><strong>Telefone:</strong> ${escapeHtml(corretor.telefone || '-')}</p>
+    <p><strong>CRECI:</strong> ${escapeHtml(corretor.creci || '-')}</p>
+    <p><strong>Cidade:</strong> ${escapeHtml(corretor.cidade || '-')}</p>
+    <hr style="margin:15px 0">
+    <p style="font-size:12px;color:var(--ink4)">Modo demonstração. Este registro está salvo apenas no navegador.</p>
+  `;
+  document.getElementById('modal-corretor-detalhes').classList.add('on');
+}
+
+function removerCorretor(id){
+  if(!confirm('Remover este corretor do modo demonstração?'))return;
+  corretoresDemo=corretoresDemo.filter(c=>c.id!==id);
+  salvarCorretoresDemo();
+  renderCorretores();
+}
+
+// ── NOTIFICAÇÕES ──
+function renderNotificacoes(){
+  const nl=document.getElementById('notif-list');
+  const itens=[
+    ...pendentes.map(im=>({
+      txt:`Imóvel aguardando aprovação: ${im.titulo || 'Sem título'} · ${im.cidade || '-'}`,
+      time:formatLeadDate(im),
+      cor:'var(--warn)'
+    })),
+    ...leads.slice(0,5).map(lead=>({
+      txt:`Lead no CRM: ${lead.nome || 'Lead sem nome'} · ${statusLabel[lead.etapa] || 'Sem etapa'}`,
+      time:formatLeadDate(lead),
+      cor:'var(--ok)'
+    }))
+  ].slice(0,8);
+
+  nl.innerHTML='';
+  if(itens.length===0){
+    nl.innerHTML=emptyState('Nenhuma atividade real encontrada.');
+    return;
+  }
+  itens.forEach(n=>{
+    nl.innerHTML+=`<div class="notif-row">
+      <div class="notif-dot" style="background:${n.cor}"></div>
+      <div><div class="notif-text">${escapeHtml(n.txt)}</div><div class="notif-time">${escapeHtml(n.time)}</div></div>
+    </div>`;
+  });
+}
+
+// ── NAVEGAÇÃO ──
+const titles={dashboard:'Dashboard',aprovacao:'Aprovação de imóveis',imoveis:'Imóveis cadastrados',crm:'CRM — Funil de Leads',corretores:'Corretores',configuracoes:'Configurações',notificacoes:'Notificações'};
+function goPage(p){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.sb-item').forEach(x=>x.classList.remove('on'));
+  document.getElementById('page-'+p).classList.add('on');
+  document.getElementById('tb-title').textContent=titles[p]||p;
+  document.querySelectorAll('.sb-item').forEach(item=>{
+    if(item.getAttribute('onclick')&&item.getAttribute('onclick').includes("'"+p+"'"))item.classList.add('on');
+  });
+}
+
+// ── TABS ──
+function selTab(el,activeId){
+  el.closest('.tabs').querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  ['tab-pendentes','tab-aprovados','tab-rejeitados'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.style.display=id===activeId?'block':'none';
+  });
+}
+
+// ── MODAIS ──
+function abrirNovoImovel(){document.getElementById('modal-imovel').classList.add('on')}
+function abrirNovoLead(){document.getElementById('modal-lead').classList.add('on')}
+async function salvarImovel(){
+  const titulo=document.getElementById('im-titulo').value.trim();
+  const preco=document.getElementById('im-preco').value.trim();
+  const cidade=document.getElementById('im-cidade').value;
+  if(!titulo || !preco || !cidade){alert('Preencha título, preço e cidade.');return;}
+
+  const fotos=Array.from(document.getElementById('im-fotos')?.files || []);
+  if(fotos.length > 5){alert('Selecione no máximo 5 fotos.');return;}
+
+  const payload=new FormData();
+  payload.append('titulo', titulo);
+  payload.append('tipo', document.getElementById('im-tipo').value);
+  payload.append('finalidade', document.getElementById('im-finalidade').value);
+  payload.append('preco', preco);
+  payload.append('cidade', cidade);
+  payload.append('bairro', document.getElementById('im-bairro').value.trim());
+  payload.append('quartos', document.getElementById('im-quartos').value);
+  payload.append('area', document.getElementById('im-area').value);
+  payload.append('descricao', document.getElementById('im-descricao').value.trim());
+  fotos.forEach(file=>payload.append('fotos', file));
+
+  try{
+    await apiRequest('/imoveis',{
+      method:'POST',
+      body:payload
+    });
+    await carregarImoveis();
+    fecharModal('modal-imovel');
+    ['im-titulo','im-preco','im-bairro','im-quartos','im-area','im-descricao','im-fotos'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+    const preview=document.getElementById('im-fotos-preview'); if(preview) preview.innerHTML='';
+    alert('Imóvel enviado para aprovação.');
+  }catch(error){
+    alert(error.message || 'Erro ao salvar imóvel');
+  }
+}
+async function salvarLead(){
+  const nome=document.getElementById('l-nome').value.trim();
+  if(!nome){alert('Preencha o nome do lead.');return;}
+  const etapa=document.getElementById('l-etapa').value;
+  const cidade=document.getElementById('l-cidade').value;
+  const interesse=document.getElementById('l-interesse').value;
+  const obs=document.getElementById('l-obs').value;
+  const telefone=document.getElementById('l-tel').value.trim();
+  const email=document.getElementById('l-email').value.trim();
+  try{
+    await apiRequest('/leads',{
+      method:'POST',
+      body:JSON.stringify({nome,telefone,email,cidade,interesse,observacoes:obs,etapa})
+    });
+    await carregarLeads();
+    fecharModal('modal-lead');
+    ['l-nome','l-tel','l-email','l-obs'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  }catch(error){
+    alert(error.message || 'Erro ao salvar lead');
+  }
+}
+
+function previewFotosImovel(input){
+  const preview=document.getElementById('im-fotos-preview');
+  if(!preview)return;
+  preview.innerHTML='';
+  const fotos=Array.from(input.files || []);
+  if(fotos.length > 5){
+    alert('Selecione no máximo 5 fotos.');
+    input.value='';
+    return;
+  }
+  fotos.forEach(file=>{
+    const url=URL.createObjectURL(file);
+    preview.innerHTML += `<button type="button" onclick="abrirFotoAmpliada('${url}')" style="width:72px;height:72px;border-radius:8px;background:url('${url}') center/cover;border:1px solid var(--bdr);cursor:pointer;padding:0"></button>`;
+  });
+}
+
+// Fechar modais ao clicar fora
+document.querySelectorAll('.modal-bg').forEach(bg=>{
+  bg.addEventListener('click',function(e){if(e.target===this)this.classList.remove('on')});
+});
+</script>
+</body>
+</html>

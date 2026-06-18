@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>imoore — Acesso Restrito</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --or:#F26522;--or2:#d95510;--orl:#FEF0E8;--orm:#FDDCC8;
+  --bg:#FAF8F5;--bg2:#fff;--bg3:#F3EFE9;
+  --ink:#1A1614;--ink2:#3D3530;--ink3:#6B6058;--ink4:#9C9188;
+  --bdr:#E8E2DB;--bdr2:#DDD5CB;
+  --ok:#1D9E75;--okl:#E1F5EE;
+  --err:#E24B4A;--errl:#FCEBEB;
+  --sh:0 4px 24px rgba(26,22,20,.10);
+  --shl:0 12px 48px rgba(26,22,20,.18);
+  --f:'Plus Jakarta Sans',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--bg);
+  font-family:var(--f);
+  display:flex;align-items:center;justify-content:center;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  position:relative;overflow:hidden;
+}
+
+/* BG decorativo */
+.bg-orb1{position:fixed;top:-120px;right:-120px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(242,101,34,.12) 0%,transparent 65%);pointer-events:none}
+.bg-orb2{position:fixed;bottom:-80px;left:-80px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(242,101,34,.07) 0%,transparent 65%);pointer-events:none}
+.bg-stripe{position:fixed;left:0;top:0;bottom:0;width:6px;background:var(--or)}
+
+/* CARD */
+.card{
+  background:#fff;border-radius:20px;
+  width:100%;max-width:420px;
+  padding:40px 36px;
+  box-shadow:var(--shl);
+  border:1px solid var(--bdr);
+  position:relative;z-index:1;
+  margin:20px;
+  animation:fadeUp .4s ease;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* LOGO */
+.logo-wrap{text-align:center;margin-bottom:28px}
+.logo-wrap img{height:86px;width:auto;border-radius:12px;object-fit:contain;box-shadow:0 4px 20px rgba(242,101,34,.22)}
+.logo-sub{font-size:12px;color:var(--ink4);margin-top:8px;font-weight:500;letter-spacing:.3px}
+
+/* TITLE */
+.card-title{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.5px;margin-bottom:4px;text-align:center}
+.card-desc{font-size:13px;color:var(--ink3);text-align:center;margin-bottom:28px;line-height:1.6}
+
+/* PERFIL SELECT */
+.perfil-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px}
+.perfil-btn{
+  padding:14px 10px;border-radius:12px;border:2px solid var(--bdr);
+  background:var(--bg);cursor:pointer;text-align:center;
+  font-family:var(--f);transition:all .2s;
+}
+.perfil-btn:hover{border-color:var(--or);background:var(--orl)}
+.perfil-btn.on{border-color:var(--or);background:var(--orl)}
+.perfil-icon{font-size:26px;margin-bottom:6px}
+.perfil-label{font-size:12px;font-weight:700;color:var(--ink2)}
+.perfil-desc{font-size:10px;color:var(--ink4);margin-top:2px}
+
+/* FORM */
+.field{margin-bottom:16px}
+.field label{display:block;font-size:11px;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px}
+.field input{
+  width:100%;background:var(--bg);border:1.5px solid var(--bdr);
+  border-radius:10px;padding:12px 14px;font-size:14px;
+  color:var(--ink);font-family:var(--f);outline:none;
+  transition:border-color .2s;
+}
+.field input:focus{border-color:var(--or);background:#fff}
+.field input::placeholder{color:var(--ink4)}
+.field .pass-wrap{position:relative}
+.field .pass-wrap input{padding-right:44px}
+.field .eye-btn{
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;color:var(--ink4);
+  font-size:18px;line-height:1;padding:2px;
+}
+.field .eye-btn:hover{color:var(--or)}
+
+/* ERRO */
+.error-msg{
+  background:var(--errl);border:1px solid #FECACA;
+  border-radius:8px;padding:10px 14px;font-size:13px;
+  color:#991B1B;margin-bottom:14px;display:none;
+  align-items:center;gap:8px;
+}
+.error-msg.on{display:flex}
+
+/* BTN */
+.btn-login{
+  width:100%;padding:14px;border-radius:50px;
+  background:var(--or);color:#fff;border:none;
+  font-family:var(--f);font-size:15px;font-weight:700;
+  cursor:pointer;transition:all .2s;
+  box-shadow:0 4px 14px rgba(242,101,34,.3);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin-top:4px;
+}
+.btn-login:hover{background:var(--or2);transform:translateY(-1px)}
+.btn-login:disabled{opacity:.6;cursor:default;transform:none}
+
+/* FOOTER */
+.card-footer{text-align:center;margin-top:20px;font-size:11px;color:var(--ink4);line-height:1.7}
+.card-footer a{color:var(--or);text-decoration:none;font-weight:600}
+
+/* LOADING */
+.spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none}
+.spinner.on{display:block}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* HINT para dev */
+.dev-hint{
+  position:fixed;bottom:16px;right:16px;
+  background:rgba(0,0,0,.75);color:#fff;
+  border-radius:10px;padding:10px 14px;
+  font-size:11px;line-height:1.8;
+  font-family:monospace;backdrop-filter:blur(4px);
+  max-width:220px;
+}
+.dev-hint strong{color:var(--or)}
+</style>
+</head>
+<body>
+
+<div class="bg-orb1"></div>
+<div class="bg-orb2"></div>
+<div class="bg-stripe"></div>
+
+<div class="card">
+  <div class="logo-wrap">
+    <img src="assets/imoore-logo-oficial-horizontal.jpeg" alt="Imoore plataforma imobiliária"/>
+    <div class="logo-sub">Plataforma imobiliária · Creci/SP Nº 52050-J</div>
+  </div>
+
+  <div class="card-title">Acesso restrito</div>
+  <div class="card-desc">Selecione seu perfil e faça login para continuar</div>
+
+  <!-- PERFIL SELECT -->
+  <div class="perfil-row" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="perfil-btn on" onclick="selPerfil('admin')" id="p-admin">
+      <div class="perfil-icon">🛡</div>
+      <div class="perfil-label">Admin</div>
+      <div class="perfil-desc">Acesso total</div>
+    </div>
+    <div class="perfil-btn" onclick="selPerfil('corretor')" id="p-corretor">
+      <div class="perfil-icon">🏠</div>
+      <div class="perfil-label">Corretor</div>
+      <div class="perfil-desc">Imóveis</div>
+    </div>
+    <div class="perfil-btn" onclick="selPerfil('crm')" id="p-crm">
+      <div class="perfil-icon">📊</div>
+      <div class="perfil-label">CRM</div>
+      <div class="perfil-desc">Funil de leads</div>
+    </div>
+  </div>
+
+  <!-- ERRO -->
+  <div class="error-msg" id="error-msg">
+    <span>&#9888;</span>
+    <span id="error-text">Usuário ou senha incorretos.</span>
+  </div>
+
+  <!-- FORM -->
+  <div class="field">
+    <label>Usuário</label>
+    <input type="email" id="inp-user" placeholder="Digite seu email" autocomplete="username"/>
+  </div>
+  <div class="field">
+    <label>Senha</label>
+    <div class="pass-wrap">
+      <input type="password" id="inp-pass" placeholder="Digite sua senha" autocomplete="current-password" onkeydown="if(event.key==='Enter')fazerLogin()"/>
+      <button class="eye-btn" onclick="toggleSenha()" id="eye-btn">👁</button>
+    </div>
+  </div>
+
+  <button class="btn-login" id="btn-login" onclick="fazerLogin()">
+    <div class="spinner" id="spinner"></div>
+    <span id="btn-text">Entrar</span>
+  </button>
+
+  <div class="card-footer">
+    <a href="teste-claude.html">&#8592; Voltar ao site</a>
+    &nbsp;·&nbsp;
+    <a href="https://wa.me/5513991091887" target="_blank">Suporte</a>
+  </div>
+</div>
+
+
+<script src="api-config.js"></script>
+<script>
+const API_BASE = window.IMOORE_API_BASE || window.API_BASE || '/api';
+const PROFILE_REDIRECTS = {
+  admin: 'teste-crm.html',
+  corretor: 'painel-corretor.html',
+  crm: 'imoore-crm.html',
+};
+
+let perfilAtual = 'admin';
+let senhaVisivel = false;
+
+function selPerfil(p) {
+  perfilAtual = p;
+  document.getElementById('p-admin').classList.toggle('on', p === 'admin');
+  document.getElementById('p-corretor').classList.toggle('on', p === 'corretor');
+  document.getElementById('p-crm').classList.toggle('on', p === 'crm');
+  document.getElementById('inp-user').value = '';
+  document.getElementById('inp-pass').value = '';
+  esconderErro();
+}
+
+function toggleSenha() {
+  senhaVisivel = !senhaVisivel;
+  const inp = document.getElementById('inp-pass');
+  inp.type = senhaVisivel ? 'text' : 'password';
+  document.getElementById('eye-btn').textContent = senhaVisivel ? 'Ocultar' : 'Mostrar';
+}
+
+function mostrarErro(msg) {
+  const el = document.getElementById('error-msg');
+  document.getElementById('error-text').textContent = msg;
+  el.classList.add('on');
+}
+function esconderErro() {
+  document.getElementById('error-msg').classList.remove('on');
+}
+
+async function fazerLogin() {
+  const email = document.getElementById('inp-user').value.trim().toLowerCase();
+  const senha = document.getElementById('inp-pass').value;
+
+  esconderErro();
+
+  if (!email || !senha) {
+    mostrarErro('Preencha email e senha.');
+    return;
+  }
+
+  const btn = document.getElementById('btn-login');
+  const spinner = document.getElementById('spinner');
+  const btnText = document.getElementById('btn-text');
+  btn.disabled = true;
+  spinner.classList.add('on');
+  btnText.textContent = 'Verificando...';
+
+  try {
+    const response = await fetch(`${API_BASE}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, senha }),
+    });
+
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      throw new Error(payload.error || payload.message || 'Falha ao fazer login.');
+    }
+
+    if (!payload.token || !payload.user) {
+      throw new Error('Resposta de login invalida.');
+    }
+
+    if (payload.user.perfil !== perfilAtual) {
+      throw new Error('Este usuario nao tem acesso ao perfil selecionado.');
+    }
+
+    localStorage.setItem('imoore_token', payload.token);
+    localStorage.setItem('imoore_user', JSON.stringify(payload.user));
+
+    btnText.textContent = 'Bem-vindo, ' + (payload.user.nome || payload.user.email).split(' ')[0] + '!';
+    btn.style.background = 'var(--ok)';
+
+    setTimeout(() => {
+      window.location.href = PROFILE_REDIRECTS[payload.user.perfil] || 'teste-claude.html';
+    }, 500);
+  } catch (error) {
+    mostrarErro(error.message || 'Erro inesperado ao fazer login.');
+    btn.disabled = false;
+    spinner.classList.remove('on');
+    btnText.textContent = 'Entrar';
+  }
+}
+</script>
+</body>
+</html>
