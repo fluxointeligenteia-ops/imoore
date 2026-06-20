@@ -5,6 +5,10 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 const ALLOWED_PROFILES = ['admin', 'corretor', 'crm'];
 
+const loginLog = (message, details = {}) => {
+  console.log('[auth-login]', message, details);
+};
+
 const publicUser = (user) => ({
   id: user.id,
   nome: user.nome,
@@ -30,7 +34,10 @@ const generateToken = (user) => {
 router.post('/login', async (req, res) => {
   const email = String(req.body.email || '').trim().toLowerCase();
   const senha = req.body.senha;
+  loginLog('email recebido', { email, hasPassword: !!senha });
+
   if (!email || !senha) {
+    loginLog('retorno sem 401', { status: 400, motivo: 'email ou senha ausente' });
     return res.status(400).json({ error: 'Email e senha sao obrigatorios' });
   }
 
@@ -41,20 +48,44 @@ router.post('/login', async (req, res) => {
     .eq('email', email)
     .single();
 
+  loginLog('resultado consulta Supabase', {
+    hasData: !!data,
+    error: error ? {
+      code: error.code,
+      message: error.message,
+      details: error.details,
+    } : null,
+  });
+  loginLog('perfil encontrado', { perfil: data ? data.perfil : null });
+  loginLog('ativo', { ativo: data ? data.ativo : null });
+
   if (error || !data) {
+    loginLog('retorno 401', {
+      motivo: error ? 'consulta Supabase sem usuario valido' : 'usuario nao encontrado',
+    });
     return res.status(401).json({ error: 'Credenciais invalidas' });
   }
 
   if (!data.ativo) {
+    loginLog('retorno sem 401', { status: 403, motivo: 'usuario inativo' });
     return res.status(403).json({ error: 'Usuario inativo' });
   }
 
   const validPassword = await bcrypt.compare(senha, data.senha);
+  loginLog('resultado bcrypt.compare', { validPassword });
+
   if (!validPassword) {
+    loginLog('retorno 401', { motivo: 'senha invalida' });
     return res.status(401).json({ error: 'Credenciais invalidas' });
   }
 
+  if (!process.env.JWT_SECRET) {
+    loginLog('falha ao gerar token', { motivo: 'JWT_SECRET ausente' });
+    return res.status(500).json({ error: 'Configuracao de autenticacao ausente' });
+  }
+
   const token = generateToken(data);
+  loginLog('token gerado', { userId: data.id, perfil: data.perfil });
   res.json({ token, user: publicUser(data) });
 });
 
