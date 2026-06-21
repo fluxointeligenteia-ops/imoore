@@ -179,7 +179,10 @@ nav a:hover,nav a.on{color:var(--or);background:var(--orl)}
 .cta-card::after{content:'';position:absolute;bottom:-50px;left:-50px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.06)}
 .cta-card h2{font-size:30px;font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:10px;position:relative}
 .cta-card p{font-size:15px;color:rgba(255,255,255,.88);margin-bottom:28px;line-height:1.65;position:relative}
-.cta-stack{display:grid;gap:24px}
+.cta-stack{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;-webkit-overflow-scrolling:touch}
+.cta-stack::-webkit-scrollbar{height:6px}
+.cta-stack::-webkit-scrollbar-thumb{background:var(--orm);border-radius:999px}
+.cta-stack .cta-card{min-width:min(680px,88vw);scroll-snap-align:center}
 .cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative}
 .btn-wh{background:#fff;color:var(--or);padding:13px 28px;font-size:15px;font-weight:700;border-radius:50px;border:none;cursor:pointer;font-family:var(--f);display:inline-flex;align-items:center;gap:7px;transition:all .2s}
 .btn-wh:hover{background:var(--orl);transform:translateY(-1px)}
@@ -579,8 +582,9 @@ footer{background:var(--ink);padding:48px 0 24px}
   .icard-price{font-size:18px}
   .icard-foot{padding:10px 13px}
   .fg{grid-template-columns:1fr}
-  .cta-stack{gap:14px}
-  .cta-card{padding:24px 18px;border-radius:var(--rl)}
+  .cta-stack{gap:14px;margin:0 -16px;padding:0 16px 12px}
+  .cta-stack::-webkit-scrollbar{height:0}
+  .cta-card{padding:24px 18px;border-radius:var(--rl);min-width:86%}
   .cta-card h2{font-size:24px}
   .cta-card p{font-size:13px;line-height:1.55;margin-bottom:18px}
   .cta-btns{flex-direction:column;align-items:stretch}
@@ -734,8 +738,6 @@ footer{background:var(--ink);padding:48px 0 24px}
             <p>Em caso de concretiza&ccedil;&atilde;o da venda, ser&aacute; devida &agrave; esta empresa a comiss&atilde;o de 6% (seis por cento) sobre o valor da negocia&ccedil;&atilde;o.</p>
             <p>O propriet&aacute;rio declara ci&ecirc;ncia e concord&acirc;ncia de que os dados pessoais informados no cadastro do im&oacute;vel ser&atilde;o tratados em conformidade com a Lei n&ordm; 13.709/2018 (LGPD), com observ&acirc;ncia do sigilo, seguran&ccedil;a e confidencialidade, sendo utilizados exclusivamente para as finalidades operacionais desta plataforma digital, vedado o uso para finalidade diversa sem autoriza&ccedil;&atilde;o legal ou consentimento espec&iacute;fico.</p>
             <p>Fica consignado, ainda, que a assinatura deste termo ocorre de forma autom&aacute;tica no momento do cadastro do im&oacute;vel na plataforma digital da Imoore, valendo o respectivo cadastro como aceite integral das condi&ccedil;&otilde;es aqui previstas.</p>
-            <p>( ) Autorizo a venda do im&oacute;vel em refer&ecirc;ncia</p>
-            <p>( ) N&atilde;o autorizo a venda.</p>
             <p><strong>IMOORE GEST&Atilde;O DE NEG&Oacute;CIOS IMOBILI&Aacute;RIOS LTDA</strong><br/>CNPJ n&ordm; 61.788.646/0001-70</p>
           </div>
         </div>
@@ -1487,8 +1489,6 @@ footer{background:var(--ink);padding:48px 0 24px}
           <p>Em caso de concretização da venda, será devida à esta empresa a comissão de 6% (seis por cento) sobre o valor da negociação.</p>
           <p>O proprietário declara ciência e concordância de que os dados pessoais informados no cadastro do imóvel serão tratados em conformidade com a Lei nº 13.709/2018 (LGPD), com observância do sigilo, segurança e confidencialidade, sendo utilizados exclusivamente para as finalidades operacionais desta plataforma digital, vedado o uso para finalidade diversa sem autorização legal ou consentimento específico.</p>
           <p>Fica consignado, ainda, que a assinatura deste termo ocorre de forma automática no momento do cadastro do imóvel na plataforma digital da Imoore, valendo o respectivo cadastro como aceite integral das condições aqui previstas.</p>
-          <p>( ) Autorizo a venda do imóvel em referência</p>
-          <p>( ) Não autorizo a venda.</p>
           <p class="term-company">IMOORE GESTÃO DE NEGÓCIOS IMOBILIÁRIOS LTDA<br/>CNPJ nº 61.788.646/0001-70</p>
         </div>
         <div class="auth-choice-group">
