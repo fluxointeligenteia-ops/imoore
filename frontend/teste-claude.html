@@ -25,7 +25,7 @@
   --shl:0 12px 48px rgba(26,22,20,.14);
   --f:'Plus Jakarta Sans',sans-serif;
   --r:10px;--rl:16px;--rxl:24px;
-  --hdr:76px;
+  --hdr:84px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -41,7 +41,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:15px;l
 .brand-copy{display:flex;flex-direction:column;line-height:1}
 .brand-name{font-family:var(--f);font-size:24px;font-weight:800;color:var(--ink);line-height:1}
 .brand-sub{font-size:11px;color:var(--ink4);font-weight:600;letter-spacing:.2px;line-height:1;margin-top:4px}
-.logo-img{height:64px;width:auto;cursor:pointer;transition:transform .2s;flex-shrink:0;border-radius:10px;object-fit:contain;box-shadow:0 2px 12px rgba(242,101,34,.18)}
+.logo-img{height:77px;width:auto;cursor:pointer;transition:transform .2s;flex-shrink:0;border-radius:10px;object-fit:contain;box-shadow:0 2px 12px rgba(242,101,34,.18)}
 .logo-img:hover{transform:scale(1.05)}
 /* UTILS */
 .or{color:var(--or)}
@@ -64,6 +64,8 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:15px;l
 nav{display:flex;gap:2px}
 nav a{color:var(--ink3);font-size:13px;text-decoration:none;font-weight:500;cursor:pointer;padding:6px 11px;border-radius:50px;transition:all .2s;white-space:nowrap}
 nav a:hover,nav a.on{color:var(--or);background:var(--orl)}
+.nav-login{background:#FF5500!important;color:#fff!important;padding:8px 16px!important;font-weight:800!important;box-shadow:0 8px 20px rgba(255,85,0,.24)}
+.nav-login:hover{background:#d94800!important;color:#fff!important;transform:translateY(-1px)}
 .hdr-r{display:flex;align-items:center;gap:10px;flex-shrink:0}
 .creci{font-size:10px;color:var(--ink4);background:var(--bg3);border:1px solid var(--bdr);border-radius:50px;padding:4px 10px;font-weight:500;white-space:nowrap}
 .hdr-wpp{background:#25D366;color:#fff;border:none;border-radius:50px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--f);display:flex;align-items:center;gap:7px;transition:all .2s;white-space:nowrap;box-shadow:0 2px 10px rgba(37,211,102,.3)}
@@ -76,6 +78,7 @@ nav a:hover,nav a.on{color:var(--or);background:var(--orl)}
 .mobile-nav a{display:block;padding:12px 24px;font-size:15px;color:var(--ink2);font-weight:500;cursor:pointer;border-bottom:.5px solid var(--bdr);transition:background .2s}
 .mobile-nav a:hover,.mobile-nav a.on{background:var(--orl);color:var(--or)}
 .mobile-nav a:last-child{border-bottom:none}
+.mobile-nav .nav-login{display:flex;align-items:center;justify-content:center;gap:8px;margin:12px 16px 4px;border-radius:50px;border-bottom:none;background:#FF5500!important;color:#fff!important;padding:13px 18px!important;font-weight:800!important}
 .mobile-wpp{display:block;margin:12px 16px 4px;background:#25D366;color:#fff;text-align:center;padding:13px;border-radius:50px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--f);border:none;width:calc(100% - 32px)}
 
 /* -- HERO -- */
@@ -200,6 +203,28 @@ nav a:hover,nav a.on{color:var(--or);background:var(--orl)}
 /* -- REGIÕES -- */
 .rcard{background:#fff;border:1px solid var(--bdr);border-radius:var(--rl);overflow:hidden;cursor:pointer;box-shadow:var(--sh);transition:all .25s}
 .rcard:hover{border-color:var(--orm);transform:translateY(-3px);box-shadow:var(--shl)}
+
+
+/* -- REGIOES PREMIUM -- */
+.regions-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.regions-grid .rcard{min-height:230px;border-radius:22px;position:relative;isolation:isolate;overflow:hidden;border:1px solid var(--bdr);box-shadow:var(--sh);transition:transform .25s,box-shadow .25s,border-color .25s;background:#fff}
+.regions-grid .rcard:hover{border-color:var(--orm);transform:translateY(-5px);box-shadow:var(--shl)}
+.region-media{position:absolute;inset:0;background-image:radial-gradient(circle at 22% 18%,rgba(255,255,255,.34),transparent 24%),linear-gradient(180deg,rgba(26,22,20,.04) 0%,rgba(26,22,20,.72) 100%),var(--img);background-size:cover;background-position:center;transition:transform .45s ease;z-index:-2;display:flex;align-items:center;justify-content:center}
+.region-media i{font-size:86px;color:rgba(255,255,255,.24);filter:drop-shadow(0 16px 26px rgba(0,0,0,.22));transform:translateY(-18px)}
+.region-media::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,85,0,.16),rgba(43,189,173,.08));z-index:-1}
+.regions-grid .rcard:hover .region-media{transform:scale(1.06)}
+.region-body{position:absolute;left:0;right:0;bottom:0;padding:18px;color:#fff}
+.region-kicker{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.92);color:#FF5500;border-radius:999px;padding:5px 10px;font-size:11px;font-weight:800;margin-bottom:10px;box-shadow:var(--sh)}
+.region-title{font-size:22px;font-weight:800;letter-spacing:-.4px;margin-bottom:4px;text-shadow:0 2px 12px rgba(0,0,0,.28)}
+.region-text{font-size:13px;line-height:1.55;color:rgba(255,255,255,.88);max-width:260px}
+.info-page-card{background:#fff;border:1px solid var(--bdr);border-radius:var(--rxl);padding:32px;box-shadow:var(--sh);font-size:15px;color:var(--ink2);line-height:1.85}
+.info-page-card h2{font-size:18px;font-weight:800;color:var(--ink);margin:24px 0 8px}.info-page-card h2:first-child{margin-top:0}
+.info-page-card p{margin-bottom:14px}.info-page-card ul{padding-left:18px}.info-page-card li{margin-bottom:8px}
+.auth-choice{border:2px solid var(--bdr);background:#fff;box-shadow:var(--sh);padding:16px}
+.auth-choice:has(input:checked){border-color:#FF5500;background:var(--orl)}
+.auth-choice span{font-weight:800;color:var(--ink)}
+.auth-choice small{display:block;font-size:12px;font-weight:600;color:var(--ink3);margin-top:4px}
+#btn-prop-enviar{text-transform:none}
 
 /* -- MODAL -- */
 .mov{position:fixed;inset:0;background:rgba(26,22,20,.5);z-index:1000;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px)}
@@ -441,11 +466,11 @@ footer{background:var(--ink);padding:48px 0 24px}
 
 /* Mobile (≤640px) */
 @media(max-width:640px){
-  :root{--hdr:68px}
+  :root{--hdr:78px}
   .brand-logo{gap:0}
   .brand-name{font-size:20px}
   .brand-sub{font-size:9px;margin-top:3px}
-  .logo-img{height:46px!important;width:auto!important}
+  .logo-img{height:60px!important;width:auto!important}
     .container{padding:0 16px}
   
   .hero{padding:40px 0 36px}
@@ -485,6 +510,7 @@ footer{background:var(--ink);padding:48px 0 24px}
   .broker-review-cover{min-height:220px}
   .broker-summary{position:static}
   footer .hdr-wpp,footer .soc[title="WhatsApp"]{display:none}
+  .mobile-wpp{display:none!important}
   .steps4{grid-template-columns:1fr}
   .grid-f{grid-template-columns:1fr}
   .grid3{grid-template-columns:1fr}
@@ -633,12 +659,14 @@ footer{background:var(--ink);padding:48px 0 24px}
       <section class="owner-stage" data-owner-step="2">
         <div class="owner-section">
           <div class="term-copy" style="max-height:340px;overflow-y:auto;padding-right:6px">
-            <h3>TERMO DE AUTORIZAÇÃO DE VENDA DE IMÓVEL E USO DE DADOS PESSOAIS</h3>
-            <p>Pelo presente instrumento, DECLARO, na qualidade de proprietário(a) do imóvel localizado conforme dados preenchidos no cadastro imobiliário desta plataforma, autoriza a IMOORE GESTÃO DE NEGÓCIOS IMOBILIÁRIOS LTDA, inscrita no CNPJ nº 61.788.646/0001-70, a divulgar, intermediar e promover a venda do referido bem.</p>
-            <p>Em caso de concretização da venda, será devida à esta empresa a comissão de 6% (seis por cento) sobre o valor da negociação.</p>
-            <p>O proprietário declara ciência e concordância de que os dados pessoais informados no cadastro do imóvel serão tratados em conformidade com a Lei nº 13.709/2018 (LGPD), com observância do sigilo, segurança e confidencialidade, sendo utilizados exclusivamente para as finalidades operacionais desta plataforma digital, vedado o uso para finalidade diversa sem autorização legal ou consentimento específico.</p>
-            <p>Fica consignado, ainda, que a assinatura deste termo ocorre de forma automática no momento do cadastro do imóvel na plataforma digital da Imoore, valendo o respectivo cadastro como aceite integral das condições aqui previstas.</p>
-            <p><strong>IMOORE GESTÃO DE NEGÓCIOS IMOBILIÁRIOS LTDA</strong><br/>CNPJ nº 61.788.646/0001-70</p>
+            <h3>TERMO DE AUTORIZA&Ccedil;&Atilde;O DE VENDA DE IM&Oacute;VEL E USO DE DADOS PESSOAIS</h3>
+            <p>Pelo presente instrumento, DECLARO, na qualidade de propriet&aacute;rio(a) do im&oacute;vel localizado conforme dados preenchidos no cadastro imobili&aacute;rio desta plataforma, autoriza a IMOORE GEST&Atilde;O DE NEG&Oacute;CIOS IMOBILI&Aacute;RIOS LTDA, inscrita no CNPJ n&ordm; 61.788.646/0001-70, a divulgar, intermediar e promover a venda do referido bem.</p>
+            <p>Em caso de concretiza&ccedil;&atilde;o da venda, ser&aacute; devida &agrave; esta empresa a comiss&atilde;o de 6% (seis por cento) sobre o valor da negocia&ccedil;&atilde;o.</p>
+            <p>O propriet&aacute;rio declara ci&ecirc;ncia e concord&acirc;ncia de que os dados pessoais informados no cadastro do im&oacute;vel ser&atilde;o tratados em conformidade com a Lei n&ordm; 13.709/2018 (LGPD), com observ&acirc;ncia do sigilo, seguran&ccedil;a e confidencialidade, sendo utilizados exclusivamente para as finalidades operacionais desta plataforma digital, vedado o uso para finalidade diversa sem autoriza&ccedil;&atilde;o legal ou consentimento espec&iacute;fico.</p>
+            <p>Fica consignado, ainda, que a assinatura deste termo ocorre de forma autom&aacute;tica no momento do cadastro do im&oacute;vel na plataforma digital da Imoore, valendo o respectivo cadastro como aceite integral das condi&ccedil;&otilde;es aqui previstas.</p>
+            <p>( ) Autorizo a venda do im&oacute;vel em refer&ecirc;ncia</p>
+            <p>( ) N&atilde;o autorizo a venda.</p>
+            <p><strong>IMOORE GEST&Atilde;O DE NEG&Oacute;CIOS IMOBILI&Aacute;RIOS LTDA</strong><br/>CNPJ n&ordm; 61.788.646/0001-70</p>
           </div>
         </div>
         <div class="auth-choice-group">
@@ -844,9 +872,10 @@ footer{background:var(--ink);padding:48px 0 24px}
       <a onclick="goPage('home')" class="on" id="nav-home">Início</a>
       <a onclick="goPage('imoveis')" id="nav-imoveis">Imóveis</a>
       <a onclick="goPage('regioes')" id="nav-regioes">Regiões</a>
-      <a onclick="abrirTermo()" id="nav-proprietario" style="color:var(--or);font-weight:600">Proprietário</a>
+      <a onclick="abrirTermo()" id="nav-proprietario">Propriet&aacute;rios</a>
       <a onclick="abrirModalCorretor()" id="nav-corretor">Corretores</a>
       <a onclick="goPage('contato')" id="nav-contato">Contato</a>
+      <a href="imoore-entrar.html" class="nav-login"><i class="ti ti-lock" aria-hidden="true"></i> Entrar</a>
     </nav>
     <div class="hdr-r">
       <span class="creci">Creci/SP Nº 52050-J</span>
@@ -866,9 +895,10 @@ footer{background:var(--ink);padding:48px 0 24px}
   <a onclick="goPage('home');closeMenu()" class="on" id="mnav-home">Início</a>
   <a onclick="goPage('imoveis');closeMenu()" id="mnav-imoveis">Imóveis</a>
   <a onclick="goPage('regioes');closeMenu()" id="mnav-regioes">Regiões</a>
-  <a onclick="abrirTermo();closeMenu()" id="mnav-proprietario" style="color:var(--or);font-weight:600">Proprietário</a>
+  <a onclick="abrirTermo();closeMenu()" id="mnav-proprietario">Propriet&aacute;rios</a>
   <a onclick="abrirModalCorretor();closeMenu()" id="mnav-corretor">Corretores</a>
   <a onclick="goPage('contato');closeMenu()" id="mnav-contato">Contato</a>
+  <a href="imoore-entrar.html" class="nav-login"><i class="ti ti-lock" aria-hidden="true"></i> Entrar</a>
   <button class="mobile-wpp" onclick="abrirWpp('Olá! Vim pelo site Imoore e gostaria de saber mais.');closeMenu()">
     <i class="ti ti-brand-whatsapp" aria-hidden="true"></i> Falar no WhatsApp
   </button>
@@ -892,12 +922,12 @@ footer{background:var(--ink);padding:48px 0 24px}
               <i class="ti ti-brand-whatsapp" aria-hidden="true"></i> Falar no WhatsApp
             </button>
           </div>
-          <p style="font-size:11px;color:var(--ink4);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px">Atuamos em:</p>
+          <p style="font-size:11px;color:var(--ink4);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px">Regi&otilde;es</p>
           <div class="cidades-wrap">
-            <div class="cpill">Santos</div><div class="cpill">São Vicente</div><div class="cpill">Guarujá</div>
-            <div class="cpill">Praia Grande</div><div class="cpill">Cubatão</div><div class="cpill">Bertioga</div>
-            <div class="cpill">Itanhaém</div><div class="cpill">Mongaguá</div><div class="cpill">Peruíbe</div>
-            <div class="cpill">Itariri</div><div class="cpill">Pedro de Toledo</div><div class="cpill">Ana Dias</div>
+            <div class="cpill" onclick="goPage('regioes')">Santos</div><div class="cpill" onclick="goPage('regioes')">São Vicente</div><div class="cpill" onclick="goPage('regioes')">Guarujá</div>
+            <div class="cpill" onclick="goPage('regioes')">Praia Grande</div><div class="cpill" onclick="goPage('regioes')">Cubatão</div><div class="cpill" onclick="goPage('regioes')">Bertioga</div>
+            <div class="cpill" onclick="goPage('regioes')">Itanhaém</div><div class="cpill" onclick="goPage('regioes')">Mongaguá</div><div class="cpill" onclick="goPage('regioes')">Peruíbe</div>
+            <div class="cpill" onclick="goPage('regioes')">Itariri</div><div class="cpill" onclick="goPage('regioes')">Pedro de Toledo</div><div class="cpill" onclick="goPage('regioes')">Ana Dias</div>
           </div>
         </div>
         <div class="search-card fi2">
@@ -1232,19 +1262,55 @@ footer{background:var(--ink);padding:48px 0 24px}
         <h2>Onde a Imoore <span class="or">atua</span></h2>
         <p>Conheça cada cidade da Baixada Santista e Litoral Sul Paulista</p>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px">
-        <div class="rcard" onclick="goPage('imoveis')"><div style="height:100px;background:linear-gradient(135deg,#B5D9F0,#7EC8E3);display:flex;align-items:center;justify-content:center"><i class="ti ti-anchor" style="font-size:36px;color:#1a6080;opacity:.35" aria-hidden="true"></i></div><div style="padding:14px"><div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:3px">Santos</div><div style="font-size:12px;color:var(--ink4)">Capital da Baixada Santista · Porto · Centro financeiro</div></div></div>
-        <div class="rcard" onclick="goPage('imoveis')"><div style="height:100px;background:linear-gradient(135deg,#C0E8D0,#7ED4A0);display:flex;align-items:center;justify-content:center"><i class="ti ti-beach" style="font-size:36px;color:#1a6040;opacity:.35" aria-hidden="true"></i></div><div style="padding:14px"><div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:3px">São Vicente</div><div style="font-size:12px;color:var(--ink4)">Primeira cidade do Brasil · Praias tranquilas</div></div></div>
-        <div class="rcard" onclick="goPage('imoveis')"><div style="height:100px;background:linear-gradient(135deg,#FAE0B0,#F5C070);display:flex;align-items:center;justify-content:center"><i class="ti ti-sun" style="font-size:36px;color:#8a5000;opacity:.35" aria-hidden="true"></i></div><div style="padding:14px"><div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:3px">Guarujá</div><div style="font-size:12px;color:var(--ink4)">Alto padrão · Turismo · Enseada · Pitangueiras</div></div></div>
-        <div class="rcard" onclick="goPage('imoveis')"><div style="height:100px;background:linear-gradient(135deg,#D0E8F8,#90C8F0);display:flex;align-items:center;justify-content:center"><i class="ti ti-waves" style="font-size:36px;color:#0a4870;opacity:.35" aria-hidden="true"></i></div><div style="padding:14px"><div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:3px">Praia Grande</div><div style="font-size:12px;color:var(--ink4)">Maior orla do Brasil · Grande valorização</div></div></div>
-        <div class="rcard" onclick="goPage('imoveis')"><div style="height:100px;background:linear-gradient(135deg,#C8E0D0,#90C8A8);display:flex;align-items:center;justify-content:center"><i class="ti ti-trees" style="font-size:36px;color:#1a5030;opacity:.35" aria-hidden="true"></i></div><div style="padding:14px"><div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:3px">Bertioga</div><div style="font-size:12px;color:var(--ink4)">Natureza preservada · Condomínios fechados</div></div></div>
-        <div class="rcard" onclick="goPage('imoveis')"><div style="height:100px;background:linear-gradient(135deg,#D0E8D8,#90C8A0);display:flex;align-items:center;justify-content:center"><i class="ti ti-industry" style="font-size:36px;color:#1a5020;opacity:.35" aria-hidden="true"></i></div><div style="padding:14px"><div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:3px">Cubatão</div><div style="font-size:12px;color:var(--ink4)">Polo industrial · Logística · Oportunidades comerciais</div></div></div>
-        <div class="rcard" onclick="goPage('imoveis')"><div style="height:100px;background:linear-gradient(135deg,#E8D0F0,#C090E0);display:flex;align-items:center;justify-content:center"><i class="ti ti-building" style="font-size:36px;color:#5a0090;opacity:.35" aria-hidden="true"></i></div><div style="padding:14px"><div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:3px">Itanhaém</div><div style="font-size:12px;color:var(--ink4)">Litoral Sul · Chácaras · Praias desertas</div></div></div>
-        <div class="rcard" onclick="goPage('imoveis')"><div style="height:100px;background:linear-gradient(135deg,#FDE8D0,#FBCCA0);display:flex;align-items:center;justify-content:center"><i class="ti ti-home" style="font-size:36px;color:#8a4000;opacity:.35" aria-hidden="true"></i></div><div style="padding:14px"><div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:3px">Mongaguá</div><div style="font-size:12px;color:var(--ink4)">Cidade tranquila · Bom custo-benefício</div></div></div>
-        <div class="rcard" onclick="goPage('imoveis')"><div style="height:100px;background:linear-gradient(135deg,#D0F0E8,#90E0C8);display:flex;align-items:center;justify-content:center"><i class="ti ti-leaf" style="font-size:36px;color:#006040;opacity:.35" aria-hidden="true"></i></div><div style="padding:14px"><div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:3px">Peruíbe</div><div style="font-size:12px;color:var(--ink4)">Praias selvagens · Área de proteção ambiental</div></div></div>
-        <div class="rcard" onclick="goPage('imoveis')"><div style="height:100px;background:linear-gradient(135deg,#D8EED0,#A8D890);display:flex;align-items:center;justify-content:center"><i class="ti ti-mountain" style="font-size:36px;color:#1a5000;opacity:.35" aria-hidden="true"></i></div><div style="padding:14px"><div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:3px">Itariri</div><div style="font-size:12px;color:var(--ink4)">Mata Atlântica · Sítios e chácaras</div></div></div>
-        <div class="rcard" onclick="goPage('imoveis')"><div style="height:100px;background:linear-gradient(135deg,#E0D8F0,#B0A8D8);display:flex;align-items:center;justify-content:center"><i class="ti ti-building-community" style="font-size:36px;color:#3a2080;opacity:.35" aria-hidden="true"></i></div><div style="padding:14px"><div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:3px">Pedro de Toledo</div><div style="font-size:12px;color:var(--ink4)">Interior tranquilo · Grande potencial de crescimento</div></div></div>
-        <div class="rcard" onclick="goPage('imoveis')"><div style="height:100px;background:linear-gradient(135deg,#F0E8D0,#E0D0A0);display:flex;align-items:center;justify-content:center"><i class="ti ti-home-2" style="font-size:36px;color:#6a5000;opacity:.35" aria-hidden="true"></i></div><div style="padding:14px"><div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:3px">Ana Dias</div><div style="font-size:12px;color:var(--ink4)">Distrito de Itariri · Região rural · Nascentes</div></div></div>
+      <div class="regions-grid">
+        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#ff7a2f,#25313f)">
+          <div class="region-media"><i class="ti ti-building-skyscraper" aria-hidden="true"></i></div>
+          <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Centro regional</div><div class="region-title">Santos</div><div class="region-text">Porto, praia, servi&ccedil;os e alta procura por apartamentos bem localizados.</div></div>
+        </div>
+        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#26b6c8,#1f4d63)">
+          <div class="region-media"><i class="ti ti-beach" aria-hidden="true"></i></div>
+          <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Tradi&ccedil;&atilde;o e mobilidade</div><div class="region-title">S&atilde;o Vicente</div><div class="region-text">Bairros consolidados, acesso regional e oportunidades para moradia e investimento.</div></div>
+        </div>
+        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#f6b24a,#7d4b12)">
+          <div class="region-media"><i class="ti ti-sun" aria-hidden="true"></i></div>
+          <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Alto padr&atilde;o e turismo</div><div class="region-title">Guaruj&aacute;</div><div class="region-text">Mercado forte para lazer, temporada e im&oacute;veis pr&oacute;ximos &agrave;s praias.</div></div>
+        </div>
+        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#4aa3ff,#173f70)">
+          <div class="region-media"><i class="ti ti-waves" aria-hidden="true"></i></div>
+          <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Orla e valoriza&ccedil;&atilde;o</div><div class="region-title">Praia Grande</div><div class="region-text">Infraestrutura urbana, avenida da praia e grande liquidez imobili&aacute;ria.</div></div>
+        </div>
+        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#7dcf87,#245334)">
+          <div class="region-media"><i class="ti ti-industry" aria-hidden="true"></i></div>
+          <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Log&iacute;stica e neg&oacute;cios</div><div class="region-title">Cubat&atilde;o</div><div class="region-text">Polo industrial com demanda por moradia funcional e im&oacute;veis comerciais.</div></div>
+        </div>
+        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#48c9a9,#155849)">
+          <div class="region-media"><i class="ti ti-trees" aria-hidden="true"></i></div>
+          <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Natureza e condom&iacute;nios</div><div class="region-title">Bertioga</div><div class="region-text">Praias, reservas e condom&iacute;nios fechados com perfil de moradia e lazer.</div></div>
+        </div>
+        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#b78cff,#4f2c7a)">
+          <div class="region-media"><i class="ti ti-building" aria-hidden="true"></i></div>
+          <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Hist&oacute;ria e litoral sul</div><div class="region-title">Itanha&eacute;m</div><div class="region-text">Cidade tradicional com casas, terrenos e im&oacute;veis para fam&iacute;lias.</div></div>
+        </div>
+        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#ff9b6a,#7a351a)">
+          <div class="region-media"><i class="ti ti-home" aria-hidden="true"></i></div>
+          <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Custo-benef&iacute;cio</div><div class="region-title">Mongagu&aacute;</div><div class="region-text">Perfil acess&iacute;vel, vida tranquila e oportunidades perto da praia.</div></div>
+        </div>
+        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#38cfa2,#185743)">
+          <div class="region-media"><i class="ti ti-leaf" aria-hidden="true"></i></div>
+          <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Natureza preservada</div><div class="region-title">Peru&iacute;be</div><div class="region-text">Praias, montanhas e qualidade de vida para morar ou investir.</div></div>
+        </div>
+        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#9fce64,#385721)">
+          <div class="region-media"><i class="ti ti-mountain" aria-hidden="true"></i></div>
+          <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Mata Atl&acirc;ntica</div><div class="region-title">Itariri</div><div class="region-text">S&iacute;tios, ch&aacute;caras e propriedades com voca&ccedil;&atilde;o rural e ambiental.</div></div>
+        </div>
+        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#9ca8ff,#303d75)">
+          <div class="region-media"><i class="ti ti-building-community" aria-hidden="true"></i></div>
+          <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Interior tranquilo</div><div class="region-title">Pedro de Toledo</div><div class="region-text">Terrenos, ch&aacute;caras e crescimento com ritmo mais reservado.</div></div>
+        </div>
+        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#d8b56a,#67511f)">
+          <div class="region-media"><i class="ti ti-home-2" aria-hidden="true"></i></div>
+          <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Distrito e nascentes</div><div class="region-title">Ana Dias</div><div class="region-text">Regi&atilde;o rural de Itariri com potencial para descanso, natureza e propriedades amplas.</div></div>
+        </div>
       </div>
     </div>
   </section>
@@ -1397,6 +1463,36 @@ footer{background:var(--ink);padding:48px 0 24px}
       <button class="btn btn-o" onclick="goPage('home')" style="margin-top:20px;border-radius:50px"><i class="ti ti-arrow-left" aria-hidden="true"></i> Voltar ao início</button>
     </div>
   </section>
+</div>
+
+
+
+<!-- ========== TERMOS DE USO ========== -->
+<div class="page" id="page-termos">
+  <section style="padding:48px 0;background:var(--bg);min-height:calc(100vh - var(--hdr))"><div class="container" style="max-width:800px">
+    <span class="tag" style="margin-bottom:14px"><i class="ti ti-file-text" aria-hidden="true"></i> Institucional</span>
+    <h1 style="font-size:30px;font-weight:800;letter-spacing:-1px;margin-bottom:8px">Termos de Uso da Plataforma Imoore</h1>
+    <div class="info-page-card"><h2>1. OBJETO</h2><p>A plataforma Imoore tem como finalidade divulgar im&oacute;veis, conectar propriet&aacute;rios, corretores e interessados, bem como facilitar a gera&ccedil;&atilde;o de oportunidades imobili&aacute;rias.</p><h2>2. RESPONSABILIDADE DAS INFORMA&Ccedil;&Otilde;ES</h2><p>O usu&aacute;rio declara que todas as informa&ccedil;&otilde;es fornecidas s&atilde;o verdadeiras, completas e atualizadas, assumindo integral responsabilidade pelos dados cadastrados.</p><h2>3. DIVULGA&Ccedil;&Atilde;O DE IM&Oacute;VEIS</h2><p>Os im&oacute;veis cadastrados poder&atilde;o ser divulgados nos canais pr&oacute;prios da Imoore, parceiros comerciais e plataformas integradas, respeitando as autoriza&ccedil;&otilde;es concedidas pelo propriet&aacute;rio.</p><h2>4. PROPRIEDADE INTELECTUAL</h2><p>Todo o conte&uacute;do da plataforma, incluindo marcas, logotipos, textos, imagens e funcionalidades, &eacute; protegido pela legisla&ccedil;&atilde;o aplic&aacute;vel e n&atilde;o poder&aacute; ser reproduzido sem autoriza&ccedil;&atilde;o.</p><h2>5. PROTE&Ccedil;&Atilde;O DE DADOS</h2><p>A Imoore realiza o tratamento de dados pessoais em conformidade com a Lei n&ordm; 13.709/2018 (LGPD), adotando medidas de seguran&ccedil;a compat&iacute;veis com a prote&ccedil;&atilde;o das informa&ccedil;&otilde;es.</p><h2>6. LIMITA&Ccedil;&Atilde;O DE RESPONSABILIDADE</h2><p>A Imoore atua como plataforma de conex&atilde;o e intermedia&ccedil;&atilde;o imobili&aacute;ria, n&atilde;o sendo respons&aacute;vel por informa&ccedil;&otilde;es falsas fornecidas por usu&aacute;rios ou por negocia&ccedil;&otilde;es realizadas fora dos canais oficiais.</p><h2>7. ALTERA&Ccedil;&Otilde;ES</h2><p>Os presentes Termos de Uso poder&atilde;o ser atualizados periodicamente para adequa&ccedil;&atilde;o legal, operacional ou tecnol&oacute;gica.</p><h2>8. FORO</h2><p>Fica eleito o foro da Comarca de Peru&iacute;be/SP para dirimir eventuais controv&eacute;rsias decorrentes da utiliza&ccedil;&atilde;o da plataforma.</p><p><strong>IMOORE GEST&Atilde;O DE NEG&Oacute;CIOS IMOBILI&Aacute;RIOS LTDA</strong><br/>CNPJ n&ordm; 61.788.646/0001-70</p></div>
+    <button class="btn btn-o" onclick="goPage('home')" style="margin-top:20px;border-radius:50px"><i class="ti ti-arrow-left" aria-hidden="true"></i> Voltar ao in&iacute;cio</button>
+  </div></section>
+</div>
+
+<!-- ========== QUEM SOMOS ========== -->
+<div class="page" id="page-quem-somos">
+  <section style="padding:48px 0;background:var(--bg);min-height:calc(100vh - var(--hdr))"><div class="container" style="max-width:800px">
+    <span class="tag" style="margin-bottom:14px"><i class="ti ti-users" aria-hidden="true"></i> Imoore</span><h1 style="font-size:30px;font-weight:800;letter-spacing:-1px;margin-bottom:8px">Quem Somos</h1>
+    <div class="info-page-card"><p>A Imoore &eacute; uma plataforma imobili&aacute;ria criada para conectar propriet&aacute;rios, compradores, corretores e investidores de forma simples, segura e transparente.</p><p>Atuando principalmente na Baixada Santista e litoral sul de S&atilde;o Paulo, a Imoore utiliza tecnologia para facilitar a divulga&ccedil;&atilde;o de im&oacute;veis, a gera&ccedil;&atilde;o de oportunidades de neg&oacute;cio e o relacionamento entre todas as partes envolvidas.</p><p>Nosso objetivo &eacute; tornar o processo imobili&aacute;rio mais acess&iacute;vel, eficiente e confi&aacute;vel, valorizando tanto os propriet&aacute;rios quanto os profissionais do mercado imobili&aacute;rio.</p><p>Acreditamos que a tecnologia deve aproximar pessoas e simplificar processos, sempre com responsabilidade, &eacute;tica e seguran&ccedil;a jur&iacute;dica.</p></div>
+    <button class="btn btn-o" onclick="goPage('home')" style="margin-top:20px;border-radius:50px"><i class="ti ti-arrow-left" aria-hidden="true"></i> Voltar ao in&iacute;cio</button>
+  </div></section>
+</div>
+
+<!-- ========== MISSAO VISAO VALORES ========== -->
+<div class="page" id="page-missao">
+  <section style="padding:48px 0;background:var(--bg);min-height:calc(100vh - var(--hdr))"><div class="container" style="max-width:800px">
+    <span class="tag" style="margin-bottom:14px"><i class="ti ti-compass" aria-hidden="true"></i> Cultura</span><h1 style="font-size:30px;font-weight:800;letter-spacing:-1px;margin-bottom:8px">Miss&atilde;o, Vis&atilde;o e Valores</h1>
+    <div class="info-page-card"><h2>MISS&Atilde;O</h2><p>Conectar pessoas e oportunidades imobili&aacute;rias por meio da tecnologia, promovendo negocia&ccedil;&otilde;es seguras, transparentes e eficientes.</p><h2>VIS&Atilde;O</h2><p>Ser refer&ecirc;ncia em inova&ccedil;&atilde;o imobili&aacute;ria na Baixada Santista, oferecendo solu&ccedil;&otilde;es digitais que simplificam a compra, venda e administra&ccedil;&atilde;o de im&oacute;veis.</p><h2>VALORES</h2><ul><li>Transpar&ecirc;ncia.</li><li>&Eacute;tica.</li><li>Inova&ccedil;&atilde;o.</li><li>Seguran&ccedil;a Jur&iacute;dica.</li><li>Respeito &agrave;s Pessoas.</li><li>Compromisso com Resultados.</li><li>Valoriza&ccedil;&atilde;o dos Corretores e Propriet&aacute;rios.</li></ul></div>
+    <button class="btn btn-o" onclick="goPage('home')" style="margin-top:20px;border-radius:50px"><i class="ti ti-arrow-left" aria-hidden="true"></i> Voltar ao in&iacute;cio</button>
+  </div></section>
 </div>
 
 <!-- FOOTER -->
@@ -1719,19 +1815,27 @@ window.goPage = function(p) {
         <li><a onclick="goPage('imoveis')">Lançamentos</a></li>
         <li><a onclick="goPage('regioes')">Por região</a></li>
       </ul></div>
-      <div class="fc2"><h4>Regiões</h4><ul>
+      <div class="fc2"><h4>Regi&otilde;es</h4><ul>
         <li><a onclick="goPage('regioes')">Santos</a></li>
-        <li><a onclick="goPage('regioes')">Guarujá</a></li>
+        <li><a onclick="goPage('regioes')">S&atilde;o Vicente</a></li>
+        <li><a onclick="goPage('regioes')">Guaruj&aacute;</a></li>
         <li><a onclick="goPage('regioes')">Praia Grande</a></li>
-        <li><a onclick="goPage('regioes')">Peruíbe</a></li>
+        <li><a onclick="goPage('regioes')">Cubat&atilde;o</a></li>
+        <li><a onclick="goPage('regioes')">Bertioga</a></li>
+        <li><a onclick="goPage('regioes')">Itanha&eacute;m</a></li>
+        <li><a onclick="goPage('regioes')">Mongagu&aacute;</a></li>
+        <li><a onclick="goPage('regioes')">Peru&iacute;be</a></li>
         <li><a onclick="goPage('regioes')">Itariri</a></li>
         <li><a onclick="goPage('regioes')">Pedro de Toledo</a></li>
+        <li><a onclick="goPage('regioes')">Ana Dias</a></li>
       </ul></div>
       <div class="fc2"><h4>Imoore</h4><ul>
-        <li><a onclick="goPage('corretor')">Anunciar imóvel</a></li>
+        <li><a onclick="goPage('quem-somos')">Quem Somos</a></li>
+        <li><a onclick="goPage('missao')">Miss&atilde;o, Vis&atilde;o e Valores</a></li>
+        <li><a onclick="goPage('corretor')">Anunciar im&oacute;vel</a></li>
         <li><a onclick="goPage('contato')">Contato</a></li>
-        <li><a onclick="goPage('privacidade')">Política de privacidade</a></li>
-        <li><a onclick="goPage('privacidade')">Termos de uso</a></li>
+        <li><a onclick="goPage('privacidade')">Pol&iacute;tica de privacidade</a></li>
+        <li><a onclick="goPage('termos')">Termos de Uso</a></li>
       </ul></div>
     </div>
     <div class="fbot" style="flex-direction:column;gap:16px">
@@ -1757,7 +1861,7 @@ window.goPage = function(p) {
         </div>
       </div>
       <div style="width:100%;border-top:.5px solid rgba(255,255,255,.08);padding-top:14px;display:flex;justify-content:center">
-        <span style="font-size:11px;color:#555">Desenvolvido por <strong style="color:#777">Fluxo Inteligente</strong> &middot; <a href="imoore-entrar.html" style="color:#333;text-decoration:none;font-size:10px;opacity:.4">Acesso restrito</a></span>
+        <span style="font-size:11px;color:#555">Desenvolvido por <strong style="color:#777">Fluxo Inteligente</strong></span>
       </div>
     </div>
   </div>
