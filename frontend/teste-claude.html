@@ -871,7 +871,7 @@ footer{background:var(--ink);padding:48px 0 24px}
     <nav>
       <a onclick="goPage('home')" class="on" id="nav-home">Início</a>
       <a onclick="goPage('imoveis')" id="nav-imoveis">Imóveis</a>
-      <a onclick="goPage('regioes')" id="nav-regioes">Regiões</a>
+      <a href="regioes.html" id="nav-regioes">Regi&otilde;es</a>
       <a onclick="abrirTermo()" id="nav-proprietario">Propriet&aacute;rios</a>
       <a onclick="abrirModalCorretor()" id="nav-corretor">Corretores</a>
       <a onclick="goPage('contato')" id="nav-contato">Contato</a>
@@ -894,7 +894,7 @@ footer{background:var(--ink);padding:48px 0 24px}
 <div class="mobile-nav" id="mobile-nav">
   <a onclick="goPage('home');closeMenu()" class="on" id="mnav-home">Início</a>
   <a onclick="goPage('imoveis');closeMenu()" id="mnav-imoveis">Imóveis</a>
-  <a onclick="goPage('regioes');closeMenu()" id="mnav-regioes">Regiões</a>
+  <a href="regioes.html" id="mnav-regioes">Regi&otilde;es</a>
   <a onclick="abrirTermo();closeMenu()" id="mnav-proprietario">Propriet&aacute;rios</a>
   <a onclick="abrirModalCorretor();closeMenu()" id="mnav-corretor">Corretores</a>
   <a onclick="goPage('contato');closeMenu()" id="mnav-contato">Contato</a>
@@ -924,10 +924,10 @@ footer{background:var(--ink);padding:48px 0 24px}
           </div>
           <p style="font-size:11px;color:var(--ink4);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px">Regi&otilde;es</p>
           <div class="cidades-wrap">
-            <div class="cpill" onclick="goPage('regioes')">Santos</div><div class="cpill" onclick="goPage('regioes')">São Vicente</div><div class="cpill" onclick="goPage('regioes')">Guarujá</div>
-            <div class="cpill" onclick="goPage('regioes')">Praia Grande</div><div class="cpill" onclick="goPage('regioes')">Cubatão</div><div class="cpill" onclick="goPage('regioes')">Bertioga</div>
-            <div class="cpill" onclick="goPage('regioes')">Itanhaém</div><div class="cpill" onclick="goPage('regioes')">Mongaguá</div><div class="cpill" onclick="goPage('regioes')">Peruíbe</div>
-            <div class="cpill" onclick="goPage('regioes')">Itariri</div><div class="cpill" onclick="goPage('regioes')">Pedro de Toledo</div><div class="cpill" onclick="goPage('regioes')">Ana Dias</div>
+            <div class="cpill" onclick="window.location.href='regiao-santos.html'">Santos</div><div class="cpill" onclick="window.location.href='regiao-sao-vicente.html'">São Vicente</div><div class="cpill" onclick="window.location.href='regiao-guaruja.html'">Guarujá</div>
+            <div class="cpill" onclick="window.location.href='regiao-praia-grande.html'">Praia Grande</div><div class="cpill" onclick="window.location.href='regiao-cubatao.html'">Cubatão</div><div class="cpill" onclick="window.location.href='regiao-bertioga.html'">Bertioga</div>
+            <div class="cpill" onclick="window.location.href='regiao-itanhaem.html'">Itanhaém</div><div class="cpill" onclick="window.location.href='regiao-mongagua.html'">Mongaguá</div><div class="cpill" onclick="window.location.href='regiao-peruibe.html'">Peruíbe</div>
+            <div class="cpill" onclick="window.location.href='regiao-itariri.html'">Itariri</div><div class="cpill" onclick="window.location.href='regiao-pedro-de-toledo.html'">Pedro de Toledo</div><div class="cpill" onclick="window.location.href='regiao-ana-dias.html'">Ana Dias</div>
           </div>
         </div>
         <div class="search-card fi2">
@@ -1263,51 +1263,51 @@ footer{background:var(--ink);padding:48px 0 24px}
         <p>Conheça cada cidade da Baixada Santista e Litoral Sul Paulista</p>
       </div>
       <div class="regions-grid">
-        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#ff7a2f,#25313f)">
+        <div class="rcard" onclick="window.location.href='regiao-santos.html'" style="--img:linear-gradient(135deg,#ff7a2f,#25313f)">
           <div class="region-media"><i class="ti ti-building-skyscraper" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Centro regional</div><div class="region-title">Santos</div><div class="region-text">Porto, praia, servi&ccedil;os e alta procura por apartamentos bem localizados.</div></div>
         </div>
-        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#26b6c8,#1f4d63)">
+        <div class="rcard" onclick="window.location.href='regiao-sao-vicente.html'" style="--img:linear-gradient(135deg,#26b6c8,#1f4d63)">
           <div class="region-media"><i class="ti ti-beach" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Tradi&ccedil;&atilde;o e mobilidade</div><div class="region-title">S&atilde;o Vicente</div><div class="region-text">Bairros consolidados, acesso regional e oportunidades para moradia e investimento.</div></div>
         </div>
-        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#f6b24a,#7d4b12)">
+        <div class="rcard" onclick="window.location.href='regiao-guaruja.html'" style="--img:linear-gradient(135deg,#f6b24a,#7d4b12)">
           <div class="region-media"><i class="ti ti-sun" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Alto padr&atilde;o e turismo</div><div class="region-title">Guaruj&aacute;</div><div class="region-text">Mercado forte para lazer, temporada e im&oacute;veis pr&oacute;ximos &agrave;s praias.</div></div>
         </div>
-        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#4aa3ff,#173f70)">
+        <div class="rcard" onclick="window.location.href='regiao-praia-grande.html'" style="--img:linear-gradient(135deg,#4aa3ff,#173f70)">
           <div class="region-media"><i class="ti ti-waves" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Orla e valoriza&ccedil;&atilde;o</div><div class="region-title">Praia Grande</div><div class="region-text">Infraestrutura urbana, avenida da praia e grande liquidez imobili&aacute;ria.</div></div>
         </div>
-        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#7dcf87,#245334)">
+        <div class="rcard" onclick="window.location.href='regiao-cubatao.html'" style="--img:linear-gradient(135deg,#7dcf87,#245334)">
           <div class="region-media"><i class="ti ti-industry" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Log&iacute;stica e neg&oacute;cios</div><div class="region-title">Cubat&atilde;o</div><div class="region-text">Polo industrial com demanda por moradia funcional e im&oacute;veis comerciais.</div></div>
         </div>
-        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#48c9a9,#155849)">
+        <div class="rcard" onclick="window.location.href='regiao-bertioga.html'" style="--img:linear-gradient(135deg,#48c9a9,#155849)">
           <div class="region-media"><i class="ti ti-trees" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Natureza e condom&iacute;nios</div><div class="region-title">Bertioga</div><div class="region-text">Praias, reservas e condom&iacute;nios fechados com perfil de moradia e lazer.</div></div>
         </div>
-        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#b78cff,#4f2c7a)">
+        <div class="rcard" onclick="window.location.href='regiao-itanhaem.html'" style="--img:linear-gradient(135deg,#b78cff,#4f2c7a)">
           <div class="region-media"><i class="ti ti-building" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Hist&oacute;ria e litoral sul</div><div class="region-title">Itanha&eacute;m</div><div class="region-text">Cidade tradicional com casas, terrenos e im&oacute;veis para fam&iacute;lias.</div></div>
         </div>
-        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#ff9b6a,#7a351a)">
+        <div class="rcard" onclick="window.location.href='regiao-mongagua.html'" style="--img:linear-gradient(135deg,#ff9b6a,#7a351a)">
           <div class="region-media"><i class="ti ti-home" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Custo-benef&iacute;cio</div><div class="region-title">Mongagu&aacute;</div><div class="region-text">Perfil acess&iacute;vel, vida tranquila e oportunidades perto da praia.</div></div>
         </div>
-        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#38cfa2,#185743)">
+        <div class="rcard" onclick="window.location.href='regiao-peruibe.html'" style="--img:linear-gradient(135deg,#38cfa2,#185743)">
           <div class="region-media"><i class="ti ti-leaf" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Natureza preservada</div><div class="region-title">Peru&iacute;be</div><div class="region-text">Praias, montanhas e qualidade de vida para morar ou investir.</div></div>
         </div>
-        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#9fce64,#385721)">
+        <div class="rcard" onclick="window.location.href='regiao-itariri.html'" style="--img:linear-gradient(135deg,#9fce64,#385721)">
           <div class="region-media"><i class="ti ti-mountain" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Mata Atl&acirc;ntica</div><div class="region-title">Itariri</div><div class="region-text">S&iacute;tios, ch&aacute;caras e propriedades com voca&ccedil;&atilde;o rural e ambiental.</div></div>
         </div>
-        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#9ca8ff,#303d75)">
+        <div class="rcard" onclick="window.location.href='regiao-pedro-de-toledo.html'" style="--img:linear-gradient(135deg,#9ca8ff,#303d75)">
           <div class="region-media"><i class="ti ti-building-community" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Interior tranquilo</div><div class="region-title">Pedro de Toledo</div><div class="region-text">Terrenos, ch&aacute;caras e crescimento com ritmo mais reservado.</div></div>
         </div>
-        <div class="rcard" onclick="goPage('regioes')" style="--img:linear-gradient(135deg,#d8b56a,#67511f)">
+        <div class="rcard" onclick="window.location.href='regiao-ana-dias.html'" style="--img:linear-gradient(135deg,#d8b56a,#67511f)">
           <div class="region-media"><i class="ti ti-home-2" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Distrito e nascentes</div><div class="region-title">Ana Dias</div><div class="region-text">Regi&atilde;o rural de Itariri com potencial para descanso, natureza e propriedades amplas.</div></div>
         </div>
@@ -1813,21 +1813,21 @@ window.goPage = function(p) {
         <li><a onclick="goPage('imoveis')">Comprar</a></li>
         <li><a onclick="goPage('imoveis')">Alugar</a></li>
         <li><a onclick="goPage('imoveis')">Lançamentos</a></li>
-        <li><a onclick="goPage('regioes')">Por região</a></li>
+        <li><a href="regioes.html">Por regi&atilde;o</a></li>
       </ul></div>
       <div class="fc2"><h4>Regi&otilde;es</h4><ul>
-        <li><a onclick="goPage('regioes')">Santos</a></li>
-        <li><a onclick="goPage('regioes')">S&atilde;o Vicente</a></li>
-        <li><a onclick="goPage('regioes')">Guaruj&aacute;</a></li>
-        <li><a onclick="goPage('regioes')">Praia Grande</a></li>
-        <li><a onclick="goPage('regioes')">Cubat&atilde;o</a></li>
-        <li><a onclick="goPage('regioes')">Bertioga</a></li>
-        <li><a onclick="goPage('regioes')">Itanha&eacute;m</a></li>
-        <li><a onclick="goPage('regioes')">Mongagu&aacute;</a></li>
-        <li><a onclick="goPage('regioes')">Peru&iacute;be</a></li>
-        <li><a onclick="goPage('regioes')">Itariri</a></li>
-        <li><a onclick="goPage('regioes')">Pedro de Toledo</a></li>
-        <li><a onclick="goPage('regioes')">Ana Dias</a></li>
+        <li><a href="regiao-santos.html">Santos</a></li>
+        <li><a href="regiao-sao-vicente.html">S&atilde;o Vicente</a></li>
+        <li><a href="regiao-guaruja.html">Guaruj&aacute;</a></li>
+        <li><a href="regiao-praia-grande.html">Praia Grande</a></li>
+        <li><a href="regiao-cubatao.html">Cubat&atilde;o</a></li>
+        <li><a href="regiao-bertioga.html">Bertioga</a></li>
+        <li><a href="regiao-itanhaem.html">Itanha&eacute;m</a></li>
+        <li><a href="regiao-mongagua.html">Mongagu&aacute;</a></li>
+        <li><a href="regiao-peruibe.html">Peru&iacute;be</a></li>
+        <li><a href="regiao-itariri.html">Itariri</a></li>
+        <li><a href="regiao-pedro-de-toledo.html">Pedro de Toledo</a></li>
+        <li><a href="regiao-ana-dias.html">Ana Dias</a></li>
       </ul></div>
       <div class="fc2"><h4>Imoore</h4><ul>
         <li><a onclick="goPage('quem-somos')">Quem Somos</a></li>
