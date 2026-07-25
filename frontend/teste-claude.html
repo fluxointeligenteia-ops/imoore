@@ -55,6 +55,9 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:15px;l
 .btn{display:inline-flex;align-items:center;gap:7px;border:none;border-radius:50px;cursor:pointer;font-family:var(--f);font-weight:600;transition:all .25s ease;text-decoration:none;white-space:nowrap;font-size:14px;max-width:100%}
 .btn-p{background:var(--or);color:#fff;padding:12px 24px;box-shadow:0 8px 22px rgba(248,88,0,.22)}
 .btn-p:hover{background:var(--or2);transform:translateY(-1px)}
+.btn-pill-test{background:linear-gradient(90deg,#f45623 0%,#ff8f16 100%)!important;color:#fff!important;border:3px solid rgba(255,255,255,.96)!important;border-radius:999px!important;box-shadow:0 10px 0 rgba(26,22,20,.14),0 16px 30px rgba(26,22,20,.18)!important;text-shadow:0 1px 2px rgba(90,32,0,.28);overflow:hidden}
+.btn-pill-test:hover{filter:saturate(1.08) brightness(1.02);transform:translateY(-2px)!important;box-shadow:0 7px 0 rgba(26,22,20,.14),0 18px 34px rgba(26,22,20,.22)!important}
+.btn-pill-test i{color:#fff}
 .btn-o{background:#fff;color:var(--ink);border:1.5px solid var(--bdr2);padding:11px 22px}
 .btn-o:hover{border-color:var(--or);color:var(--or)}
 .btn-wpp{background:#fff;color:#16894a;padding:12px 22px;font-weight:700;font-size:14px;border-radius:50px;border:1.5px solid rgba(37,211,102,.32);cursor:pointer;font-family:var(--f);display:inline-flex;align-items:center;gap:8px;transition:all .25s ease;box-shadow:0 4px 12px rgba(37,211,102,.10)}
@@ -99,10 +102,12 @@ nav a:hover,nav a.on{color:var(--or);background:var(--orl)}
 .hero-sub{font-size:17px;color:var(--ink3);line-height:1.62;max-width:500px;margin-bottom:24px}
 .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px}
 .hero-cta-main,.hero-cta-secondary{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.25);isolation:isolate}
-.hero-cta-main{background:#FF5500;font-size:16px!important;padding:16px 30px!important;font-weight:800;letter-spacing:.2px;box-shadow:0 10px 22px rgba(255,85,0,.18)}
-.hero-cta-secondary{background:#071827!important;color:#fff!important;border:1px solid #071827!important;font-size:14px!important;padding:14px 24px!important;font-weight:800;box-shadow:0 8px 18px rgba(23,32,51,.08)}
-.hero-cta-main:hover,.hero-cta-secondary:hover{transform:translateY(-1px);filter:none;box-shadow:0 12px 26px rgba(23,32,51,.10)}
-.hero-cta-secondary:hover{background:#0B2133!important;color:#fff!important;box-shadow:0 12px 26px rgba(23,32,51,.10)}
+.hero-cta-main::before,.hero-cta-secondary::before{content:'';position:absolute;inset:-2px;background:linear-gradient(120deg,transparent 0%,rgba(255,255,255,.38) 42%,transparent 72%);transform:translateX(-120%);transition:transform .7s ease;z-index:-1}
+.hero-cta-main{background:linear-gradient(135deg,#FF6A00 0%,#F85800 48%,#D94B00 100%);font-size:16px!important;padding:16px 30px!important;font-weight:800;letter-spacing:.2px;box-shadow:0 16px 34px rgba(248,88,0,.32),0 4px 10px rgba(122,43,0,.16)}
+.hero-cta-secondary{background:linear-gradient(135deg,#F85800 0%,#E95000 58%,#C94300 100%)!important;color:#fff!important;border:1px solid rgba(255,255,255,.34)!important;font-size:14px!important;padding:14px 24px!important;font-weight:800;box-shadow:0 12px 28px rgba(248,88,0,.24),inset 0 1px 0 rgba(255,255,255,.28)}
+.hero-cta-main:hover,.hero-cta-secondary:hover{transform:translateY(-2px);filter:saturate(1.05);box-shadow:0 20px 42px rgba(248,88,0,.32),0 8px 18px rgba(26,22,20,.10)}
+.hero-cta-secondary:hover{background:linear-gradient(135deg,#FF6A00 0%,#F85800 54%,#D94B00 100%)!important;color:#fff!important;box-shadow:0 18px 38px rgba(248,88,0,.30),0 0 0 4px rgba(248,88,0,.08),inset 0 1px 0 rgba(255,255,255,.34)}
+.hero-cta-main:hover::before,.hero-cta-secondary:hover::before{transform:translateX(120%)}
 .hero-cta-main i,.hero-cta-secondary i{font-size:18px}
 .home-region-label{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--ink2);font-weight:900;text-transform:uppercase;letter-spacing:.9px;margin:2px 0 12px}
 .home-region-label::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--or);box-shadow:0 0 0 6px rgba(248,88,0,.10)}
@@ -939,10 +944,11 @@ footer{background:var(--ink);padding:48px 0 24px}
   .hero-ctas{gap:12px;flex-direction:column;width:100%;max-width:100%;align-items:stretch;margin-bottom:34px}
   .hero-ctas .btn-p{font-size:14px;padding:14px 18px;width:100%;justify-content:center}
   .hero-cta-main,.hero-cta-secondary{display:grid!important;grid-template-columns:24px 1fr 24px;width:100%!important;max-width:100%!important;padding:15px 18px!important;min-height:56px;white-space:normal;text-align:center;justify-content:center!important;align-items:center;font-weight:900!important}
+  .hero-cta-main.btn-pill-test,.hero-cta-secondary.btn-pill-test{min-height:64px!important;padding:17px 20px!important}
   .hero-cta-main i,.hero-cta-secondary i{grid-column:1;justify-self:center;margin:0!important}
   .hero-cta-main,.hero-cta-secondary,.hero-ctas .btn-wpp{overflow-wrap:anywhere;line-height:1.2}
-  .hero-cta-secondary{border-width:1px!important;box-shadow:0 8px 18px rgba(23,32,51,.08)!important}
-  .hero-cta-secondary:hover,.hero-cta-secondary:active{background:#0B2133!important;border-color:#0B2133!important;color:#fff!important;transform:translateY(-1px)}
+  .hero-cta-secondary{border-width:1px!important;box-shadow:0 12px 26px rgba(248,88,0,.22),inset 0 1px 0 rgba(255,255,255,.28)!important}
+  .hero-cta-secondary:hover,.hero-cta-secondary:active{background:linear-gradient(135deg,#FF6A00 0%,#F85800 54%,#D94B00 100%)!important;border-color:rgba(255,255,255,.38)!important;color:#fff!important;transform:translateY(-1px)}
   .hero-ctas .btn-wpp{font-size:14px;padding:12px 16px;width:100%;justify-content:center}
   .hero-ctas + p{margin-top:0!important;margin-bottom:14px!important}
   .home-region-label{font-size:11px;color:var(--ink4);margin-bottom:12px}
@@ -1061,6 +1067,7 @@ footer{background:var(--ink);padding:48px 0 24px}
   .cta-card p{min-height:58px}
   .cta-card .cta-btns{grid-template-columns:1fr}
   .cta-card .cta-btns button{height:48px;min-height:48px}
+  .cta-card .cta-btns button.btn-pill-test{height:58px;min-height:58px;padding:0 20px!important}
   .hero-cta-main,.hero-cta-secondary,.cta-card .cta-btns .btn-wh:first-child{font-size:var(--cta-fs-mobile)!important}
   .cta-btns{flex-direction:column;align-items:stretch}
   .btn-wh,.btn-wpp{justify-content:center}
@@ -1759,6 +1766,13 @@ footer{
 #page-home .region-title{
   text-shadow:none!important;
 }
+#page-home .btn-pill-test{
+  text-shadow:none!important;
+  box-shadow:0 14px 30px rgba(7,24,39,.12),0 4px 12px rgba(7,24,39,.08)!important;
+}
+#page-home .btn-pill-test:hover{
+  box-shadow:0 18px 38px rgba(7,24,39,.15),0 5px 14px rgba(7,24,39,.10)!important;
+}
 @media(max-width:960px){
   #page-home .home-city-grid{
     grid-template-columns:repeat(2,minmax(0,1fr));
@@ -1798,797 +1812,6 @@ footer{
     min-height:148px;
     border-radius:22px;
     scroll-snap-align:start;
-  }
-}
-
-/* -- HOME VISUAL HIERARCHY REFINEMENT -- */
-:root{
-  --imoore-orange:#FF5500;
-  --imoore-orange-hover:#E94D00;
-  --imoore-orange-soft:#FFF1E8;
-  --imoore-orange-muted:#FFE2D1;
-  --imoore-navy:#071827;
-  --imoore-text:#172033;
-  --imoore-text-muted:#667085;
-  --imoore-background:#FFFFFF;
-  --imoore-surface:#FFFAF7;
-  --imoore-border:#EAE7E4;
-  --imoore-shadow:rgba(23,32,51,.08);
-  --or:#FF5500;
-  --or2:#E94D00;
-  --orl:#FFF1E8;
-  --orm:#FFE2D1;
-}
-.hdr{
-  background:rgba(255,255,255,.98)!important;
-  box-shadow:0 4px 18px rgba(23,32,51,.05)!important;
-}
-.creci{
-  color:#A13A00!important;
-  background:#FFF8F3!important;
-  border-color:#FFE2D1!important;
-  box-shadow:none!important;
-}
-.hamburger{
-  min-width:44px!important;
-  min-height:44px!important;
-  color:#071827!important;
-  background:#fff!important;
-  border:1px solid #EAE7E4!important;
-  box-shadow:0 8px 20px rgba(23,32,51,.06)!important;
-}
-#page-home .hero .container{
-  background:
-    linear-gradient(90deg,rgba(255,255,255,.96) 0%,rgba(255,250,247,.90) 48%,rgba(255,255,255,.46) 100%),
-    url('assets/regioes/praia-grande.png') center/cover no-repeat!important;
-}
-#page-home .hero-kicker .tag{
-  width:auto!important;
-  color:#A13A00!important;
-  background:#FFF1E8!important;
-  border:1px solid #FFE2D1!important;
-  box-shadow:none!important;
-}
-#page-home .hero h1{
-  color:#172033!important;
-}
-#page-home .hero h1 .ac{
-  color:#FF5500!important;
-}
-#page-home .hero-sub{
-  color:#475467!important;
-  line-height:1.6!important;
-}
-#page-home .hero-ctas{
-  grid-template-columns:repeat(3,minmax(0,1fr))!important;
-  align-items:stretch!important;
-}
-#page-home .hero-cta-main,
-#page-home .hero-cta-secondary,
-#page-home .hero-cta-buy{
-  height:56px!important;
-  min-height:56px!important;
-  border-radius:18px!important;
-  padding:0 18px!important;
-  display:inline-flex!important;
-  flex-direction:row!important;
-  align-items:center!important;
-  justify-content:center!important;
-  gap:10px!important;
-  font-size:14px!important;
-  line-height:1.15!important;
-  letter-spacing:0!important;
-  white-space:normal!important;
-  text-align:center!important;
-  box-shadow:0 12px 24px rgba(23,32,51,.10)!important;
-}
-#page-home .hero-cta-main{
-  background:#FF5500!important;
-  color:#fff!important;
-  border:1px solid #FF5500!important;
-}
-#page-home .hero-cta-main:hover{
-  background:#E94D00!important;
-  border-color:#E94D00!important;
-}
-#page-home .hero-cta-secondary,
-#page-home .hero-cta-buy{
-  background:#fff!important;
-  color:#071827!important;
-  border:1px solid #EAE7E4!important;
-  box-shadow:0 8px 18px rgba(23,32,51,.07)!important;
-}
-#page-home .hero-cta-secondary:hover,
-#page-home .hero-cta-buy:hover{
-  background:#FFF8F3!important;
-  border-color:#FFE2D1!important;
-}
-#page-home .hero-cta-main i,
-#page-home .hero-cta-secondary i,
-#page-home .hero-cta-buy i{
-  width:22px!important;
-  height:22px!important;
-  min-width:22px!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-  font-size:20px!important;
-}
-#page-home .hero-cta-main i{
-  color:#fff!important;
-}
-#page-home .hero-cta-secondary i,
-#page-home .hero-cta-buy i{
-  color:#FF5500!important;
-}
-#page-home .hero-cta-main::after,
-#page-home .hero-cta-secondary::after,
-#page-home .hero-cta-buy::after{
-  display:none!important;
-}
-#page-home .hero-primary-note{
-  margin:-12px 0 18px;
-  color:#667085;
-  font-size:13px;
-  font-weight:700;
-}
-#page-home .search-card,
-#page-home .step,
-#page-home .fcard,
-#page-home .partner-card,
-#page-home .cta-card,
-#page-home .ppill{
-  background:#fff!important;
-  border:1px solid #EAE7E4!important;
-  color:#172033!important;
-  box-shadow:0 10px 26px rgba(23,32,51,.07)!important;
-  backdrop-filter:none!important;
-  -webkit-backdrop-filter:none!important;
-}
-#page-home .step::before,
-#page-home .fcard::before,
-#page-home .partner-card::before,
-#page-home .cta-card::before,
-#page-home .ppill::before,
-#page-home .search-card::before{
-  display:none!important;
-}
-#page-home .step h3,
-#page-home .fcard h3,
-#page-home .partner-copy h3,
-#page-home .cta-card h2{
-  color:#172033!important;
-}
-#page-home .step p,
-#page-home .fcard p,
-#page-home .partner-copy p,
-#page-home .cta-card p{
-  color:#667085!important;
-}
-#page-home .step-n,
-#page-home .partners-eyebrow,
-#page-home .cta-card > span{
-  color:#A13A00!important;
-}
-#page-home .step-ic,
-#page-home .fic{
-  background:#FFF1E8!important;
-  color:#FF5500!important;
-  box-shadow:none!important;
-}
-#page-home .step-ic i,
-#page-home .fic i,
-#page-home .ppill i{
-  color:#FF5500!important;
-}
-#page-home .grid-f .fcard,
-#page-home .steps4 .step{
-  background:#FFFAF7!important;
-  border-color:#EAE7E4!important;
-}
-#page-home .search-card .stabs,
-#page-home .search-card .sf input,
-#page-home .search-card .sf select{
-  background:#fff!important;
-  color:#172033!important;
-  border-color:#EAE7E4!important;
-  box-shadow:none!important;
-}
-#page-home .search-card .sf label,
-#page-home .search-card .stab{
-  color:#667085!important;
-}
-#page-home .search-card .stab.on,
-#page-home .purpose-tab.on{
-  background:#FFF1E8!important;
-  color:#A13A00!important;
-  box-shadow:none!important;
-}
-#page-home .home-cities-section{
-  background:#fff!important;
-}
-#page-home .home-city-card{
-  border-color:#EAE7E4!important;
-  box-shadow:0 10px 26px rgba(23,32,51,.08)!important;
-}
-.chat-fl{
-  right:18px!important;
-  bottom:calc(18px + env(safe-area-inset-bottom))!important;
-}
-.chat-fab{
-  width:54px!important;
-  height:54px!important;
-}
-.btn:focus-visible,
-button:focus-visible,
-a:focus-visible,
-.home-city-card:focus-visible{
-  outline:3px solid rgba(255,85,0,.32)!important;
-  outline-offset:3px!important;
-}
-@media(hover:hover){
-  #page-home .home-city-card:hover,
-  #page-home .step:hover,
-  #page-home .fcard:hover,
-  #page-home .partner-card:hover,
-  #page-home .cta-card:hover{
-    transform:translateY(-2px)!important;
-    border-color:#FFE2D1!important;
-  }
-}
-@media(prefers-reduced-motion:reduce){
-  *,
-  *::before,
-  *::after{
-    animation-duration:.001ms!important;
-    animation-iteration-count:1!important;
-    scroll-behavior:auto!important;
-    transition-duration:.001ms!important;
-  }
-}
-@media(max-width:640px){
-  :root{
-    --hdr:82px;
-  }
-  .hdr-inner{
-    padding:0 18px!important;
-  }
-  .logo-img{
-    width:214px!important;
-    max-width:calc(100vw - 116px)!important;
-    max-height:58px!important;
-  }
-  #page-home .hero h1{
-    font-size:clamp(30px,9.2vw,38px)!important;
-  }
-  #page-home .hero-ctas{
-    grid-template-columns:1fr!important;
-    gap:10px!important;
-  }
-  #page-home .hero-cta-main,
-  #page-home .hero-cta-secondary,
-  #page-home .hero-cta-buy{
-    width:100%!important;
-    height:56px!important;
-    min-height:56px!important;
-    justify-content:center!important;
-    padding:0 16px!important;
-  }
-  #page-home .hero-primary-note{
-    margin:8px 0 14px;
-    text-align:center;
-  }
-  #page-home .home-city-grid{
-    display:grid!important;
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    gap:10px!important;
-    overflow:visible!important;
-    padding:0 0 64px!important;
-    margin:0!important;
-  }
-  #page-home .home-city-card{
-    min-height:126px!important;
-    flex:auto!important;
-  }
-}
-@media(max-width:340px){
-  #page-home .home-city-grid{
-    grid-template-columns:1fr!important;
-  }
-}
-
-/* -- HOME FINAL POLISH: paleta consistente e botoes sem neon -- */
-:root{
-  --imoore-orange:#FF5500;
-  --imoore-orange-hover:#E94D00;
-  --imoore-orange-soft:#FFF1E8;
-  --imoore-orange-muted:#FFE2D1;
-  --imoore-navy:#071827;
-  --imoore-navy-soft:#0B2133;
-  --imoore-ink:#172033;
-  --imoore-muted:#667085;
-  --imoore-surface:#FFFAF7;
-  --imoore-border:#EAE7E4;
-  --or:#FF5500;
-  --or2:#E94D00;
-  --orl:#FFF1E8;
-  --orm:#FFE2D1;
-}
-#page-home{
-  color:#172033!important;
-  background:
-    linear-gradient(180deg,rgba(255,250,247,.82),rgba(255,255,255,.96) 42%,rgba(255,250,247,.86))!important;
-}
-#page-home .hero .container{
-  border-radius:32px!important;
-  background:
-    linear-gradient(90deg,rgba(255,255,255,.97) 0%,rgba(255,250,247,.93) 50%,rgba(255,255,255,.62) 100%),
-    url('assets/regioes/praia-grande.png') center/cover no-repeat!important;
-  box-shadow:0 18px 46px rgba(23,32,51,.08)!important;
-}
-#page-home .home-region-label,
-#page-home .cidades-wrap{
-  display:none!important;
-}
-#page-home .hero-ctas{
-  display:grid!important;
-  grid-template-columns:repeat(3,minmax(0,1fr))!important;
-  gap:14px!important;
-  margin-top:28px!important;
-}
-#page-home .hero-cta-main,
-#page-home .hero-cta-secondary,
-#page-home .hero-cta-buy{
-  width:100%!important;
-  min-width:0!important;
-  height:64px!important;
-  min-height:64px!important;
-  padding:0 18px!important;
-  border-radius:18px!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  flex-direction:row!important;
-  gap:10px!important;
-  font-size:13px!important;
-  font-weight:850!important;
-  line-height:1.15!important;
-  letter-spacing:0!important;
-  text-align:center!important;
-  text-wrap:balance;
-  white-space:normal!important;
-  overflow:hidden!important;
-  text-shadow:none!important;
-  filter:none!important;
-  transform:none;
-  box-shadow:0 10px 22px rgba(23,32,51,.10)!important;
-}
-#page-home .hero-cta-main{
-  background:#FF5500!important;
-  border:1px solid #FF5500!important;
-  color:#fff!important;
-}
-#page-home .hero-cta-secondary{
-  background:#071827!important;
-  border:1px solid #071827!important;
-  color:#fff!important;
-}
-#page-home .hero-cta-buy{
-  background:#fff!important;
-  border:1px solid #FFE2D1!important;
-  color:#172033!important;
-}
-#page-home .hero-cta-main:hover,
-#page-home .hero-cta-secondary:hover,
-#page-home .hero-cta-buy:hover{
-  transform:translateY(-1px)!important;
-  filter:none!important;
-  box-shadow:0 14px 28px rgba(23,32,51,.12)!important;
-}
-#page-home .hero-cta-main:hover{
-  background:#E94D00!important;
-  border-color:#E94D00!important;
-}
-#page-home .hero-cta-secondary:hover{
-  background:#0B2133!important;
-  border-color:#0B2133!important;
-}
-#page-home .hero-cta-buy:hover{
-  background:#FFF1E8!important;
-}
-#page-home .hero-cta-main::before,
-#page-home .hero-cta-secondary::before,
-#page-home .hero-cta-buy::before,
-#page-home .hero-cta-main::after,
-#page-home .hero-cta-secondary::after,
-#page-home .hero-cta-buy::after{
-  display:none!important;
-}
-#page-home .hero-cta-main i,
-#page-home .hero-cta-secondary i,
-#page-home .hero-cta-buy i{
-  width:22px!important;
-  min-width:22px!important;
-  height:22px!important;
-  display:inline-grid!important;
-  place-items:center!important;
-  margin:0!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-  filter:none!important;
-  text-shadow:none!important;
-  font-size:21px!important;
-}
-#page-home .hero-cta-main i,
-#page-home .hero-cta-secondary i{
-  color:#fff!important;
-}
-#page-home .hero-cta-buy i{
-  color:#FF5500!important;
-}
-#page-home .hero-primary-note{
-  color:#667085!important;
-  font-size:13px!important;
-  font-weight:700!important;
-  margin:10px 0 2px!important;
-}
-#page-home .search-card,
-#page-home .step,
-#page-home .fcard,
-#page-home .partner-card,
-#page-home .cta-card,
-#page-home .ppill,
-#page-home .icard{
-  background:linear-gradient(180deg,#fff,#FFFAF7)!important;
-  border:1px solid #EAE7E4!important;
-  color:#172033!important;
-  text-shadow:none!important;
-  filter:none!important;
-  box-shadow:0 12px 28px rgba(23,32,51,.07)!important;
-}
-#page-home .step::before,
-#page-home .fcard::before,
-#page-home .partner-card::before,
-#page-home .cta-card::before,
-#page-home .ppill::before,
-#page-home .icard::before,
-#page-home .search-card::before{
-  display:none!important;
-}
-#page-home .step-ic,
-#page-home .fic,
-#page-home .ppill i{
-  background:#FFF1E8!important;
-  color:#FF5500!important;
-  box-shadow:none!important;
-}
-#page-home .home-cities-section{
-  display:block!important;
-  padding:44px 0 58px!important;
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.88),rgba(255,250,247,.92)),
-    url('assets/regioes/santos.png') center/cover fixed!important;
-}
-#page-home .home-cities-head{
-  align-items:center!important;
-}
-#page-home .home-city-grid{
-  display:grid!important;
-  grid-template-columns:repeat(4,minmax(0,1fr))!important;
-  gap:16px!important;
-  overflow:visible!important;
-  padding:0!important;
-}
-#page-home .home-city-card{
-  min-height:150px!important;
-  border-radius:20px!important;
-  border:1px solid rgba(255,255,255,.72)!important;
-  box-shadow:0 12px 30px rgba(23,32,51,.11)!important;
-  background-image:
-    linear-gradient(180deg,rgba(7,24,39,.02),rgba(7,24,39,.66)),
-    var(--city-img)!important;
-}
-#page-home .home-city-card::after{
-  background:#FF5500!important;
-}
-#page-home .btn,
-#page-home .btn-p,
-#page-home .btn-o,
-#page-home .btn-wh,
-#page-home .purpose-tab,
-#page-home .fc{
-  text-shadow:none!important;
-  filter:none!important;
-}
-#page-home .btn-p{
-  background:#FF5500!important;
-  border-color:#FF5500!important;
-}
-#page-home .btn-p:hover{
-  background:#E94D00!important;
-  border-color:#E94D00!important;
-}
-#page-home .purpose-tab.on,
-#page-home .stab.on,
-#page-home .fc.on{
-  background:#FFF1E8!important;
-  color:#A13A00!important;
-  border-color:#FFE2D1!important;
-  box-shadow:none!important;
-}
-@media(max-width:1024px){
-  #page-home .home-city-grid{
-    grid-template-columns:repeat(3,minmax(0,1fr))!important;
-  }
-}
-@media(max-width:640px){
-  #page-home .hero .container{
-    border-radius:26px!important;
-  }
-  #page-home .hero-ctas{
-    grid-template-columns:1fr!important;
-    gap:12px!important;
-  }
-  #page-home .hero-cta-main,
-  #page-home .hero-cta-secondary,
-  #page-home .hero-cta-buy{
-    height:58px!important;
-    min-height:58px!important;
-    padding:0 18px!important;
-    font-size:14px!important;
-    justify-content:center!important;
-  }
-  #page-home .home-city-grid{
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    gap:12px!important;
-    padding-bottom:72px!important;
-  }
-  #page-home .home-city-card{
-    min-height:132px!important;
-  }
-}
-@media(max-width:340px){
-  #page-home .hero-cta-main,
-  #page-home .hero-cta-secondary,
-  #page-home .hero-cta-buy{
-    font-size:13px!important;
-  }
-  #page-home .home-city-grid{
-    grid-template-columns:1fr!important;
-  }
-}
-
-/* -- HOME VISUAL AUDIT 2: hierarquia, contraste e 360/390px -- */
-#page-home .hero-cta-main,
-#page-home .hero-cta-secondary,
-#page-home .hero-cta-buy,
-#page-home .cta-card .btn-wh,
-#page-home .cta-card .btn-wpp{
-  border-radius:16px!important;
-  text-shadow:none!important;
-  filter:none!important;
-  box-shadow:0 8px 18px rgba(23,32,51,.08)!important;
-}
-#page-home .hero-cta-main{
-  box-shadow:0 10px 22px rgba(255,85,0,.18)!important;
-}
-#page-home .hero-cta-secondary,
-#page-home .hero-cta-buy{
-  font-weight:800!important;
-  box-shadow:0 8px 18px rgba(23,32,51,.06)!important;
-}
-#page-home .hero-cta-secondary{
-  background:#071827!important;
-  border-color:#071827!important;
-}
-#page-home .hero-cta-buy{
-  background:rgba(255,255,255,.94)!important;
-}
-#page-home .search-card,
-#page-home .step,
-#page-home .fcard,
-#page-home .partner-card,
-#page-home .cta-card,
-#page-home .ppill,
-#page-home .icard{
-  border-radius:18px!important;
-  box-shadow:0 8px 22px rgba(23,32,51,.055)!important;
-}
-#page-home .search-card{
-  padding:18px!important;
-}
-#page-home .step,
-#page-home .fcard{
-  padding:20px!important;
-}
-#page-home .step:hover,
-#page-home .fcard:hover,
-#page-home .partner-card:hover,
-#page-home .cta-card:hover,
-#page-home .ppill:hover,
-#page-home .icard:hover{
-  box-shadow:0 12px 28px rgba(23,32,51,.08)!important;
-  transform:translateY(-1px)!important;
-}
-#page-home .step-ic,
-#page-home .fic{
-  width:50px!important;
-  height:50px!important;
-  min-width:50px!important;
-  border-radius:15px!important;
-  background:#FFF1E8!important;
-  color:#FF5500!important;
-}
-#page-home .ppill{
-  border-radius:14px!important;
-  background:#fff!important;
-  justify-content:flex-start!important;
-}
-#page-home .cta-card .cta-btns .btn-wh,
-#page-home .cta-card .cta-btns .btn-wpp{
-  min-height:48px!important;
-  height:48px!important;
-  border-radius:14px!important;
-  padding:0 14px!important;
-  font-size:13px!important;
-  white-space:normal!important;
-}
-#page-home .cta-card .cta-btns .btn-wh:first-child{
-  background:#FF5500!important;
-  border:1px solid #FF5500!important;
-  color:#fff!important;
-  box-shadow:0 9px 18px rgba(255,85,0,.15)!important;
-}
-#page-home .cta-card .cta-btns .btn-wh:not(:first-child),
-#page-home .cta-card .cta-btns .btn-wpp{
-  background:#fff!important;
-  border:1px solid #EAE7E4!important;
-  color:#172033!important;
-  box-shadow:none!important;
-}
-#page-home .home-cities-section{
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,250,247,.94)),
-    url('assets/regioes/santos.png') center/cover no-repeat!important;
-}
-#page-home .home-city-card{
-  border-radius:18px!important;
-  box-shadow:0 10px 24px rgba(23,32,51,.09)!important;
-}
-#page-home .home-city-card::after{
-  width:30px!important;
-  height:30px!important;
-  font-size:15px!important;
-}
-.chat-fl{
-  right:16px!important;
-  bottom:calc(24px + env(safe-area-inset-bottom))!important;
-}
-.chat-fab{
-  width:52px!important;
-  height:52px!important;
-  box-shadow:0 8px 18px rgba(37,211,102,.24)!important;
-  animation:none!important;
-}
-@media(max-width:640px){
-  #page-home .hero{
-    padding-top:24px!important;
-  }
-  #page-home .hero .container{
-    width:calc(100% - 28px)!important;
-    padding:34px 18px 28px!important;
-    margin:0 auto!important;
-  }
-  #page-home .hero-kicker .tag{
-    max-width:100%!important;
-    font-size:12px!important;
-    line-height:1.25!important;
-    white-space:normal!important;
-  }
-  #page-home .hero h1{
-    margin-top:24px!important;
-    font-size:clamp(31px,8.8vw,38px)!important;
-    line-height:1.12!important;
-    letter-spacing:-.035em!important;
-  }
-  #page-home .hero-sub{
-    font-size:16px!important;
-    line-height:1.55!important;
-    margin-top:18px!important;
-  }
-  #page-home .hero-ctas{
-    margin-top:26px!important;
-    gap:10px!important;
-  }
-  #page-home .hero-cta-main,
-  #page-home .hero-cta-secondary,
-  #page-home .hero-cta-buy{
-    display:grid!important;
-    grid-template-columns:24px minmax(0,1fr)!important;
-    width:100%!important;
-    height:58px!important;
-    min-height:58px!important;
-    padding:0 18px!important;
-    text-align:center!important;
-    white-space:normal!important;
-    overflow-wrap:normal!important;
-    word-break:normal!important;
-  }
-  #page-home .hero-cta-main i,
-  #page-home .hero-cta-secondary i,
-  #page-home .hero-cta-buy i{
-    justify-self:start!important;
-  }
-  #page-home .search-card{
-    margin-top:22px!important;
-    border-radius:20px!important;
-  }
-  #page-home .home-cities-section{
-    padding:34px 0 74px!important;
-    background:
-      linear-gradient(180deg,rgba(255,255,255,.94),rgba(255,250,247,.96)),
-      url('assets/regioes/santos.png') center/cover no-repeat!important;
-  }
-  #page-home .home-cities-head{
-    gap:10px!important;
-  }
-  #page-home .home-city-grid{
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    gap:10px!important;
-    padding-bottom:26px!important;
-  }
-  #page-home .home-city-card{
-    min-height:118px!important;
-    padding:14px!important;
-  }
-  #page-home .home-city-card span{
-    font-size:15px!important;
-  }
-  .chat-fl{
-    right:14px!important;
-    bottom:calc(76px + env(safe-area-inset-bottom))!important;
-  }
-  .chat-fab{
-    width:50px!important;
-    height:50px!important;
-  }
-}
-@media(min-width:341px) and (max-width:390px){
-  #page-home .hero .container{
-    width:calc(100% - 24px)!important;
-    padding-left:16px!important;
-    padding-right:16px!important;
-  }
-  #page-home .hero h1{
-    font-size:clamp(30px,8.6vw,36px)!important;
-  }
-  #page-home .hero-cta-main,
-  #page-home .hero-cta-secondary,
-  #page-home .hero-cta-buy{
-    font-size:13px!important;
-  }
-}
-@media(max-width:360px){
-  #page-home .hero .container{
-    width:calc(100% - 20px)!important;
-    padding-left:14px!important;
-    padding-right:14px!important;
-  }
-  #page-home .hero h1{
-    font-size:30px!important;
-  }
-  #page-home .hero-cta-main,
-  #page-home .hero-cta-secondary,
-  #page-home .hero-cta-buy{
-    grid-template-columns:22px minmax(0,1fr)!important;
-    min-height:60px!important;
-    height:60px!important;
-    padding:0 14px!important;
-    font-size:12.5px!important;
-  }
-  #page-home .home-city-grid{
-    grid-template-columns:1fr!important;
   }
 }
 </style>
@@ -2996,21 +2219,20 @@ a:focus-visible,
     <div class="container">
       <div class="hero-grid">
         <div class="fi hero-copy">
-          <div class="hero-kicker"><span class="tag" onclick="window.location.href='regiao-baixada-santista-litoral-sul.html'" style="cursor:pointer"><i class="ti ti-map-pin" style="font-size:12px" aria-hidden="true"></i> Baixada Santista e Litoral Sul Paulista</span></div>
+          <div class="hero-kicker"><span class="tag" onclick="window.location.href='/regiao/baixada-santista-litoral-sul'" style="cursor:pointer"><i class="ti ti-map-pin" style="font-size:12px" aria-hidden="true"></i> Baixada Santista e Litoral Sul Paulista</span></div>
           <h1>Anuncie seu imóvel<br>conosco e <span class="ac">venda<br>mais rápido.</span></h1>
           <p class="hero-sub">A Imoore conecta proprietários e corretores às melhores oportunidades da Baixada Santista e do Litoral Sul Paulista.</p>
           <div class="hero-ctas">
-            <button class="btn btn-p hero-cta-main" onclick="abrirTermo()"><i class="ti ti-home-plus" aria-hidden="true"></i> ANUNCIE SEU IMÓVEL GRÁTIS</button>
-            <button class="btn btn-p hero-cta-secondary" onclick="abrirModalCorretor()"><i class="ti ti-id-badge" aria-hidden="true"></i> SOU CORRETOR</button>
-            <button class="btn btn-p hero-cta-buy" onclick="abrirImoveisPorFinalidade('comprar')"><i class="ti ti-home-search" aria-hidden="true"></i> QUERO COMPRAR</button>
+            <button class="btn btn-p hero-cta-main btn-pill-test" onclick="abrirTermo()"><i class="ti ti-home-plus" aria-hidden="true"></i> ANUNCIE SEU IMÓVEL GRÁTIS</button>
+            <button class="btn btn-p hero-cta-secondary btn-pill-test" onclick="abrirModalCorretor()"><i class="ti ti-id-badge" aria-hidden="true"></i> SOU CORRETOR</button>
+            <button class="btn btn-p hero-cta-buy btn-pill-test" onclick="abrirImoveisPorFinalidade('comprar')"><i class="ti ti-home-search" aria-hidden="true"></i> QUERO COMPRAR</button>
           </div>
-          <p class="hero-primary-note">Cadastro gratuito em menos de 3 minutos.</p>
           <p class="home-region-label">Regi&otilde;es</p>
           <div class="cidades-wrap">
-            <a class="cpill" href="regiao-santos.html">Santos</a><a class="cpill" href="regiao-sao-vicente.html">São Vicente</a><a class="cpill" href="regiao-guaruja.html">Guarujá</a>
-            <a class="cpill" href="regiao-praia-grande.html">Praia Grande</a><a class="cpill" href="regiao-cubatao.html">Cubatão</a><a class="cpill" href="regiao-bertioga.html">Bertioga</a>
-            <a class="cpill" href="regiao-itanhaem.html">Itanhaém</a><a class="cpill" href="regiao-mongagua.html">Mongaguá</a><a class="cpill" href="regiao-peruibe.html">Peruíbe</a>
-            <a class="cpill" href="regiao-itariri.html">Itariri</a><a class="cpill" href="regiao-pedro-de-toledo.html">Pedro de Toledo</a><a class="cpill" href="regiao-ana-dias.html">Ana Dias</a>
+            <a class="cpill" href="/regiao/santos">Santos</a><a class="cpill" href="/regiao/sao-vicente">São Vicente</a><a class="cpill" href="/regiao/guaruja">Guarujá</a>
+            <a class="cpill" href="/regiao/praia-grande">Praia Grande</a><a class="cpill" href="/regiao/cubatao">Cubatão</a><a class="cpill" href="/regiao/bertioga">Bertioga</a>
+            <a class="cpill" href="/regiao/itanhaem">Itanhaém</a><a class="cpill" href="/regiao/mongagua">Mongaguá</a><a class="cpill" href="/regiao/peruibe">Peruíbe</a>
+            <a class="cpill" href="/regiao/itariri">Itariri</a><a class="cpill" href="/regiao/pedro-de-toledo">Pedro de Toledo</a><a class="cpill" href="/regiao/ana-dias">Ana Dias</a>
           </div>
         </div>
         <div class="search-card fi2">
@@ -3075,14 +2297,14 @@ a:focus-visible,
         </div>
       </div>
       <div class="home-city-grid">
-        <a class="home-city-card" href="regiao-santos.html" style="--city-img:url('assets/regioes/santos.png')"><span>Santos</span></a>
-        <a class="home-city-card" href="regiao-sao-vicente.html" style="--city-img:url('assets/regioes/santos.png')"><span>S&atilde;o Vicente</span></a>
-        <a class="home-city-card" href="regiao-guaruja.html" style="--city-img:url('assets/regioes/guaruja.png')"><span>Guaruj&aacute;</span></a>
-        <a class="home-city-card" href="regiao-praia-grande.html" style="--city-img:url('assets/regioes/praia-grande.png')"><span>Praia Grande</span></a>
-        <a class="home-city-card" href="regiao-cubatao.html" style="--city-img:url('assets/regioes/cubatao.png')"><span>Cubat&atilde;o</span></a>
-        <a class="home-city-card" href="regiao-bertioga.html" style="--city-img:url('assets/regioes/bertioga.png')"><span>Bertioga</span></a>
-        <a class="home-city-card" href="regiao-itanhaem.html" style="--city-img:url('assets/regioes/itanhaem.png')"><span>Itanha&eacute;m</span></a>
-        <a class="home-city-card" href="regiao-peruibe.html" style="--city-img:url('assets/regioes/peruibe.png')"><span>Peru&iacute;be</span></a>
+        <a class="home-city-card" href="/regiao/santos" style="--city-img:url('assets/regioes/santos.png')"><span>Santos</span></a>
+        <a class="home-city-card" href="/regiao/sao-vicente" style="--city-img:url('assets/regioes/santos.png')"><span>S&atilde;o Vicente</span></a>
+        <a class="home-city-card" href="/regiao/guaruja" style="--city-img:url('assets/regioes/guaruja.png')"><span>Guaruj&aacute;</span></a>
+        <a class="home-city-card" href="/regiao/praia-grande" style="--city-img:url('assets/regioes/praia-grande.png')"><span>Praia Grande</span></a>
+        <a class="home-city-card" href="/regiao/cubatao" style="--city-img:url('assets/regioes/cubatao.png')"><span>Cubat&atilde;o</span></a>
+        <a class="home-city-card" href="/regiao/bertioga" style="--city-img:url('assets/regioes/bertioga.png')"><span>Bertioga</span></a>
+        <a class="home-city-card" href="/regiao/itanhaem" style="--city-img:url('assets/regioes/itanhaem.png')"><span>Itanha&eacute;m</span></a>
+        <a class="home-city-card" href="/regiao/peruibe" style="--city-img:url('assets/regioes/peruibe.png')"><span>Peru&iacute;be</span></a>
       </div>
     </div>
   </section>
@@ -3251,7 +2473,7 @@ a:focus-visible,
           <h2>Cadastre seu imóvel conosco</h2>
           <p>Envie as informações do imóvel para análise da equipe Imoore e receba orientação para anunciar com segurança.</p>
           <div class="cta-btns">
-            <button class="btn-wh" onclick="abrirTermo()"><i class="ti ti-home-plus" aria-hidden="true"></i> Anuncie gratuitamente</button>
+            <button class="btn-wh btn-pill-test" onclick="abrirTermo()"><i class="ti ti-home-plus" aria-hidden="true"></i> Anuncie gratuitamente</button>
             <button class="btn-wpp" onclick="abrirWpp('Olá! Sou proprietário e quero cadastrar meu imóvel na Imoore.')" style="font-size:15px;padding:14px 26px">
               <i class="ti ti-brand-whatsapp" aria-hidden="true"></i> Falar no WhatsApp
             </button>
@@ -3262,7 +2484,7 @@ a:focus-visible,
           <h2>Corretor, trabalhe conosco</h2>
           <p>Cadastre seu perfil para atuar com a Imoore, enviar imóveis para análise e receber oportunidades qualificadas.</p>
           <div class="cta-btns">
-            <button class="btn-wh" onclick="abrirModalCorretor()"><i class="ti ti-id-badge" aria-hidden="true"></i> Cadastrar perfil</button>
+            <button class="btn-wh btn-pill-test" onclick="abrirModalCorretor()"><i class="ti ti-id-badge" aria-hidden="true"></i> Cadastrar perfil</button>
             <button class="btn-wpp" onclick="abrirWpp('Olá! Sou corretor e quero anunciar meus imóveis na Imoore.')" style="font-size:15px;padding:14px 26px">
               <i class="ti ti-brand-whatsapp" aria-hidden="true"></i> Anunciar pelo WhatsApp
             </button>
@@ -3405,53 +2627,53 @@ a:focus-visible,
       </div>
       <div class="regions-grid">
         <div class="region-group-title"><span>Baixada Santista</span></div>
-        <div class="rcard" onclick="window.location.href='regiao-santos.html'" style="--img:linear-gradient(135deg,#ff7a2f,#25313f)">
+        <div class="rcard" onclick="window.location.href='/regiao/santos'" style="--img:linear-gradient(135deg,#ff7a2f,#25313f)">
           <div class="region-media"><i class="ti ti-building-skyscraper" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Centro regional</div><div class="region-title">Santos</div><div class="region-text">Porto, praia, servi&ccedil;os e alta procura por apartamentos bem localizados.</div></div>
         </div>
-        <div class="rcard" onclick="window.location.href='regiao-sao-vicente.html'" style="--img:linear-gradient(135deg,#26b6c8,#1f4d63)">
+        <div class="rcard" onclick="window.location.href='/regiao/sao-vicente'" style="--img:linear-gradient(135deg,#26b6c8,#1f4d63)">
           <div class="region-media"><i class="ti ti-beach" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Tradi&ccedil;&atilde;o e mobilidade</div><div class="region-title">S&atilde;o Vicente</div><div class="region-text">Bairros consolidados, acesso regional e oportunidades para moradia e investimento.</div></div>
         </div>
-        <div class="rcard" onclick="window.location.href='regiao-guaruja.html'" style="--img:linear-gradient(135deg,#f6b24a,#7d4b12)">
+        <div class="rcard" onclick="window.location.href='/regiao/guaruja'" style="--img:linear-gradient(135deg,#f6b24a,#7d4b12)">
           <div class="region-media"><i class="ti ti-sun" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Alto padr&atilde;o e turismo</div><div class="region-title">Guaruj&aacute;</div><div class="region-text">Mercado forte para lazer, temporada e im&oacute;veis pr&oacute;ximos &agrave;s praias.</div></div>
         </div>
-        <div class="rcard" onclick="window.location.href='regiao-praia-grande.html'" style="--img:linear-gradient(135deg,#4aa3ff,#173f70)">
+        <div class="rcard" onclick="window.location.href='/regiao/praia-grande'" style="--img:linear-gradient(135deg,#4aa3ff,#173f70)">
           <div class="region-media"><i class="ti ti-waves" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Orla e valoriza&ccedil;&atilde;o</div><div class="region-title">Praia Grande</div><div class="region-text">Infraestrutura urbana, avenida da praia e grande liquidez imobili&aacute;ria.</div></div>
         </div>
-        <div class="rcard" onclick="window.location.href='regiao-cubatao.html'" style="--img:linear-gradient(135deg,#7dcf87,#245334)">
+        <div class="rcard" onclick="window.location.href='/regiao/cubatao'" style="--img:linear-gradient(135deg,#7dcf87,#245334)">
           <div class="region-media"><i class="ti ti-industry" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Log&iacute;stica e neg&oacute;cios</div><div class="region-title">Cubat&atilde;o</div><div class="region-text">Polo industrial com demanda por moradia funcional e im&oacute;veis comerciais.</div></div>
         </div>
         <div class="region-group-title"><span>Litoral Norte</span></div>
-        <div class="rcard" onclick="window.location.href='regiao-bertioga.html'" style="--img:linear-gradient(135deg,#48c9a9,#155849)">
+        <div class="rcard" onclick="window.location.href='/regiao/bertioga'" style="--img:linear-gradient(135deg,#48c9a9,#155849)">
           <div class="region-media"><i class="ti ti-trees" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Litoral Norte</div><div class="region-title">Bertioga</div><div class="region-text">Praias, reservas e condom&iacute;nios fechados com perfil de moradia e lazer.</div></div>
         </div>
         <div class="region-group-title"><span>Litoral Sul Paulista</span></div>
-        <div class="rcard" onclick="window.location.href='regiao-itanhaem.html'" style="--img:linear-gradient(135deg,#b78cff,#4f2c7a)">
+        <div class="rcard" onclick="window.location.href='/regiao/itanhaem'" style="--img:linear-gradient(135deg,#b78cff,#4f2c7a)">
           <div class="region-media"><i class="ti ti-building" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Hist&oacute;ria e litoral sul</div><div class="region-title">Itanha&eacute;m</div><div class="region-text">Cidade tradicional com casas, terrenos e im&oacute;veis para fam&iacute;lias.</div></div>
         </div>
-        <div class="rcard" onclick="window.location.href='regiao-mongagua.html'" style="--img:linear-gradient(135deg,#ff9b6a,#7a351a)">
+        <div class="rcard" onclick="window.location.href='/regiao/mongagua'" style="--img:linear-gradient(135deg,#ff9b6a,#7a351a)">
           <div class="region-media"><i class="ti ti-home" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Custo-benef&iacute;cio</div><div class="region-title">Mongagu&aacute;</div><div class="region-text">Perfil acess&iacute;vel, vida tranquila e oportunidades perto da praia.</div></div>
         </div>
-        <div class="rcard" onclick="window.location.href='regiao-peruibe.html'" style="--img:linear-gradient(135deg,#38cfa2,#185743)">
+        <div class="rcard" onclick="window.location.href='/regiao/peruibe'" style="--img:linear-gradient(135deg,#38cfa2,#185743)">
           <div class="region-media"><i class="ti ti-leaf" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Natureza preservada</div><div class="region-title">Peru&iacute;be</div><div class="region-text">Praias, montanhas e qualidade de vida para morar ou investir.</div></div>
         </div>
-        <div class="rcard" onclick="window.location.href='regiao-itariri.html'" style="--img:linear-gradient(135deg,#9fce64,#385721)">
+        <div class="rcard" onclick="window.location.href='/regiao/itariri'" style="--img:linear-gradient(135deg,#9fce64,#385721)">
           <div class="region-media"><i class="ti ti-mountain" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Mata Atl&acirc;ntica</div><div class="region-title">Itariri</div><div class="region-text">S&iacute;tios, ch&aacute;caras e propriedades com voca&ccedil;&atilde;o rural e ambiental.</div></div>
         </div>
-        <div class="rcard" onclick="window.location.href='regiao-pedro-de-toledo.html'" style="--img:linear-gradient(135deg,#9ca8ff,#303d75)">
+        <div class="rcard" onclick="window.location.href='/regiao/pedro-de-toledo'" style="--img:linear-gradient(135deg,#9ca8ff,#303d75)">
           <div class="region-media"><i class="ti ti-building-community" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Interior tranquilo</div><div class="region-title">Pedro de Toledo</div><div class="region-text">Terrenos, ch&aacute;caras e crescimento com ritmo mais reservado.</div></div>
         </div>
-        <div class="rcard" onclick="window.location.href='regiao-ana-dias.html'" style="--img:linear-gradient(135deg,#d8b56a,#67511f)">
+        <div class="rcard" onclick="window.location.href='/regiao/ana-dias'" style="--img:linear-gradient(135deg,#d8b56a,#67511f)">
           <div class="region-media"><i class="ti ti-home-2" aria-hidden="true"></i></div>
           <div class="region-body"><div class="region-kicker"><i class="ti ti-map-pin" aria-hidden="true"></i> Distrito e nascentes</div><div class="region-title">Ana Dias</div><div class="region-text">Regi&atilde;o rural de Itariri com potencial para descanso, natureza e propriedades amplas.</div></div>
         </div>
@@ -3960,18 +3182,18 @@ window.goPage = function(p) {
         <li><a href="/regioes">Por regi&atilde;o</a></li>
       </ul></div>
       <div class="fc2"><h4>Regi&otilde;es</h4><ul>
-        <li><a href="regiao-santos.html">Santos</a></li>
-        <li><a href="regiao-sao-vicente.html">S&atilde;o Vicente</a></li>
-        <li><a href="regiao-guaruja.html">Guaruj&aacute;</a></li>
-        <li><a href="regiao-praia-grande.html">Praia Grande</a></li>
-        <li><a href="regiao-cubatao.html">Cubat&atilde;o</a></li>
-        <li><a href="regiao-bertioga.html">Bertioga</a></li>
-        <li><a href="regiao-itanhaem.html">Itanha&eacute;m</a></li>
-        <li><a href="regiao-mongagua.html">Mongagu&aacute;</a></li>
-        <li><a href="regiao-peruibe.html">Peru&iacute;be</a></li>
-        <li><a href="regiao-itariri.html">Itariri</a></li>
-        <li><a href="regiao-pedro-de-toledo.html">Pedro de Toledo</a></li>
-        <li><a href="regiao-ana-dias.html">Ana Dias</a></li>
+        <li><a href="/regiao/santos">Santos</a></li>
+        <li><a href="/regiao/sao-vicente">S&atilde;o Vicente</a></li>
+        <li><a href="/regiao/guaruja">Guaruj&aacute;</a></li>
+        <li><a href="/regiao/praia-grande">Praia Grande</a></li>
+        <li><a href="/regiao/cubatao">Cubat&atilde;o</a></li>
+        <li><a href="/regiao/bertioga">Bertioga</a></li>
+        <li><a href="/regiao/itanhaem">Itanha&eacute;m</a></li>
+        <li><a href="/regiao/mongagua">Mongagu&aacute;</a></li>
+        <li><a href="/regiao/peruibe">Peru&iacute;be</a></li>
+        <li><a href="/regiao/itariri">Itariri</a></li>
+        <li><a href="/regiao/pedro-de-toledo">Pedro de Toledo</a></li>
+        <li><a href="/regiao/ana-dias">Ana Dias</a></li>
       </ul></div>
       <div class="fc2"><h4>Imoore</h4><ul>
         <li><a onclick="goPage('quem-somos')">Quem Somos</a></li>
@@ -5110,7 +4332,7 @@ function previewImovelFotos(input){
   }
   fotos.forEach(file=>{
     const url=URL.createObjectURL(file);
-    if(preview)preview.innerHTML += `<button type="button" aria-label="Ampliar foto do imóvel" onclick="abrirFotoAmpliada('${url}')" style="width:72px;height:72px;border-radius:8px;background:url('${url}') center/cover;border:1px solid var(--bdr);cursor:pointer;padding:0"></button>`;
+    if(preview)preview.innerHTML += `<button type="button" onclick="abrirFotoAmpliada('${url}')" style="width:72px;height:72px;border-radius:8px;background:url('${url}') center/cover;border:1px solid var(--bdr);cursor:pointer;padding:0"></button>`;
   });
 }
 // -- DADOS DOS IMÓVEIS --
@@ -5189,7 +4411,7 @@ function modalGalleryHtml(im){
   const fotos = Array.isArray(im.fotos) ? im.fotos.slice(1).filter(Boolean) : [];
   if(!fotos.length) return '';
   const galeria = encodeURIComponent(JSON.stringify(im.fotos.filter(Boolean)));
-  return `<div class="mgallery">${fotos.map((foto,index)=>`<button type="button" class="mgallery-item" onclick="abrirGaleriaPublica('${galeria}',${index+1})" title="Ampliar foto ${index+2}" aria-label="Ampliar foto ${index+2}" style="background-image:url('${foto}')"></button>`).join('')}</div>`;
+  return `<div class="mgallery">${fotos.map((foto,index)=>`<button type="button" class="mgallery-item" onclick="abrirGaleriaPublica('${galeria}',${index+1})" title="Ampliar foto ${index+2}" style="background-image:url('${foto}')"></button>`).join('')}</div>`;
 }
 
 function escapeModalText(value){
