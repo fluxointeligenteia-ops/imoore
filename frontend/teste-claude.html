@@ -2464,6 +2464,100 @@ footer{
   min-width:240px!important;
   scroll-snap-align:start!important;
 }
+#page-home{
+  background:
+    linear-gradient(180deg,rgba(255,242,234,.94),rgba(255,247,242,.88) 38%,rgba(255,242,234,.92)),
+    url('assets/regioes/praia-grande.png') center top/cover fixed no-repeat!important;
+}
+#page-home > section:not(.hero){
+  background:rgba(255,246,240,.82)!important;
+}
+#page-home > section:nth-of-type(even):not(.hero){
+  background:rgba(255,250,247,.84)!important;
+}
+#page-home .home-city-card{
+  min-height:220px!important;
+  border-radius:30px!important;
+}
+#page-home .home-city-card::after{
+  display:none!important;
+}
+#page-home .step,
+#page-home .fcard{
+  background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,239,230,.90))!important;
+  border-color:rgba(255,85,0,.16)!important;
+}
+#page-home .step-ic,
+#page-home .fic{
+  display:grid!important;
+  place-items:center!important;
+  background:rgba(255,85,0,.10)!important;
+  color:#FF5500!important;
+}
+#page-home .step-ic i,
+#page-home .fic i{
+  display:none!important;
+}
+#page-home .step-ic::before,
+#page-home .fic::before{
+  content:'';
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:#FF5500;
+  box-shadow:0 0 0 8px rgba(255,85,0,.12);
+}
+#page-home .partners-section{
+  padding:64px 0 72px!important;
+  background:
+    linear-gradient(135deg,rgba(255,85,0,.10),rgba(255,255,255,.76)),
+    rgba(255,246,240,.92)!important;
+}
+#page-home .partners-head{
+  text-align:left!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,560px)!important;
+  gap:28px!important;
+  align-items:end!important;
+}
+#page-home .partners-eyebrow{
+  color:#FF5500!important;
+}
+#page-home .partners-head h2{
+  font-size:clamp(30px,4vw,48px)!important;
+  letter-spacing:-.045em!important;
+  max-width:520px!important;
+}
+#page-home .partners-head p{
+  font-size:17px!important;
+  line-height:1.7!important;
+  max-width:560px!important;
+}
+#page-home .partners-grid{
+  grid-template-columns:1fr!important;
+}
+#page-home .partner-card{
+  min-height:210px!important;
+  padding:34px!important;
+  border-radius:32px!important;
+  background:linear-gradient(135deg,#fff 0%,#fff1e8 100%)!important;
+  border:1px solid rgba(255,85,0,.18)!important;
+  box-shadow:0 22px 54px rgba(7,24,39,.10)!important;
+}
+#page-home .partner-logo-box{
+  width:260px!important;
+  height:128px!important;
+  border-radius:24px!important;
+}
+#page-home .partner-copy h3{
+  font-size:30px!important;
+  letter-spacing:-.035em!important;
+}
+#page-home .partner-copy p{
+  font-size:16px!important;
+  line-height:1.7!important;
+  max-width:680px!important;
+}
 @media(max-width:1024px){
   #page-home .hero-grid{
     grid-template-columns:1fr!important;
@@ -2477,6 +2571,10 @@ footer{
   #page-home .home-city-card{
     flex-basis:42%!important;
     min-width:260px!important;
+  }
+  #page-home .partners-head{
+    grid-template-columns:1fr!important;
+    gap:12px!important;
   }
 }
 @media(max-width:640px){
@@ -2524,8 +2622,27 @@ footer{
   }
   #page-home .home-city-card{
     flex-basis:78%!important;
-    min-width:270px!important;
+    min-width:286px!important;
+    min-height:180px!important;
   }
+  #page-home .partner-card{
+    display:block!important;
+    padding:24px!important;
+    min-height:0!important;
+  }
+  #page-home .partner-logo-box{
+    width:100%!important;
+    max-width:260px!important;
+    height:112px!important;
+    margin-bottom:18px!important;
+  }
+  #page-home .partner-copy h3{
+    font-size:24px!important;
+  }
+}
+#page-home section:has(.portais),
+#page-home section:has(.cta-stack){
+  display:none!important;
 }
 </style>
 </head>
