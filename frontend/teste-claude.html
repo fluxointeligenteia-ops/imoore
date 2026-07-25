@@ -2644,6 +2644,144 @@ footer{
 #page-home section:has(.cta-stack){
   display:none!important;
 }
+
+/* -- HOME AJUSTES PARCEIROS E ICONES -- */
+#page-home .home-cities-head{
+  justify-content:flex-end!important;
+  text-align:right!important;
+}
+#page-home .home-cities-head > div{
+  margin-left:auto!important;
+}
+#page-home .partners-head{
+  text-align:right!important;
+  grid-template-columns:minmax(0,520px) minmax(0,1fr)!important;
+}
+#page-home .partners-head .partners-eyebrow,
+#page-home .partners-head h2{
+  grid-column:2!important;
+  justify-self:end!important;
+  text-align:right!important;
+}
+#page-home .partners-head p{
+  grid-column:2!important;
+  justify-self:end!important;
+  text-align:right!important;
+}
+#page-home .hero-cta-main,
+#page-home .hero-cta-secondary,
+#page-home .hero-cta-buy{
+  justify-content:center!important;
+  text-align:center!important;
+  font-size:14px!important;
+  font-weight:850!important;
+  letter-spacing:-.01em!important;
+  text-transform:none!important;
+}
+#page-home .hero-cta-main{
+  background:linear-gradient(135deg,#FF5500,#FF7A21)!important;
+}
+#page-home .hero-cta-secondary{
+  background:linear-gradient(135deg,#071827,#0D283D)!important;
+}
+#page-home .hero-cta-buy{
+  color:#FF5500!important;
+  border-color:rgba(255,85,0,.22)!important;
+}
+#page-home .step-ic::before,
+#page-home .fic::before{
+  width:27px!important;
+  height:27px!important;
+  border-radius:0!important;
+  background:#FF5500!important;
+  box-shadow:none!important;
+  -webkit-mask:var(--home-icon) center/contain no-repeat;
+  mask:var(--home-icon) center/contain no-repeat;
+}
+#page-home .steps4 .step:nth-child(1) .step-ic{--home-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E")}
+#page-home .steps4 .step:nth-child(2) .step-ic{--home-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 7h3l2-2h6l2 2h3v12H4z'/%3E%3Ccircle cx='12' cy='13' r='3.5'/%3E%3C/svg%3E")}
+#page-home .steps4 .step:nth-child(3) .step-ic{--home-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 12a8 8 0 0 1-8 8H7l-4 3 1.5-5A8 8 0 1 1 21 12z'/%3E%3C/svg%3E")}
+#page-home .steps4 .step:nth-child(4) .step-ic{--home-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='15' r='4'/%3E%3Cpath d='m11 12 9-9'/%3E%3Cpath d='m16 3 5 5'/%3E%3C/svg%3E")}
+#page-home .grid-f .fcard:nth-child(1) .fic{--home-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='7' y='2' width='10' height='20' rx='2'/%3E%3Cpath d='M11 18h2'/%3E%3C/svg%3E")}
+#page-home .grid-f .fcard:nth-child(2) .fic{--home-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 11.5a8 8 0 0 1-11.7 7.1L4 20l1.4-4.1A8 8 0 1 1 20 11.5z'/%3E%3Cpath d='M9 9c.5 2 2 3.5 4 4l2-1'/%3E%3C/svg%3E")}
+#page-home .grid-f .fcard:nth-child(3) .fic{--home-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 21V5l8-3 8 3v16'/%3E%3Cpath d='M9 21v-6h6v6'/%3E%3Cpath d='M9 7h.01M15 7h.01M9 11h.01M15 11h.01'/%3E%3C/svg%3E")}
+#page-home .grid-f .fcard:nth-child(4) .fic{--home-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l8.8 8.8 8.8-8.8a5.5 5.5 0 0 0 0-7.8z'/%3E%3C/svg%3E")}
+#page-home .grid-f .fcard:nth-child(5) .fic{--home-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/%3E%3Cpath d='m9 12 2 2 4-4'/%3E%3C/svg%3E")}
+#page-home .grid-f .fcard:nth-child(6) .fic{--home-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 21v-2a4 4 0 0 0-8 0v2'/%3E%3Ccircle cx='12' cy='7' r='4'/%3E%3Cpath d='m16 11 2 2 4-4'/%3E%3C/svg%3E")}
+.partner-benefits{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+  margin-top:24px;
+}
+.partner-benefit{
+  background:rgba(255,255,255,.74);
+  border:1px solid rgba(255,85,0,.16);
+  border-radius:22px;
+  padding:20px;
+}
+.partner-benefit h4{
+  font-size:18px;
+  line-height:1.18;
+  color:#18181B;
+  font-weight:850;
+  letter-spacing:-.02em;
+  margin-bottom:14px;
+}
+.partner-benefit h4 strong{
+  color:#FF5500;
+  display:block;
+  font-size:24px;
+}
+.partner-benefit ul{
+  display:grid;
+  gap:9px;
+  padding:0;
+  margin:0;
+  list-style:none;
+}
+.partner-benefit li{
+  position:relative;
+  padding-left:18px;
+  color:#4B5563;
+  font-size:13px;
+  line-height:1.45;
+}
+.partner-benefit li::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:.58em;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#FF5500;
+}
+@media(max-width:1024px){
+  #page-home .home-cities-head,
+  #page-home .partners-head,
+  #page-home .partners-head .partners-eyebrow,
+  #page-home .partners-head h2,
+  #page-home .partners-head p{
+    text-align:left!important;
+    justify-self:start!important;
+  }
+  #page-home .partners-head .partners-eyebrow,
+  #page-home .partners-head h2,
+  #page-home .partners-head p{
+    grid-column:auto!important;
+  }
+}
+@media(max-width:640px){
+  .partner-benefits{
+    grid-template-columns:1fr;
+  }
+  #page-home .hero-cta-main,
+  #page-home .hero-cta-secondary,
+  #page-home .hero-cta-buy{
+    justify-content:center!important;
+  }
+}
 </style>
 </head>
 <body>
@@ -3053,9 +3191,9 @@ footer{
           <h1>Anuncie seu imóvel<br>conosco e <span class="ac">venda<br>mais rápido.</span></h1>
           <p class="hero-sub">A Imoore conecta proprietários e corretores às melhores oportunidades da Baixada Santista e do Litoral Sul Paulista.</p>
           <div class="hero-ctas">
-            <button class="btn btn-p hero-cta-main btn-pill-test" onclick="abrirTermo()"><i class="ti ti-home-plus" aria-hidden="true"></i> ANUNCIE SEU IMÓVEL GRÁTIS</button>
-            <button class="btn btn-p hero-cta-secondary btn-pill-test" onclick="abrirModalCorretor()"><i class="ti ti-id-badge" aria-hidden="true"></i> SOU CORRETOR</button>
-            <button class="btn btn-p hero-cta-buy btn-pill-test" onclick="abrirImoveisPorFinalidade('comprar')"><i class="ti ti-home-search" aria-hidden="true"></i> QUERO COMPRAR</button>
+            <button class="btn btn-p hero-cta-main btn-pill-test" onclick="abrirTermo()"><i class="ti ti-home-plus" aria-hidden="true"></i> Anuncie seu im&oacute;vel gr&aacute;tis</button>
+            <button class="btn btn-p hero-cta-secondary btn-pill-test" onclick="abrirModalCorretor()"><i class="ti ti-id-badge" aria-hidden="true"></i> Sou corretor</button>
+            <button class="btn btn-p hero-cta-buy btn-pill-test" onclick="abrirImoveisPorFinalidade('comprar')"><i class="ti ti-home-search" aria-hidden="true"></i> Quero comprar</button>
           </div>
           <p class="home-region-label">Regi&otilde;es</p>
           <div class="cidades-wrap">
@@ -3289,6 +3427,30 @@ footer{
           <div class="partner-copy">
             <h3>Aluga Mais</h3>
             <p>Parceira em solu&ccedil;&otilde;es para loca&ccedil;&atilde;o, atendimento e apoio ao mercado imobili&aacute;rio.</p>
+            <div class="partner-benefits">
+              <div class="partner-benefit">
+                <h4>Destaque-se com <strong>inquilinos</strong></h4>
+                <ul>
+                  <li>An&aacute;lise cadastral digital, r&aacute;pida e sem burocracia</li>
+                  <li>Contrata&ccedil;&atilde;o 100% online, com assinatura imediata</li>
+                  <li>Jornada de loca&ccedil;&atilde;o simples e transparente para o inquilino</li>
+                  <li>Flexibilidade no pagamento: boleto banc&aacute;rio ou cart&atilde;o de cr&eacute;dito</li>
+                </ul>
+              </div>
+              <div class="partner-benefit">
+                <h4>Destaque-se com <strong>propriet&aacute;rios</strong></h4>
+                <ul>
+                  <li>Fidelize seus locadores com uma gest&atilde;o &aacute;gil e profissional</li>
+                  <li>Pagamento do aluguel em dia, sem preocupa&ccedil;&atilde;o com inadimpl&ecirc;ncia</li>
+                  <li>Seguran&ccedil;a na loca&ccedil;&atilde;o com an&aacute;lise cadastral antifraude</li>
+                  <li>Preserva&ccedil;&atilde;o do patrim&ocirc;nio com garantia para reparos e pintura</li>
+                  <li>Loca&ccedil;&atilde;o r&aacute;pida e segura com tecnologia e intelig&ecirc;ncia artificial</li>
+                  <li>Propriet&aacute;rios escolhem sua imobili&aacute;ria por oferecer loca&ccedil;&otilde;es r&aacute;pidas e seguras</li>
+                  <li>Mais op&ccedil;&otilde;es para aprova&ccedil;&atilde;o com nosso painel de garantias</li>
+                  <li>Melhore a experi&ecirc;ncia do cliente e gere mais indica&ccedil;&otilde;es</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </article>
       </div>
