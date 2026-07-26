@@ -3662,6 +3662,98 @@ footer{
     padding-right:12px!important;
   }
 }
+
+/* -- AJUSTES HOME 20260726: HERO MOBILE E RODAPE -- */
+footer{
+  background:linear-gradient(180deg,#164467 0%,#123957 54%,#0d2c46 100%)!important;
+}
+footer .fb{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+footer .footer-brand{
+  order:1;
+  margin-bottom:10px!important;
+}
+footer .fb > p{
+  order:4;
+}
+footer .footer-credentials{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:4px 0 14px;
+}
+footer .fcreci,
+footer .fsecurity{
+  order:2;
+  margin-top:0!important;
+  display:inline-flex!important;
+  align-items:center;
+  gap:7px;
+  min-height:34px;
+  padding:8px 13px;
+  border-radius:999px;
+  color:#fff!important;
+  background:rgba(255,255,255,.10)!important;
+  border:1px solid rgba(255,255,255,.18)!important;
+  box-shadow:0 10px 24px rgba(0,0,0,.12)!important;
+  font-size:11px!important;
+  font-weight:700!important;
+  letter-spacing:0!important;
+  line-height:1!important;
+}
+footer .fsecurity{
+  order:3;
+}
+footer .fcreci{
+  background:rgba(255,85,0,.18)!important;
+  border-color:rgba(255,85,0,.34)!important;
+}
+footer .fsecurity i{
+  color:#8CFFBE;
+}
+footer .hdr-wpp,
+footer .soc[title="WhatsApp"],
+footer .fb > div[style*="margin-top:14px"]{
+  display:none!important;
+}
+@media(max-width:430px){
+  #page-home .hero h1{
+    font-size:clamp(1.82rem,7.7vw,2.18rem)!important;
+    line-height:1.1!important;
+  }
+  #page-home .hero-ctas{
+    gap:9px!important;
+    margin-bottom:24px!important;
+  }
+  #page-home .hero-ctas .btn{
+    min-height:44px!important;
+    height:44px!important;
+    font-size:clamp(.78rem,3vw,.86rem)!important;
+    padding:0 12px!important;
+  }
+  footer .footer-credentials{
+    gap:7px;
+  }
+  footer .fcreci,
+  footer .fsecurity{
+    min-height:32px;
+    padding:7px 10px;
+    font-size:10.5px!important;
+  }
+}
+@media(max-width:360px){
+  #page-home .hero h1{
+    font-size:1.78rem!important;
+  }
+  #page-home .hero-ctas .btn{
+    font-size:.76rem!important;
+    padding-left:10px!important;
+    padding-right:10px!important;
+  }
+}
 </style>
 </head>
 <body>
@@ -4139,7 +4231,7 @@ footer{
       <div class="home-cities-head">
         <span class="tag"><i class="ti ti-map-pin" aria-hidden="true"></i> Regi&otilde;es</span>
         <div>
-          <h2>Cidades do <span class="or">litoral</span></h2>
+          <h2>Cidades do <span class="or">Litoral</span></h2>
           <p>Explore oportunidades nas principais cidades da Baixada Santista e do Litoral Sul Paulista.</p>
         </div>
       </div>
