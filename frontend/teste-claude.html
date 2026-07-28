@@ -3877,6 +3877,13 @@ footer .fb > div[style*="margin-top:14px"]{
 #page-home .closing-cta-section .cta-card .cta-btns .btn-wpp i{
   color:#25D366!important;
 }
+#page-home .closing-cta-section .cta-card .cta-btns{
+  grid-template-columns:minmax(0,230px)!important;
+  justify-content:flex-start!important;
+}
+#page-home .closing-cta-section .cta-card .cta-btns .btn-wh:first-child{
+  width:100%!important;
+}
 @media(max-width:760px){
   #page-home section.closing-cta-section:has(.cta-stack){
     padding:34px 0 44px!important;
@@ -4307,8 +4314,8 @@ footer .fb > div[style*="margin-top:14px"]{
           <h1>Anuncie seu imóvel<br>conosco e <span class="ac">venda<br>mais rápido.</span></h1>
           <p class="hero-sub">A Imoore conecta proprietários e corretores às melhores oportunidades da Baixada Santista e do Litoral Sul Paulista.</p>
           <div class="hero-ctas">
-            <button class="btn btn-p hero-cta-main btn-pill-test" onclick="abrirTermo()"><i class="ti ti-home-plus" aria-hidden="true"></i> Anuncie seu im&oacute;vel gr&aacute;tis</button>
-            <button class="btn btn-p hero-cta-secondary btn-pill-test" onclick="abrirModalCorretor()"><i class="ti ti-id-badge" aria-hidden="true"></i> Sou corretor</button>
+            <button class="btn btn-p hero-cta-main btn-pill-test" onclick="abrirTermo()"><i class="ti ti-home-plus" aria-hidden="true"></i> Propriet&aacute;rios</button>
+            <button class="btn btn-p hero-cta-secondary btn-pill-test" onclick="abrirModalCorretor()"><i class="ti ti-id-badge" aria-hidden="true"></i> Corretores</button>
           </div>
           <p class="home-region-label">Regi&otilde;es</p>
           <div class="cidades-wrap">
@@ -4562,10 +4569,7 @@ footer .fb > div[style*="margin-top:14px"]{
           <h2>Cadastre seu imóvel conosco</h2>
           <p>Envie as informações do imóvel para análise da equipe Imoore e receba orientação para anunciar com segurança.</p>
           <div class="cta-btns">
-            <button class="btn-wh btn-pill-test" onclick="abrirTermo()"><i class="ti ti-home-plus" aria-hidden="true"></i> Anuncie gratuitamente</button>
-            <button class="btn-wpp" onclick="abrirWpp('Olá! Sou proprietário e quero cadastrar meu imóvel na Imoore.')" style="font-size:15px;padding:14px 26px">
-              <i class="ti ti-brand-whatsapp" aria-hidden="true"></i> Falar no WhatsApp
-            </button>
+            <button class="btn-wh btn-pill-test" onclick="abrirTermo()"><i class="ti ti-home-plus" aria-hidden="true"></i> Propriet&aacute;rios</button>
           </div>
         </div>
         <div class="cta-card">
@@ -4573,10 +4577,7 @@ footer .fb > div[style*="margin-top:14px"]{
           <h2>Corretor, trabalhe conosco</h2>
           <p>Cadastre seu perfil para atuar com a Imoore, enviar imóveis para análise e receber oportunidades qualificadas.</p>
           <div class="cta-btns">
-            <button class="btn-wh btn-pill-test" onclick="abrirModalCorretor()"><i class="ti ti-id-badge" aria-hidden="true"></i> Cadastrar perfil</button>
-            <button class="btn-wpp" onclick="abrirWpp('Olá! Sou corretor e quero anunciar meus imóveis na Imoore.')" style="font-size:15px;padding:14px 26px">
-              <i class="ti ti-brand-whatsapp" aria-hidden="true"></i> Anunciar pelo WhatsApp
-            </button>
+            <button class="btn-wh btn-pill-test" onclick="abrirModalCorretor()"><i class="ti ti-id-badge" aria-hidden="true"></i> Corretores</button>
           </div>
         </div>
       </div>
