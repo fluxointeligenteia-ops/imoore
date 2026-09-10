@@ -43,6 +43,13 @@ app.use((req, res, next) => {
   next();
 });
 
+// Add cache control headers to prevent stale API responses in approval flow
+app.use('/api', (req, res, next) => {
+  res.setHeader('Cache-Control', 'private, no-store, max-age=0');
+  res.setHeader('Vary', 'Cookie, Authorization');
+  next();
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/imoveis', imoveisRoutes);
 app.use('/api/leads', leadsRoutes);
