@@ -34,7 +34,8 @@ jobs:
             set -e
             cd \"$DEPLOY_PATH\"
             git fetch --prune origin
-            git reset --hard origin/main
+            git checkout main
+            git pull --ff-only origin main
             chmod +x scripts/*.sh
             ./scripts/update.sh
           "
