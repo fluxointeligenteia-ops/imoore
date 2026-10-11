@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://imoore.com.br/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
+  <url><loc>https://imoore.com.br/regioes</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://imoore.com.br/regiao/baixada-santista-litoral-sul</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://imoore.com.br/regiao/santos</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://imoore.com.br/regiao/sao-vicente</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://imoore.com.br/regiao/praia-grande</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://imoore.com.br/regiao/itanhaem</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://imoore.com.br/regiao/mongagua</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://imoore.com.br/regiao/peruibe</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://imoore.com.br/regiao/itariri</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://imoore.com.br/regiao/pedro-de-toledo</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://imoore.com.br/regiao/ana-dias</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+</urlset>

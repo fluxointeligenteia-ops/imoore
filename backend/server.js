@@ -57,6 +57,18 @@ app.get('/index.html', (req, res) => {
   res.sendFile(path.join(frontendPath, 'teste-claude.html'));
 });
 
+app.get('/regioes', (req, res) => {
+  res.sendFile(path.join(frontendPath, 'regioes.html'));
+});
+
+app.get(['/regiao/guaruja', '/regiao/cubatao', '/regiao/bertioga'], (req, res) => {
+  res.redirect(301, '/regioes');
+});
+
+app.get(['/regiao-guaruja.html', '/regiao-cubatao.html', '/regiao-bertioga.html'], (req, res) => {
+  res.redirect(301, '/regioes');
+});
+
 app.use(express.static(frontendPath, { index: false }));
 
 const PORT = process.env.PORT || 3001;
