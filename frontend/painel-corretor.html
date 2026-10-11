@@ -262,8 +262,8 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
             <div class="ff"><label>Chave do imóvel</label><input type="text" id="im-chave" placeholder="Ex: Portaria, cofre, proprietário"/></div>
             <div class="ff"><label>Cidade</label>
               <select id="im-cidade">
-                <option>Santos</option><option>São Vicente</option><option>Guarujá</option>
-                <option>Praia Grande</option><option>Cubatão</option><option>Bertioga</option>
+                <option>Santos</option><option>São Vicente</option>
+                <option>Praia Grande</option>
                 <option>Itanhaém</option><option>Mongaguá</option><option>Peruíbe</option>
                 <option>Itariri</option><option>Pedro de Toledo</option><option>Ana Dias</option>
               </select>
@@ -371,7 +371,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
             <div class="ff"><label>Creci/SP</label><input type="text" id="pf-creci" placeholder="SP-000000"/></div>
             <div class="ff"><label>Cidade de atuação</label>
               <select id="pf-cidade">
-                <option>Santos</option><option>São Vicente</option><option>Guarujá</option>
+                <option>Santos</option><option>São Vicente</option>
                 <option>Praia Grande</option><option>Peruíbe</option><option>Itanhaém</option>
               </select>
             </div>
@@ -460,7 +460,6 @@ if (document.getElementById('pf-nome')) document.getElementById('pf-nome').value
 // ── DADOS DEMO ──
 let meusImoveis = [
   {titulo:'Apartamento 2q Gonzaga',tipo:'Apartamento',cidade:'Santos',preco:'R$ 420.000',quartos:2,banheiros:1,area:70,status:'publicado',img:'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&q=80'},
-  {titulo:'Casa com piscina Enseada',tipo:'Casa',cidade:'Guarujá',preco:'R$ 980.000',quartos:4,banheiros:3,area:240,status:'publicado',img:'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=400&q=80'},
   {titulo:'Studio Aviação',tipo:'Studio',cidade:'Praia Grande',preco:'R$ 285.000',quartos:1,banheiros:1,area:42,status:'pendente',img:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&q=80'},
 ];
 

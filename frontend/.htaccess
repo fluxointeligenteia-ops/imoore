@@ -2,6 +2,14 @@
 RewriteEngine On
 RewriteBase /
 
+# Regioes descontinuadas: preservar links antigos sem expor paginas removidas.
+Redirect 301 /regiao-guaruja.html /regioes
+Redirect 301 /regiao-cubatao.html /regioes
+Redirect 301 /regiao-bertioga.html /regioes
+Redirect 301 /regiao/guaruja /regioes
+Redirect 301 /regiao/cubatao /regioes
+Redirect 301 /regiao/bertioga /regioes
+
 # Redirecionar requisições para index.html (SPA fallback, se necessário)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
