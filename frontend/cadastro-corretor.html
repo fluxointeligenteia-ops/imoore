@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cadastro de corretor | Imoore</title>
+  <style>
+    body{font:16px Arial,sans-serif;background:#f6f3ef;color:#211b17;margin:0;padding:24px}.card{max-width:760px;margin:30px auto;background:#fff;padding:28px;border-radius:18px;box-shadow:0 8px 32px #0001}h1{margin-top:0}label{display:block;font-weight:600;margin:14px 0 6px}input{box-sizing:border-box;width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;font:inherit}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.notice{border:1px solid #f1c8b3;background:#fff7f2;padding:16px;border-radius:10px;line-height:1.55}.check{display:flex;align-items:flex-start;gap:10px;font-weight:400}.check input{width:auto;margin-top:4px}button{padding:13px 20px;border:0;border-radius:24px;background:#f26522;color:white;font-weight:700;font-size:15px;cursor:pointer;margin-top:18px}button:disabled{opacity:.55}#message{margin-top:16px}.ok{color:#147347}.error{color:#b42318}@media(max-width:600px){.grid{grid-template-columns:1fr}.card{padding:20px}}
+  </style>
+</head>
+<body><main class="card">
+  <h1>Cadastro profissional de corretor</h1>
+  <p>Envie seus dados profissionais para análise da equipe Imoore. Não solicitamos CPF ou CNH nesta etapa.</p>
+  <form id="application-form">
+    <div class="grid">
+      <div><label for="nome">Nome completo *</label><input id="nome" name="nome" required maxlength="160" autocomplete="name"></div>
+      <div><label for="telefone">Telefone/WhatsApp *</label><input id="telefone" name="telefone" required maxlength="40" autocomplete="tel"></div>
+      <div><label for="email">E-mail *</label><input id="email" name="email" type="email" required maxlength="254" autocomplete="email"></div>
+      <div><label for="creci">CRECI *</label><input id="creci" name="creci" required maxlength="60"></div>
+      <div><label for="cidade">Cidade de atuação *</label><input id="cidade" name="cidade" required maxlength="100"></div>
+      <div><label for="experiencia">Experiência profissional</label><input id="experiencia" name="experiencia" maxlength="100" placeholder="Ex.: 3 anos"></div>
+      <div><label for="imobiliaria">Imobiliária/empresa</label><input id="imobiliaria" name="imobiliaria" maxlength="160"></div>
+    </div>
+    <section class="notice" aria-labelledby="privacy-title">
+      <h2 id="privacy-title">Aviso de Privacidade — cadastro de corretor</h2>
+      <p>A IMOORE GESTÃO DE NEGÓCIOS IMOBILIÁRIOS LTDA, CNPJ 61.788.646/0001-70, tratará os dados informados — nome, telefone, e-mail, CRECI, cidade de atuação, experiência e imobiliária/empresa, se informada — para receber e avaliar a candidatura, verificar as informações profissionais, organizar eventual entrevista e comunicar o andamento da análise.</p>
+      <p>Neste primeiro cadastro não solicitamos CPF, CNH nem documentos de identificação. Se algum documento for necessário posteriormente, informaremos separadamente sua finalidade e as condições de acesso e retenção.</p>
+      <p>O acesso será limitado às pessoas autorizadas envolvidas na análise e aos prestadores necessários para operar os sistemas. Os dados serão mantidos pelo período necessário à análise e ao cumprimento de obrigações aplicáveis. Para solicitações sobre seus dados, correção ou exclusão, contate <strong>[e-mail/canal de privacidade a confirmar]</strong>. Pedidos serão avaliados considerando obrigações legais de conservação.</p>
+    </section>
+    <label class="check"><input type="checkbox" name="aceite_aviso" required>Li o Aviso de Privacidade e estou ciente do tratamento dos meus dados para as finalidades descritas. *</label>
+    <label class="check"><input type="checkbox" name="aceite_contato">Autorizo contato por telefone, WhatsApp ou e-mail sobre futuras oportunidades e assuntos comerciais. Posso retirar essa autorização a qualquer momento.</label>
+    <button id="submit" type="submit">Enviar para análise</button>
+    <div id="message" role="status" aria-live="polite"></div>
+  </form>
+</main>
+<script>
+const form=document.getElementById('application-form');
+form.addEventListener('submit',async event=>{
+  event.preventDefault(); const button=document.getElementById('submit'); const message=document.getElementById('message');
+  button.disabled=true; message.textContent='Enviando…'; message.className='';
+  const values=Object.fromEntries(new FormData(form));
+  try{
+    const response=await fetch('/api/corretores/public',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nome:values.nome,telefone:values.telefone,email:values.email,creci:values.creci,cidade:values.cidade,experiencia:values.experiencia,imobiliaria:values.imobiliaria,aceite_aviso:form.elements.aceite_aviso.checked,aceite_contato:form.elements.aceite_contato.checked})});
+    const body=await response.json().catch(()=>({})); if(!response.ok)throw new Error(body.error||'Erro ao enviar cadastro.');
+    form.innerHTML='<h2>Cadastro recebido</h2><p>Seu cadastro foi enviado para análise. A equipe Imoore entrará em contato.</p>';
+  }catch(error){message.textContent=error.message;message.className='error';button.disabled=false;}
+});
+</script></body></html>
