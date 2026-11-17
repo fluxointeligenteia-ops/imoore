@@ -540,7 +540,7 @@
       1: ['Boas-vindas', 'Vamos cadastrar seu perfil de corretor.', 'O processo leva menos de 3 minutos.'],
       2: ['Etapa 1 de 6', 'Dados básicos', 'Informe seus dados de contato.'],
       3: ['Etapa 2 de 6', 'Registro e atuação', 'Confirme seu Creci/SP e sua cidade principal.'],
-      4: ['Etapa 3 de 6', 'Termo de parceria', 'Leia e aceite as condições para continuar.'],
+      4: ['Etapa 3 de 6', 'Consentimento LGPD', 'Leia e aceite o tratamento dos seus dados para análise, contato e eventual formalização da parceria.'],
       5: ['Etapa 4 de 6', 'Revisão', 'Confira seu cadastro antes de enviar.'],
       6: ['Etapa 5 de 6', 'Envio', 'Cadastro enviado para análise.'],
     };
@@ -587,6 +587,11 @@
       creci: takeBrokerField('cor-creci'),
       cidade: takeBrokerField('cor-cidade'),
       exp: takeBrokerField('cor-exp'),
+      imobiliaria: takeBrokerField('cor-imobiliaria'),
+      cnpj: takeBrokerField('cor-cnpj'),
+      endCidade: takeBrokerField('cor-end-cidade'),
+      endBairro: takeBrokerField('cor-end-bairro'),
+      endereco: takeBrokerField('cor-endereco'),
     };
     const aceite = document.getElementById('cor-aceite')?.closest('label');
     if(aceite?.parentElement) aceite.parentElement.removeChild(aceite);
@@ -644,7 +649,7 @@
           <div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.brokerPublicGo(2)">Voltar</button><button class="broker-primary" type="button" onclick="window.brokerPublicGo(4)">CONTINUAR</button></div>
         </section>
         <section class="broker-stage" data-broker-step="4">
-          <div class="broker-card" id="public-broker-term"><h3><i class="ti ti-file-check"></i> Termo de parceria</h3></div>
+          <div class="broker-card" id="public-broker-term"><h3><i class="ti ti-file-check"></i> Consentimento LGPD</h3></div>
           <div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.brokerPublicGo(3)">Voltar</button><button class="broker-primary" type="button" onclick="window.brokerPublicGo(5)">REVISAR</button></div>
         </section>
         <section class="broker-stage" data-broker-step="5">
@@ -663,7 +668,7 @@
       </div>`;
 
     addPublicItems('public-broker-basic', [fields.nome, fields.tel, fields.email]);
-    addPublicItems('public-broker-credentials', [fields.creci, fields.cidade, fields.exp]);
+    addPublicItems('public-broker-credentials', [fields.creci, fields.cidade, fields.exp, fields.imobiliaria, fields.cnpj, fields.endCidade, fields.endBairro, fields.endereco]);
     addPublicItems('public-broker-term', [termo, aceite]);
     if(aceite){
       aceite.classList.add('auth-choice');
@@ -720,7 +725,7 @@
   };
 
   setTimeout(() => {
-    if(document.getElementById('modal-corretor-cadastro')) return;
+    if(!document.getElementById('modal-corretor-cadastro')) return;
     buildPublicBrokerExperience();
     window.enviarCorretor = enviarCorretorPublico;
     window.abrirModalCorretor = () => {
@@ -1000,6 +1005,7 @@
   };
 
   setTimeout(() => {
+    if(typeof window.abrirModalCorretor === 'function') return;
     window.abrirModalCorretor = () => {
       buildPublicCorretorImovelExperience();
       const modal = document.getElementById('modal-corretor-cadastro');
