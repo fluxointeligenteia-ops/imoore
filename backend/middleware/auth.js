@@ -11,12 +11,16 @@ const authMiddleware = async (req, res, next) => {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     const { data: user, error } = await req.supabase
       .from('usuarios')
-      .select('id, nome, email, perfil, creci, ativo')
+      .select('id, nome, email, perfil, creci, ativo, status')
       .eq('id', payload.id)
       .single();
 
     if (error || !user || !user.ativo) {
       return res.status(401).json({ error: 'Usuario invalido ou inativo' });
+    }
+
+    if (user.perfil === 'corretor' && user.status !== 'aprovado') {
+      return res.status(403).json({ error: 'Corretor pendente de aprovacao' });
     }
 
     req.user = user;
