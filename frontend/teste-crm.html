@@ -1338,6 +1338,50 @@ function previewFotosImovel(input){
 document.querySelectorAll('.modal-bg').forEach(bg=>{
   bg.addEventListener('click',function(e){if(e.target===this)this.classList.remove('on')});
 });
+// Cadastro real de candidaturas: substitui o modo demo quando a API estiver configurada.
+async function renderCorretores(){
+  const ctb=document.getElementById('corretores-tbody');
+  if(!ctb)return;
+  try{
+    const candidaturas=await apiRequest('/corretores');
+    ctb.innerHTML='';
+    if(!candidaturas.length){
+      ctb.innerHTML=`<tr><td colspan="6">${emptyState('Nenhuma candidatura encontrada.')}</td></tr>`;
+      return;
+    }
+    candidaturas.forEach(c=>{
+      const actions=c.status==='pendente'
+        ? `<button class="btn btn-p btn-sm" onclick="aprovarCandidatura('${c.id}')" title="Aprovar"><i class="ti ti-check"></i></button><button class="btn btn-err btn-sm" onclick="rejeitarCandidatura('${c.id}')" title="Rejeitar"><i class="ti ti-x"></i></button>`
+        : `<button class="btn btn-o btn-sm" onclick="visualizarCorretor('${c.id}')" title="Visualizar"><i class="ti ti-eye"></i></button>`;
+      ctb.innerHTML+=`<tr><td><strong>${escapeHtml(c.nome)}</strong></td><td>${escapeHtml(c.email)}</td><td>${escapeHtml(c.telefone)}</td><td><span class="badge b-gray">${escapeHtml(c.creci)}</span></td><td>${escapeHtml(c.cidade)}</td><td><span class="badge ${c.status==='aprovado'?'b-ok':c.status==='rejeitado'?'b-err':'b-warn'}">${escapeHtml(c.status)}</span> ${actions}</td></tr>`;
+    });
+  }catch(error){
+    ctb.innerHTML=`<tr><td colspan="6">${emptyState(error.message || 'Não foi possível carregar candidaturas.')}</td></tr>`;
+  }
+}
+
+async function visualizarCorretor(id){
+  const candidaturas=await apiRequest('/corretores');
+  const c=candidaturas.find(item=>item.id===id);
+  if(!c)return;
+  document.getElementById('modal-corretor-detalhes-body').innerHTML=`<h2 style="font-size:18px;margin-bottom:12px">${escapeHtml(c.nome)}</h2><p><strong>E-mail:</strong> ${escapeHtml(c.email)}</p><p><strong>WhatsApp:</strong> ${escapeHtml(c.telefone)}</p><p><strong>CRECI:</strong> ${escapeHtml(c.creci)}</p><p><strong>Cidade:</strong> ${escapeHtml(c.cidade)}</p><p><strong>Experiência:</strong> ${escapeHtml(c.experiencia || '-')}</p><p><strong>Imobiliária:</strong> ${escapeHtml(c.imobiliaria || '-')}</p><p><strong>CNPJ:</strong> ${escapeHtml(c.cnpj || '-')}</p><p><strong>Endereço:</strong> ${escapeHtml(c.endereco || '-')}</p><p><strong>Status:</strong> ${escapeHtml(c.status)}</p><p><strong>Consentimento LGPD:</strong> confirmado em ${escapeHtml(c.consentimento_em || '-')}</p>`;
+  document.getElementById('modal-corretor-detalhes').classList.add('on');
+}
+
+async function aprovarCandidatura(id){
+  const senha=prompt('Informe uma senha temporária forte com pelo menos 16 caracteres. Compartilhe-a por canal separado:');
+  if(!senha)return;
+  if(senha.length<16){alert('A senha precisa ter pelo menos 16 caracteres.');return;}
+  try{await apiRequest(`/corretores/${id}/aprovar`,{method:'POST',body:JSON.stringify({senha_temporaria:senha})});alert('Candidatura aprovada. Entregue a senha temporária por canal seguro.');await renderCorretores();}catch(error){alert(error.message || 'Não foi possível aprovar.');}
+}
+
+async function rejeitarCandidatura(id){
+  const motivo=prompt('Informe o motivo da rejeição:');
+  if(!motivo)return;
+  try{await apiRequest(`/corretores/${id}/rejeitar`,{method:'POST',body:JSON.stringify({motivo})});await renderCorretores();}catch(error){alert(error.message || 'Não foi possível rejeitar.');}
+}
+
+renderCorretores();
 </script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { authMiddleware, requireRole } = require('../middleware/auth');
 
 const router = express.Router();
 const ALLOWED_PROFILES = ['admin', 'corretor', 'crm'];
@@ -15,6 +16,8 @@ const publicUser = (user) => ({
   email: user.email,
   perfil: user.perfil,
   creci: user.creci,
+  status: user.status || (user.perfil === 'corretor' ? 'pendente' : 'aprovado'),
+  senha_troca_obrigatoria: user.senha_troca_obrigatoria === true,
 });
 
 const generateToken = (user) => {
@@ -60,6 +63,19 @@ router.post('/login', async (req, res) => {
   loginLog('ativo', { ativo: data ? data.ativo : null });
 
   if (error || !data) {
+    const { data: applications } = await supabase
+      .from('corretor_candidaturas')
+      .select('status')
+      .eq('email', email)
+      .order('criado_em', { ascending: false })
+      .limit(1);
+    const applicationStatus = applications?.[0]?.status;
+    if (applicationStatus === 'pendente') {
+      return res.status(403).json({ error: 'Cadastro de corretor aguardando aprovacao' });
+    }
+    if (applicationStatus === 'rejeitado' || applicationStatus === 'revogado') {
+      return res.status(403).json({ error: 'Cadastro de corretor nao aprovado' });
+    }
     loginLog('retorno 401', {
       motivo: error ? 'consulta Supabase sem usuario valido' : 'usuario nao encontrado',
     });
@@ -69,6 +85,14 @@ router.post('/login', async (req, res) => {
   if (!data.ativo) {
     loginLog('retorno sem 401', { status: 403, motivo: 'usuario inativo' });
     return res.status(403).json({ error: 'Usuario inativo' });
+  }
+
+  if (data.perfil === 'corretor' && data.status !== 'aprovado') {
+    return res.status(403).json({
+      error: data.status === 'rejeitado'
+        ? 'Cadastro de corretor nao aprovado'
+        : 'Cadastro de corretor aguardando aprovacao',
+    });
   }
 
   const validPassword = await bcrypt.compare(senha, data.senha);
@@ -89,36 +113,26 @@ router.post('/login', async (req, res) => {
   res.json({ token, user: publicUser(data) });
 });
 
-router.post('/register', async (req, res) => {
+router.post('/register', authMiddleware, requireRole('admin'), async (req, res) => {
   const nome = String(req.body.nome || '').trim();
   const email = String(req.body.email || '').trim().toLowerCase();
   const { senha, telefone, creci } = req.body;
   const perfil = String(req.body.perfil || '').trim();
 
-  if (!nome || !email || !senha || !perfil) {
-    return res.status(400).json({ error: 'Nome, email, senha e perfil sao obrigatorios' });
+  if (!nome || !email || !senha || senha.length < 12 || !perfil) {
+    return res.status(400).json({ error: 'Nome, email, senha (minimo 12 caracteres) e perfil sao obrigatorios' });
   }
 
   if (!ALLOWED_PROFILES.includes(perfil)) {
     return res.status(400).json({ error: 'Perfil invalido' });
   }
 
-  const allowRegistration = process.env.ALLOW_REGISTRATION === 'true';
   const supabase = req.supabase;
-
-  const { data: users, error: userError } = await supabase.from('usuarios').select('id').limit(1);
-  if (userError) {
-    return res.status(500).json({ error: 'Erro ao verificar usuarios' });
-  }
-
-  if (!allowRegistration && users && users.length > 0) {
-    return res.status(403).json({ error: 'Cadastro nao permitido no momento' });
-  }
 
   const passwordHash = await bcrypt.hash(senha, 10);
   const { data, error } = await supabase
     .from('usuarios')
-    .insert([{ nome, email, senha: passwordHash, perfil, telefone, creci, ativo: true }])
+    .insert([{ nome, email, senha: passwordHash, perfil, telefone, creci, ativo: true, status: perfil === 'corretor' ? 'pendente' : 'aprovado' }])
     .select()
     .single();
 
@@ -126,8 +140,23 @@ router.post('/register', async (req, res) => {
     return res.status(500).json({ error: 'Erro ao criar usuario', details: error.message });
   }
 
-  const token = generateToken(data);
-  res.status(201).json({ token, user: publicUser(data) });
+  res.status(201).json({ user: publicUser(data) });
+});
+
+router.get('/me', authMiddleware, (req, res) => res.json(publicUser(req.user)));
+
+router.post('/change-password', authMiddleware, async (req, res) => {
+  const senhaAtual = String(req.body.senha_atual || '');
+  const novaSenha = String(req.body.nova_senha || '');
+  if (novaSenha.length < 16) return res.status(400).json({ error: 'A nova senha deve ter no minimo 16 caracteres' });
+  const { data: user, error: userError } = await req.supabase.from('usuarios').select('senha').eq('id', req.user.id).single();
+  if (userError || !user || !(await bcrypt.compare(senhaAtual, user.senha))) {
+    return res.status(401).json({ error: 'Senha atual invalida' });
+  }
+  const senhaHash = await bcrypt.hash(novaSenha, 12);
+  const { error } = await req.supabase.from('usuarios').update({ senha: senhaHash, senha_troca_obrigatoria: false, atualizado_em: new Date().toISOString() }).eq('id', req.user.id);
+  if (error) return res.status(500).json({ error: 'Nao foi possivel atualizar a senha' });
+  return res.json({ message: 'Senha atualizada com sucesso' });
 });
 
 module.exports = router;

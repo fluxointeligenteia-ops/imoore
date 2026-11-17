@@ -696,7 +696,7 @@
       return;
     }
     try{
-      const response = await fetch(`${apiBase()}/leads/public`, {
+      const response = await fetch(`${apiBase()}/corretores/public`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -704,6 +704,14 @@
           telefone: tel,
           email,
           cidade: v('cor-cidade'),
+          creci,
+          experiencia: v('cor-exp'),
+          imobiliaria: v('cor-imobiliaria'),
+          cnpj: v('cor-cnpj'),
+          endereco: v('cor-endereco'),
+          aceite_lgpd: true,
+          aceite_contato: true,
+          consentimento_versao: 'lgpd-corretor-v1',
           interesse: 'corretor_trabalhe_conosco',
           observacoes: `Creci/SP: ${creci}\nExperiência: ${v('cor-exp')}\nTermo aceito: sim`,
         }),
