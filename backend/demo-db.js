@@ -16,6 +16,7 @@ const users = [
     creci: '52050-J',
     telefone: '+5513991091887',
     ativo: true,
+    status: 'aprovado',
     criado_em: new Date().toISOString(),
   },
   {
@@ -27,6 +28,7 @@ const users = [
     creci: '52050-J',
     telefone: '+5513991091887',
     ativo: true,
+    status: 'aprovado',
     criado_em: new Date().toISOString(),
   },
   {
@@ -38,17 +40,20 @@ const users = [
     creci: '',
     telefone: '+5513991091887',
     ativo: true,
+    status: 'aprovado',
     criado_em: new Date().toISOString(),
   },
 ];
 
 const imoveis = [];
 const leads = [];
+const corretorCandidaturas = [];
 
 const TABLES = {
   usuarios: users,
   imoveis,
   leads,
+  corretor_candidaturas: corretorCandidaturas,
 };
 
 const cloneRow = (row) => JSON.parse(JSON.stringify(row));

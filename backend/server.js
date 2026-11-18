@@ -7,6 +7,7 @@ const { createClient } = require('@supabase/supabase-js');
 const { createDemoClient } = require('./demo-db');
 
 const authRoutes = require('./routes/auth');
+const corretoresRoutes = require('./routes/corretores');
 const imoveisRoutes = require('./routes/imoveis');
 const leadsRoutes = require('./routes/leads');
 
@@ -18,12 +19,16 @@ app.use(express.urlencoded({ extended: true }));
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_KEY;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY;
-const DEMO_MODE = process.env.DEMO_MODE === 'true'
-  || !SUPABASE_URL
+const invalidSupabaseConfig = !SUPABASE_URL
   || !SUPABASE_SERVICE_ROLE_KEY
   || SUPABASE_URL.includes('your-project')
   || SUPABASE_SERVICE_ROLE_KEY.includes('placeholder')
   || SUPABASE_SERVICE_ROLE_KEY.includes('YOUR_SUPABASE');
+const DEMO_MODE = process.env.DEMO_MODE === 'true';
+
+if (!DEMO_MODE && invalidSupabaseConfig) {
+  throw new Error('SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY sao obrigatorios quando DEMO_MODE=false');
+}
 
 let supabase;
 if (DEMO_MODE) {
@@ -51,6 +56,7 @@ app.use('/api', (req, res, next) => {
 });
 
 app.use('/api/auth', authRoutes);
+app.use('/api/corretores', corretoresRoutes);
 app.use('/api/imoveis', imoveisRoutes);
 app.use('/api/leads', leadsRoutes);
 
@@ -79,6 +85,10 @@ app.get(['/regiao-guaruja.html', '/regiao-cubatao.html', '/regiao-bertioga.html'
 app.use(express.static(frontendPath, { index: false }));
 
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`imoore-backend running on port ${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`imoore-backend running on port ${PORT}`);
+  });
+}
+
+module.exports = app;

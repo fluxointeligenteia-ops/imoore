@@ -11,7 +11,7 @@ const authMiddleware = async (req, res, next) => {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     const { data: user, error } = await req.supabase
       .from('usuarios')
-      .select('id, nome, email, perfil, creci, ativo')
+      .select('id, nome, email, perfil, creci, ativo, status, senha_troca_obrigatoria')
       .eq('id', payload.id)
       .single();
 
@@ -20,6 +20,17 @@ const authMiddleware = async (req, res, next) => {
     }
 
     req.user = user;
+    if (user.perfil === 'corretor' && user.status !== 'aprovado') {
+      return res.status(403).json({
+        error: user.status === 'rejeitado'
+          ? 'Cadastro de corretor rejeitado'
+          : 'Cadastro de corretor aguardando aprovacao',
+      });
+    }
+    if (user.senha_troca_obrigatoria === true
+      && !(req.baseUrl === '/api/auth' && req.path === '/change-password')) {
+      return res.status(403).json({ error: 'Altere a senha temporaria antes de continuar' });
+    }
     next();
   } catch (error) {
     return res.status(401).json({ error: 'Token invalido ou expirado' });

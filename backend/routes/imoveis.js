@@ -183,7 +183,7 @@ router.get('/:id', async (req, res) => {
   res.json(data);
 });
 
-router.post('/', uploadFotos, async (req, res) => {
+router.post('/', authMiddleware, requireRole('admin', 'corretor'), uploadFotos, async (req, res) => {
   const supabase = req.supabase;
   const user = await getOptionalUser(req);
   if (user && !['admin', 'corretor'].includes(user.perfil)) {
