@@ -286,7 +286,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
           <div class="upload-box" onclick="document.getElementById('inp-fotos').click()">
             <i class="ti ti-photo-plus upload-icon"></i>
             <div class="upload-title">Clique para adicionar fotos</div>
-            <div class="upload-desc">JPG, PNG até 10MB cada · Mínimo 3 fotos recomendado</div>
+            <div class="upload-desc">JPG, PNG até 3MB cada · Mínimo 3 fotos recomendado</div>
             <input type="file" id="inp-fotos" multiple accept="image/*" style="display:none" onchange="mostrarFotos(this)"/>
           </div>
           <div id="fotos-preview" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"></div>
@@ -649,8 +649,8 @@ async function enviarImovel() {
     ].join('\n');
     formData.append('descricao', `${descricao}\n\n${dadosComplementares}`);
     const fotos = Array.from(document.getElementById('inp-fotos').files || []);
-    if (fotos.length > 5) {
-      alert('Selecione no maximo 5 fotos.');
+    if (fotos.length > 15) {
+      alert('Selecione no maximo 15 fotos.');
       return;
     }
     fotos.forEach(file => {
@@ -683,8 +683,8 @@ function mostrarFotos(inp) {
   const prev = document.getElementById('fotos-preview');
   prev.innerHTML = '';
   const fotos = Array.from(inp.files || []);
-  if (fotos.length > 5) {
-    alert('Selecione no maximo 5 fotos.');
+  if (fotos.length > 15) {
+    alert('Selecione no maximo 15 fotos.');
     inp.value = '';
     return;
   }
