@@ -798,7 +798,7 @@
 
   function addPublicCorretorPhotos(files){
     const selected = Array.from(files || []).filter(file => /^image\//.test(file.type));
-    const available = Math.max(0, 30 - state.photos.length);
+    const available = Math.max(0, 15 - state.photos.length);
     if(selected.length > available) alert('Selecione no máximo 15 fotos.');
     state.photos = state.photos.concat(selected.slice(0, available));
     if(state.cover >= state.photos.length) state.cover = 0;
@@ -1100,7 +1100,7 @@
 
   function addPanelPhotos(files){
     const selected = Array.from(files || []).filter(file => /^image\//.test(file.type));
-    const available = Math.max(0, 30 - state.photos.length);
+    const available = Math.max(0, 15 - state.photos.length);
     if(selected.length > available) alert('Selecione no máximo 15 fotos.');
     state.photos = state.photos.concat(selected.slice(0, available));
     if(state.cover >= state.photos.length) state.cover = 0;
