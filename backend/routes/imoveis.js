@@ -7,8 +7,8 @@ const router = express.Router();
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
-    fileSize: 10 * 1024 * 1024,
-    files: 5,
+    fileSize: 3 * 1024 * 1024,
+    files: 15,
   },
   fileFilter: (req, file, cb) => {
     if (!file.mimetype || !file.mimetype.startsWith('image/')) {
@@ -19,11 +19,11 @@ const upload = multer({
 });
 
 const uploadFotos = (req, res, next) => {
-  upload.array('fotos', 5)(req, res, (error) => {
+  upload.array('fotos', 15)(req, res, (error) => {
     if (!error) return next();
     if (error instanceof multer.MulterError) {
       const message = error.code === 'LIMIT_UNEXPECTED_FILE' || error.code === 'LIMIT_FILE_COUNT'
-        ? 'Envie no máximo 5 fotos'
+        ? 'Envie no máximo 15 fotos'
         : error.message;
       return res.status(400).json({ error: message });
     }
@@ -198,8 +198,8 @@ router.post('/', authMiddleware, requireRole('admin', 'corretor'), uploadFotos, 
 
   const fotosExistentes = parseFotosField(payload.fotos);
   const fotosRecebidas = req.files || [];
-  if (fotosExistentes.length + fotosRecebidas.length > 5) {
-    return res.status(400).json({ error: 'Envie no maximo 5 fotos' });
+  if (fotosExistentes.length + fotosRecebidas.length > 15) {
+    return res.status(400).json({ error: 'Envie no maximo 15 fotos' });
   }
 
   payload.status = 'pendente';
