@@ -18,7 +18,7 @@ const users = [
   {
     nome: 'Admin Imoore',
     email: 'admin@imoore.com',
-    senha: 'imoore@2026',
+    senha: process.env.SEED_ADMIN_PASSWORD,
     perfil: 'admin',
     creci: '52050-J',
     telefone: '+5513991091887',
@@ -27,7 +27,7 @@ const users = [
   {
     nome: 'Corretor Imoore',
     email: 'corretor@imoore.com',
-    senha: 'imoore123',
+    senha: process.env.SEED_CORRETOR_PASSWORD,
     perfil: 'corretor',
     creci: '52050-J',
     telefone: '+5513991091887',
@@ -36,13 +36,17 @@ const users = [
   {
     nome: 'CRM Imoore',
     email: 'crm@imoore.com',
-    senha: 'crm@2026',
+    senha: process.env.SEED_CRM_PASSWORD,
     perfil: 'crm',
     creci: '',
     telefone: '+5513991091887',
     ativo: true,
   },
 ];
+if (users.some(user => !user.senha)) {
+  console.error('Defina SEED_ADMIN_PASSWORD, SEED_CORRETOR_PASSWORD e SEED_CRM_PASSWORD antes de executar o seed.');
+  process.exit(1);
+}
 
 async function seed() {
   console.log('Iniciando seed de usuários...');

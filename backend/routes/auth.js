@@ -1,12 +1,24 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { authMiddleware, requireRole } = require('../middleware/auth');
 
 const router = express.Router();
 const ALLOWED_PROFILES = ['admin', 'corretor', 'crm'];
+const SESSION_COOKIE = 'imoore_session';
 
-const loginLog = (message, details = {}) => {
-  console.log('[auth-login]', message, details);
+const setSessionCookie = (req, res, token) => {
+  const secure = req.secure || req.headers['x-forwarded-proto'] === 'https';
+  const flags = [`${SESSION_COOKIE}=${encodeURIComponent(token)}`, 'Path=/', 'HttpOnly', 'SameSite=Lax', 'Max-Age=28800'];
+  if (secure) flags.push('Secure');
+  res.setHeader('Set-Cookie', flags.join('; '));
+};
+
+const clearSessionCookie = (req, res) => {
+  const secure = req.secure || req.headers['x-forwarded-proto'] === 'https';
+  const flags = [`${SESSION_COOKIE}=`, 'Path=/', 'HttpOnly', 'SameSite=Lax', 'Max-Age=0'];
+  if (secure) flags.push('Secure');
+  res.setHeader('Set-Cookie', flags.join('; '));
 };
 
 const publicUser = (user) => ({
@@ -34,10 +46,7 @@ const generateToken = (user) => {
 router.post('/login', async (req, res) => {
   const email = String(req.body.email || '').trim().toLowerCase();
   const senha = req.body.senha;
-  loginLog('email recebido', { email, hasPassword: !!senha });
-
   if (!email || !senha) {
-    loginLog('retorno sem 401', { status: 400, motivo: 'email ou senha ausente' });
     return res.status(400).json({ error: 'Email e senha sao obrigatorios' });
   }
 
@@ -48,48 +57,34 @@ router.post('/login', async (req, res) => {
     .eq('email', email)
     .single();
 
-  loginLog('resultado consulta Supabase', {
-    hasData: !!data,
-    error: error ? {
-      code: error.code,
-      message: error.message,
-      details: error.details,
-    } : null,
-  });
-  loginLog('perfil encontrado', { perfil: data ? data.perfil : null });
-  loginLog('ativo', { ativo: data ? data.ativo : null });
-
   if (error || !data) {
-    loginLog('retorno 401', {
-      motivo: error ? 'consulta Supabase sem usuario valido' : 'usuario nao encontrado',
-    });
     return res.status(401).json({ error: 'Credenciais invalidas' });
   }
 
   if (!data.ativo) {
-    loginLog('retorno sem 401', { status: 403, motivo: 'usuario inativo' });
     return res.status(403).json({ error: 'Usuario inativo' });
   }
 
   const validPassword = await bcrypt.compare(senha, data.senha);
-  loginLog('resultado bcrypt.compare', { validPassword });
-
   if (!validPassword) {
-    loginLog('retorno 401', { motivo: 'senha invalida' });
     return res.status(401).json({ error: 'Credenciais invalidas' });
   }
 
   if (!process.env.JWT_SECRET) {
-    loginLog('falha ao gerar token', { motivo: 'JWT_SECRET ausente' });
     return res.status(500).json({ error: 'Configuracao de autenticacao ausente' });
   }
 
   const token = generateToken(data);
-  loginLog('token gerado', { userId: data.id, perfil: data.perfil });
-  res.json({ token, user: publicUser(data) });
+  setSessionCookie(req, res, token);
+  res.json({ user: publicUser(data) });
 });
 
-router.post('/register', async (req, res) => {
+router.post('/logout', (req, res) => {
+  clearSessionCookie(req, res);
+  res.json({ message: 'Sessao encerrada' });
+});
+
+router.post('/register', authMiddleware, requireRole('admin'), async (req, res) => {
   const nome = String(req.body.nome || '').trim();
   const email = String(req.body.email || '').trim().toLowerCase();
   const { senha, telefone, creci } = req.body;
@@ -98,22 +93,15 @@ router.post('/register', async (req, res) => {
   if (!nome || !email || !senha || !perfil) {
     return res.status(400).json({ error: 'Nome, email, senha e perfil sao obrigatorios' });
   }
+  if (String(senha).length < 12) {
+    return res.status(400).json({ error: 'A senha deve ter pelo menos 12 caracteres' });
+  }
 
   if (!ALLOWED_PROFILES.includes(perfil)) {
     return res.status(400).json({ error: 'Perfil invalido' });
   }
 
-  const allowRegistration = process.env.ALLOW_REGISTRATION === 'true';
   const supabase = req.supabase;
-
-  const { data: users, error: userError } = await supabase.from('usuarios').select('id').limit(1);
-  if (userError) {
-    return res.status(500).json({ error: 'Erro ao verificar usuarios' });
-  }
-
-  if (!allowRegistration && users && users.length > 0) {
-    return res.status(403).json({ error: 'Cadastro nao permitido no momento' });
-  }
 
   const passwordHash = await bcrypt.hash(senha, 10);
   const { data, error } = await supabase
@@ -123,11 +111,54 @@ router.post('/register', async (req, res) => {
     .single();
 
   if (error) {
-    return res.status(500).json({ error: 'Erro ao criar usuario', details: error.message });
+    console.error('Falha ao criar usuario:', error.message);
+    return res.status(500).json({ error: 'Erro ao criar usuario' });
   }
 
   const token = generateToken(data);
-  res.status(201).json({ token, user: publicUser(data) });
+  setSessionCookie(req, res, token);
+  res.status(201).json({ user: publicUser(data) });
+});
+
+router.get('/users', authMiddleware, requireRole('admin'), async (req, res) => {
+  const { data, error } = await req.supabase
+    .from('usuarios')
+    .select('id,nome,email,perfil,telefone,creci,ativo,criado_em')
+    .order('criado_em', { ascending: false });
+  if (error) return res.status(500).json({ error: 'Erro ao listar usuarios' });
+  res.json(data || []);
+});
+
+router.delete('/users/:id', authMiddleware, requireRole('admin'), async (req, res) => {
+  if (req.params.id === req.user.id) return res.status(400).json({ error: 'Nao e possivel excluir o proprio usuario' });
+  const { error } = await req.supabase.from('usuarios').delete().eq('id', req.params.id);
+  if (error) return res.status(500).json({ error: 'Erro ao excluir usuario' });
+  res.json({ message: 'Usuario excluido' });
+});
+
+router.put('/me', authMiddleware, async (req, res) => {
+  const updates = {};
+  ['nome', 'telefone', 'creci'].forEach(field => {
+    if (Object.prototype.hasOwnProperty.call(req.body, field)) updates[field] = String(req.body[field] || '').trim();
+  });
+  if (!Object.keys(updates).length) return res.status(400).json({ error: 'Nenhum dado para atualizar' });
+  const { data, error } = await req.supabase.from('usuarios').update(updates).eq('id', req.user.id).select('id,nome,email,perfil,telefone,creci,ativo').single();
+  if (error || !data) return res.status(500).json({ error: 'Erro ao atualizar perfil' });
+  res.json(data);
+});
+
+router.post('/change-password', authMiddleware, async (req, res) => {
+  const currentPassword = String(req.body.senhaAtual || '');
+  const newPassword = String(req.body.novaSenha || '');
+  if (!currentPassword || newPassword.length < 12) return res.status(400).json({ error: 'Informe a senha atual e uma nova senha com pelo menos 12 caracteres' });
+  const { data: user, error: fetchError } = await req.supabase.from('usuarios').select('id,senha').eq('id', req.user.id).single();
+  if (fetchError || !user) return res.status(404).json({ error: 'Usuario nao encontrado' });
+  if (!await bcrypt.compare(currentPassword, user.senha)) return res.status(401).json({ error: 'Senha atual incorreta' });
+  if (await bcrypt.compare(newPassword, user.senha)) return res.status(400).json({ error: 'A nova senha deve ser diferente da senha atual' });
+  const passwordHash = await bcrypt.hash(newPassword, 12);
+  const { error } = await req.supabase.from('usuarios').update({ senha: passwordHash, atualizado_em: new Date().toISOString() }).eq('id', req.user.id);
+  if (error) return res.status(500).json({ error: 'Erro ao alterar senha' });
+  res.json({ message: 'Senha alterada com sucesso' });
 });
 
 module.exports = router;

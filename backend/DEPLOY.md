@@ -153,7 +153,7 @@ Vercel gera URL como `https://imoore.vercel.app`
 ### Opção B: Servir pelo mesmo backend (Railway)
 
 Já está configurado! Acesse:
-- `https://seu-projeto-railway.up.railway.app/imoore-login.html`
+- `https://seu-projeto-railway.up.railway.app/imoore-entrar.html`
 - `https://seu-projeto-railway.up.railway.app/imoore-crm.html`
 
 ---

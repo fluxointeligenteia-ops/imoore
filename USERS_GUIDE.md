@@ -6,11 +6,12 @@ Bem-vindo à plataforma imoore! Este guia ensina como usar cada painel.
 
 ## 🔐 Login
 
-1. Acesse: **http://localhost:3001/imoore-login.html** (local) ou sua URL de produção
+1. Acesse: **http://localhost:3001/imoore-entrar.html** (local) ou sua URL de produção
 2. Selecione o tipo de usuário:
-   - **Admin** → `admin@imoore.com` / `imoore@2026`
-   - **Corretor** → `corretor@imoore.com` / `imoore123`
-   - **CRM** → `crm@imoore.com` / `crm@2026`
+   - **Admin** → `admin@imoore.com`
+   - **Corretor** → `corretor@imoore.com`
+   - **CRM** → `crm@imoore.com`
+   - As senhas não ficam registradas neste guia. Consulte o responsável pela administração da plataforma.
 3. Clique em "Entrar"
 4. Você será redirecionado automaticamente para seu painel
 

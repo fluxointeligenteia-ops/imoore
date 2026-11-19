@@ -1,7 +1,8 @@
 const bcrypt = require('bcryptjs');
 const fs = require('fs');
 const path = require('path');
-const { randomUUID } = require('crypto');
+const { randomUUID, randomBytes } = require('crypto');
+const demoPassword = name => process.env[name] || randomBytes(24).toString('hex');
 
 const uploadsPath = path.resolve(__dirname, 'uploads');
 fs.mkdirSync(uploadsPath, { recursive: true });
@@ -11,7 +12,7 @@ const users = [
     id: randomUUID(),
     nome: 'Admin Imoore',
     email: 'admin@imoore.com',
-    senha: bcrypt.hashSync('imoore@2026', 10),
+    senha: bcrypt.hashSync(demoPassword('DEMO_ADMIN_PASSWORD'), 10),
     perfil: 'admin',
     creci: '52050-J',
     telefone: '+5513991091887',
@@ -22,7 +23,7 @@ const users = [
     id: randomUUID(),
     nome: 'Corretor Imoore',
     email: 'corretor@imoore.com',
-    senha: bcrypt.hashSync('imoore123', 10),
+    senha: bcrypt.hashSync(demoPassword('DEMO_CORRETOR_PASSWORD'), 10),
     perfil: 'corretor',
     creci: '52050-J',
     telefone: '+5513991091887',
@@ -33,7 +34,7 @@ const users = [
     id: randomUUID(),
     nome: 'CRM Imoore',
     email: 'crm@imoore.com',
-    senha: bcrypt.hashSync('crm@2026', 10),
+    senha: bcrypt.hashSync(demoPassword('DEMO_CRM_PASSWORD'), 10),
     perfil: 'crm',
     creci: '',
     telefone: '+5513991091887',
@@ -53,6 +54,38 @@ const TABLES = {
 
 const cloneRow = (row) => JSON.parse(JSON.stringify(row));
 
+const propertyReferencePrefix = (city) => {
+  const normalized = String(city || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toUpperCase()
+    .replace(/[^A-Z0-9]/g, '');
+  const prefixes = {
+    PERUIBE: 'P',
+    PRAIAGRANDE: 'PG',
+    SANTOS: 'S',
+    SAOVICENTE: 'SV',
+    GUARUJA: 'G',
+    CUBATAO: 'C',
+    BERTIOGA: 'B',
+    ITANHAEM: 'I',
+    MONGAGUA: 'M',
+    ITARIRI: 'IT',
+    PEDRODETOLEDO: 'PT',
+    ANADIAS: 'AD',
+  };
+  return prefixes[normalized] || normalized.slice(0, 2) || 'IM';
+};
+
+const nextPropertyReference = (city) => {
+  const prefix = propertyReferencePrefix(city);
+  const lastNumber = imoveis.reduce((max, property) => {
+    const match = String(property.referencia || '').match(/^[A-Z]+(\d+)$/);
+    return match ? Math.max(max, Number(match[1])) : max;
+  }, 0);
+  return `${prefix}${String(lastNumber + 1).padStart(3, '0')}`;
+};
+
 const withDefaults = (tableName, row) => {
   const item = {
     ...row,
@@ -64,6 +97,7 @@ const withDefaults = (tableName, row) => {
   if (tableName === 'imoveis') {
     item.fotos = row.fotos || [];
     item.status = row.status || 'pendente';
+    item.referencia = row.referencia || nextPropertyReference(row.cidade);
   }
 
   return item;
@@ -233,14 +267,14 @@ const createDemoClient = () => {
     storage: {
       from: () => ({
         upload: async (filePath, buffer) => {
-          const filename = `${Date.now()}-${path.basename(filePath)}`;
-          const targetPath = path.join(uploadsPath, filename);
+          const relativePath = String(filePath || '').replace(/^[/\\]+/, '');
+          const targetPath = path.join(uploadsPath, relativePath);
+          fs.mkdirSync(path.dirname(targetPath), { recursive: true });
           fs.writeFileSync(targetPath, buffer);
           return { error: null };
         },
         getPublicUrl: (filePath) => {
-          const filename = path.basename(filePath);
-          const publicUrl = `http://localhost:3001/uploads/${filename}`;
+          const publicUrl = `/uploads/${String(filePath || '').replace(/^[/\\]+/, '').replace(/\\/g, '/')}`;
           return { data: { publicUrl } };
         },
       }),

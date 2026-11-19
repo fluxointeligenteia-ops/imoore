@@ -9,12 +9,28 @@
 <body>
   <main class="container">
     <header class="header topbar">
-      <div>
+      <div class="crm-brand-header">
+        <img class="imoore-panel-logo" src="assets/imoore-logo-efeito-laranja-transparente-20260724.png" alt="Imoore"/>
+        <img class="flow-panel-logo" src="assets/fluxo-inteligente-simbolo.png" alt="Fluxo Inteligente"/>
+        <div>
         <h1>CRM Imoore</h1>
         <p>Gestão de leads com funil de vendas e histórico de contato.</p>
+        </div>
       </div>
       <button class="button logout" id="logoutBtn">Sair</button>
     </header>
+
+    <section class="card" style="margin-bottom:16px">
+      <details>
+        <summary style="cursor:pointer;font-weight:700">Segurança da conta — alterar senha</summary>
+        <div class="grid-2" style="margin-top:14px">
+          <div class="form-group"><label for="crm-senha-atual">Senha atual</label><input type="password" id="crm-senha-atual" autocomplete="current-password"/></div>
+          <div class="form-group"><label for="crm-nova-senha">Nova senha</label><input type="password" id="crm-nova-senha" placeholder="Mínimo de 12 caracteres" autocomplete="new-password"/></div>
+          <div class="form-group"><label for="crm-confirmar-senha">Confirmar senha</label><input type="password" id="crm-confirmar-senha" autocomplete="new-password"/></div>
+          <div class="form-footer"><button class="button" type="button" id="crm-alterar-senha">Alterar senha</button></div>
+        </div>
+      </details>
+    </section>
 
     <section class="card crm-dashboard">
       <div class="crm-summary crm-summary-top">
@@ -149,6 +165,21 @@
     requireLogin();
     requireRole('crm');
     document.getElementById('logoutBtn').addEventListener('click', logout);
+    document.getElementById('crm-alterar-senha').addEventListener('click', async () => {
+      const atual=document.getElementById('crm-senha-atual').value;
+      const nova=document.getElementById('crm-nova-senha').value;
+      const confirmar=document.getElementById('crm-confirmar-senha').value;
+      if(nova.length<12){alert('A nova senha deve ter pelo menos 12 caracteres.');return;}
+      if(nova!==confirmar){alert('A confirmação da nova senha não confere.');return;}
+      const button=document.getElementById('crm-alterar-senha');
+      try{
+        button.disabled=true;
+        await apiFetch('/auth/change-password',{method:'POST',body:JSON.stringify({senhaAtual:atual,novaSenha:nova})});
+        ['crm-senha-atual','crm-nova-senha','crm-confirmar-senha'].forEach(id=>document.getElementById(id).value='');
+        alert('Senha alterada com sucesso.');
+      }catch(error){alert(handleError(error));}
+      finally{button.disabled=false;}
+    });
 
     const state = {
       leads: [],
@@ -340,7 +371,7 @@
 
           <div class="card-actions">
             <button type="button" class="button button-small" data-action="save-note">Salvar histórico</button>
-            ${(getUser() || {}).perfil === 'admin' ? '<button type="button" class="button button-small button-secondary" data-action="delete-lead">Excluir</button>' : ''}
+            ${getUser().perfil === 'admin' ? '<button type="button" class="button button-small button-secondary" data-action="delete-lead">Excluir</button>' : ''}
           </div>
 
           <div class="history-list">

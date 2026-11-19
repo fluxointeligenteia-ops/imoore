@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /crm
+Disallow: /painel/
+Disallow: /api/
+
+Sitemap: https://imoore.com.br/sitemap.xml

@@ -1,3 +1,25 @@
+function bathroomLabel(value){
+  const total = Number.parseInt(value || '0', 10);
+  if(!total) return '0 banheiros';
+  return `${total} banheiro${total > 1 ? 's' : ''}`;
+}
+
+window.bathroomLabel = bathroomLabel;
+
+const PHOTO_LIMIT = 8;
+const PHOTO_TYPES = ['image/jpeg','image/png','image/webp'];
+const PHOTO_MAX_BYTES = 10 * 1024 * 1024;
+const PHOTO_TIPS = 'Dica: envie fachada, sala, cozinha, quarto principal e banheiro. Use luz natural e fotos horizontais.';
+
+function validPhotoFiles(files){
+  const input = Array.from(files || []);
+  const invalidType = input.find(file => !PHOTO_TYPES.includes(file.type));
+  if(invalidType){ alert('Envie somente fotos JPG, PNG ou WEBP.'); return []; }
+  const oversized = input.find(file => file.size > PHOTO_MAX_BYTES);
+  if(oversized){ alert(`A foto ${oversized.name} ultrapassa 10 MB.`); return []; }
+  return input;
+}
+
 (() => {
   const broker = {
     step: 1,
@@ -14,6 +36,11 @@
   };
 
   const valueOf = id => document.getElementById(id)?.value?.trim() || '';
+  const bathroomLabel = value => {
+    const total = Number.parseInt(value || '0', 10);
+    if(!total) return '0 banheiros';
+    return `${total} banheiro${total > 1 ? 's' : ''}`;
+  };
 
   function fieldWrap(id){
     const input = document.getElementById(id);
@@ -61,7 +88,7 @@
       .broker-field textarea{min-height:140px;line-height:1.6;resize:vertical}
       .broker-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:22px}
       .broker-primary,.broker-secondary{border:none;border-radius:50px;font-family:var(--f);font-weight:800;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:14px 24px}
-      .broker-primary{background:var(--or);color:#fff;box-shadow:0 8px 20px rgba(242,101,34,.24)}
+      .broker-primary{background:var(--or);color:#fff;box-shadow:0 8px 20px rgba(248,88,0,.24)}
       .broker-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
       .broker-secondary{background:var(--bg3);color:var(--ink3)}
       .broker-feature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
@@ -113,6 +140,13 @@
     return wrap;
   }
 
+  function bathroomSelect(label, id){
+    const wrap = document.createElement('div');
+    wrap.className = 'broker-field';
+    wrap.innerHTML = `<label>${label}</label><select id="${id}"><option value="0">0</option><option value="1">1 banheiro</option><option value="2">2 banheiros</option><option value="3">3 banheiros</option><option value="4">4 banheiros</option><option value="5">5+ banheiros</option></select>`;
+    return wrap;
+  }
+
   function append(parent, items){
     items.filter(Boolean).forEach(item => parent.appendChild(item));
   }
@@ -154,9 +188,9 @@
   }
 
   function addPhotos(files){
-    const selected = Array.from(files || []).filter(file => /^image\//.test(file.type));
-    const available = Math.max(0, 30 - broker.photos.length);
-    if(selected.length > available) alert('Selecione no máximo 30 fotos.');
+    const selected = validPhotoFiles(files);
+    const available = Math.max(0, PHOTO_LIMIT - broker.photos.length);
+    if(selected.length > available) alert(`Selecione no máximo ${PHOTO_LIMIT} fotos.`);
     broker.photos = broker.photos.concat(selected.slice(0, available));
     if(broker.cover >= broker.photos.length) broker.cover = 0;
     syncPhotosInput();
@@ -200,7 +234,7 @@
           <div class="broker-review-price">${money(valueOf('imovel-preco'))}</div>
           <div class="broker-review-meta">
             <span>${valueOf('imovel-quartos') || 0} quartos</span>
-            <span>${valueOf('imovel-banheiros') || 0} banheiros</span>
+            <span>${bathroomLabel(valueOf('imovel-banheiros'))}</span>
             <span>${valueOf('imovel-suites') || 0} suítes</span>
             <span>${valueOf('imovel-vagas') || 0} vagas</span>
             <span>${valueOf('imovel-area') || 0} m²</span>
@@ -243,7 +277,8 @@
     if(label) label.textContent = data[0];
     if(title) title.textContent = data[1];
     if(subtitle) subtitle.textContent = data[2];
-    document.getElementById('page-corretor')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const scrollPage = document.getElementById('page-corretor') || document.getElementById('page-novo-imovel');
+    if(scrollPage) scrollPage.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   function setupDrop(){
@@ -263,7 +298,7 @@
   }
 
   function buildExperience(){
-    const page = document.getElementById('page-corretor');
+    const page = document.getElementById('page-corretor') || document.getElementById('page-novo-imovel');
     if(!page || page.dataset.brokerExperience) return;
     const container = page.querySelector('.container');
     const root = page.querySelector('div[style*="padding:28px"][style*="box-shadow"]');
@@ -303,7 +338,7 @@
     const comissao = makeField('Comissão', 'imovel-comissao', 'text', 'Ex: 6%');
     const situacao = makeSelect('Situação', 'imovel-situacao', ['Disponível', 'Em negociação', 'Ocupado', 'Desocupado', 'Exclusivo']);
 
-    const oldKeyInput = fields.chave?.querySelector('#imovel-chave');
+    const oldKeyInput = fields.chave.querySelector('#imovel-chave');
     if(oldKeyInput){
       oldKeyInput.type = 'hidden';
       oldKeyInput.value = '';
@@ -325,11 +360,11 @@
         <div class="broker-step-labels" aria-hidden="true"><small>Dados</small><small>Características</small><small>Comercial</small><small>Fotos</small><small>Revisão</small><small>Envio</small></div>
       </div>
       <div class="broker-body">
-        <section class="broker-stage on" data-broker-step="1"><div class="broker-welcome"><h2>Vamos cadastrar um novo imóvel.</h2><p>O processo leva menos de 3 minutos.</p><div class="broker-checklist"><div>✓ Dados básicos</div><div>✓ Características</div><div>✓ Informações comerciais</div><div>✓ Fotos</div><div>✓ Revisão</div></div><button class="broker-primary" type="button" onclick="window.brokerGo(2)">COMEÇAR</button></div></section>
+        <section class="broker-stage on" data-broker-step="1"><div class="broker-welcome"><h2>Vamos cadastrar um novo imóvel.</h2><p>Em poucos passos, seu anúncio ficará pronto para aprovação.</p><div class="broker-checklist"><div>✓ Dados básicos</div><div>✓ Características</div><div>✓ Informações comerciais</div><div>✓ Fotos</div><div>✓ Revisão</div></div><button class="broker-primary" type="button" onclick="window.brokerGo(2)">COMEÇAR</button></div></section>
         <section class="broker-stage" data-broker-step="2"><div class="broker-card" id="broker-basic-card"><h3><i class="ti ti-home-edit" aria-hidden="true"></i> Dados do imóvel</h3><div class="broker-grid" id="broker-basic-grid"></div></div><div class="broker-card" id="broker-description-card"><h3><i class="ti ti-notes" aria-hidden="true"></i> Descrição</h3></div><div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.brokerGo(1)">Voltar</button><button class="broker-primary" type="button" onclick="window.brokerGo(3)">CONTINUAR</button></div></section>
         <section class="broker-stage" data-broker-step="3"><div class="broker-grid" style="grid-template-columns:minmax(0,1fr) 280px"><div class="broker-card"><h3><i class="ti ti-ruler-measure" aria-hidden="true"></i> Características</h3><div class="broker-feature-grid" id="broker-features-grid"></div></div><aside class="broker-summary"><h3>Resumo</h3><div><span>Quartos</span><strong id="broker-sum-quartos">0</strong></div><div><span>Banheiros</span><strong id="broker-sum-banheiros">0</strong></div><div><span>Suítes</span><strong id="broker-sum-suites">0</strong></div><div><span>Vagas</span><strong id="broker-sum-vagas">0</strong></div><div><span>Área total</span><strong id="broker-sum-area">0 m²</strong></div></aside></div><div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.brokerGo(2)">Voltar</button><button class="broker-primary" type="button" onclick="window.brokerGo(4)">CONTINUAR</button></div></section>
         <section class="broker-stage" data-broker-step="4"><div class="broker-card"><h3><i class="ti ti-cash" aria-hidden="true"></i> Informações comerciais</h3><div class="broker-grid" id="broker-commercial-grid"></div></div><div class="broker-card" id="broker-key-card"><h3><i class="ti ti-key" aria-hidden="true"></i> Onde estão as chaves</h3><div class="broker-choice-group"><label class="broker-choice"><input type="radio" name="imovel-chave-opcao" value="Proprietário" onchange="window.handleBrokerKeyChoice()"/> Proprietário</label><label class="broker-choice"><input type="radio" name="imovel-chave-opcao" value="Portaria" onchange="window.handleBrokerKeyChoice()"/> Portaria</label><label class="broker-choice"><input type="radio" name="imovel-chave-opcao" value="Imobiliária" onchange="window.handleBrokerKeyChoice()"/> Imobiliária</label><label class="broker-choice"><input type="radio" name="imovel-chave-opcao" value="Corretor" onchange="window.handleBrokerKeyChoice()"/> Corretor</label><label class="broker-choice"><input type="radio" name="imovel-chave-opcao" value="Outro" onchange="window.handleBrokerKeyChoice()"/> Outro</label></div><div class="broker-field" id="imovel-chave-outro-wrap" style="display:none;margin-top:12px"><label>Informe onde estão as chaves</label><input type="text" id="imovel-chave-outro" placeholder="Ex: Cofre na recepção" oninput="window.handleBrokerKeyChoice()"/></div></div><div class="broker-card"><h3><i class="ti ti-building-store" aria-hidden="true"></i> Publicar nos portais</h3><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:7px"><div style="background:var(--orl);border:1.5px solid var(--orm);border-radius:var(--r);padding:11px;text-align:center;font-size:11px;color:var(--or);font-weight:700">ZAP</div><div style="background:var(--orl);border:1.5px solid var(--orm);border-radius:var(--r);padding:11px;text-align:center;font-size:11px;color:var(--or);font-weight:700">VivaReal</div><div style="background:var(--orl);border:1.5px solid var(--orm);border-radius:var(--r);padding:11px;text-align:center;font-size:11px;color:var(--or);font-weight:700">OLX</div><div style="background:var(--bg3);border:1.5px solid var(--bdr);border-radius:var(--r);padding:11px;text-align:center;font-size:11px;color:var(--ink4);font-weight:600">Mercado Livre</div></div></div><div class="broker-card" id="broker-auth-card"><h3><i class="ti ti-file-check" aria-hidden="true"></i> Autorização</h3></div><div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.brokerGo(3)">Voltar</button><button class="broker-primary" type="button" onclick="window.brokerGo(5)">CONTINUAR</button></div></section>
-        <section class="broker-stage" data-broker-step="5"><div class="broker-upload" id="broker-photo-drop" onclick="document.getElementById('imovel-fotos').click()"><div><i class="ti ti-photo-plus" aria-hidden="true"></i><h3>Adicione as fotos do imóvel.</h3><p>Arraste as imagens aqui ou clique para selecionar.</p><small>Quanto mais fotos, maiores as chances de venda. Máximo de 30 fotos.</small></div></div><div id="broker-photo-slot"></div><div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.brokerGo(4)">Voltar</button><button class="broker-primary" type="button" onclick="window.brokerGo(6)">REVISAR</button></div></section>
+        <section class="broker-stage" data-broker-step="5"><div class="broker-upload" id="broker-photo-drop" onclick="document.getElementById('imovel-fotos').click()"><div><i class="ti ti-photo-plus" aria-hidden="true"></i><h3>Adicione as fotos do imóvel.</h3><p>Arraste as imagens aqui ou clique para selecionar.</p><small>Máximo de 8 fotos. ${PHOTO_TIPS}</small></div></div><div id="broker-photo-slot"></div><div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.brokerGo(4)">Voltar</button><button class="broker-primary" type="button" data-imoore-review="broker">REVISAR</button></div></section>
         <section class="broker-stage" data-broker-step="6"><div id="broker-review-card"></div><div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.brokerGo(2)">EDITAR</button><button class="broker-primary" type="button" id="broker-submit-slot">ENVIAR PARA APROVAÇÃO</button></div></section>
         <section class="broker-stage" data-broker-step="7"><div class="broker-success"><div class="broker-success-icon">✓</div><h2>Imóvel enviado com sucesso.</h2><p>O imóvel será analisado pela administração.</p><div class="broker-status">Pronto para aprovação.</div><div class="broker-actions" style="justify-content:center"><button class="broker-primary" type="button" onclick="window.brokerGo(1)">VOLTAR AO PAINEL</button></div></div></section>
       </div>`;
@@ -343,28 +378,28 @@
       feature.className = 'broker-feature';
       feature.innerHTML = `<i class="ti ${icons[index]}" aria-hidden="true"></i>`;
       feature.appendChild(item);
-      document.getElementById('broker-features-grid')?.appendChild(feature);
-      item.querySelector('input,select,textarea')?.addEventListener('input', updateSummary);
+      document.getElementById('broker-features-grid').appendChild(feature);
+      item.querySelector('input,select,textarea').addEventListener('input', updateSummary);
     });
     append(document.getElementById('broker-commercial-grid'), [fields.preco, fields.iptu, fields.condominio, comissao, situacao]);
-    if(oldKeyInput) document.getElementById('broker-key-card')?.appendChild(oldKeyInput);
+    if(oldKeyInput) document.getElementById('broker-key-card').appendChild(oldKeyInput);
     append(document.getElementById('broker-auth-card'), [term, auth]);
     if(photoInput){
       photoInput.hidden = true;
       photoInput.accept = 'image/*';
-      document.getElementById('broker-photo-slot')?.appendChild(photoInput);
+      document.getElementById('broker-photo-slot').appendChild(photoInput);
     }
     if(preview){
       preview.className = 'broker-photo-grid';
       preview.removeAttribute('style');
-      document.getElementById('broker-photo-slot')?.appendChild(preview);
+      document.getElementById('broker-photo-slot').appendChild(preview);
     }
     if(publish){
       publish.className = 'broker-primary';
       publish.removeAttribute('style');
       publish.textContent = 'ENVIAR PARA APROVAÇÃO';
       publish.disabled = true;
-      document.getElementById('broker-submit-slot')?.replaceWith(publish);
+      document.getElementById('broker-submit-slot').replaceWith(publish);
     }
     setupDrop();
     updateSummary();
@@ -374,9 +409,9 @@
     const desc = document.getElementById('imovel-descricao');
     if(!desc || desc.dataset.brokerEnriched) return;
     const extra = [
-      `Endereco: ${valueOf('imovel-endereco') || 'Nao informado'}`,
-      `Suites: ${valueOf('imovel-suites') || 'Nao informado'}`,
-      `Area construida: ${valueOf('imovel-area-construida') || 'Nao informado'} m2`,
+      `Endereço: ${valueOf('imovel-endereco') || 'Não informado'}`,
+      `Suítes: ${valueOf('imovel-suites') || 'Não informado'}`,
+      `Área construída: ${valueOf('imovel-area-construida') || 'Não informado'} m2`,
       `Comissao: ${valueOf('imovel-comissao') || 'Nao informada'}`,
       `Situacao: ${valueOf('imovel-situacao') || 'Nao informada'}`,
     ].join('\n');
@@ -387,7 +422,7 @@
 
   function restoreDescription(){
     const desc = document.getElementById('imovel-descricao');
-    if(desc?.dataset.brokerEnriched){
+    if(desc.dataset.brokerEnriched){
       desc.value = desc.dataset.originalValue || '';
       delete desc.dataset.originalValue;
       delete desc.dataset.brokerEnriched;
@@ -408,14 +443,14 @@
         alert('Não é possível enviar o imóvel para aprovação sem autorização de venda.');
         return;
       }
-      const token = typeof window.requirePropertyAuth === 'function'
+      const authorized = typeof window.requirePropertyAuth === 'function'
         ? window.requirePropertyAuth()
-        : localStorage.getItem('imoore_token');
-      if(!token) return;
+        : !!localStorage.getItem('imoore_user');
+      if(!authorized) return;
 
       const fotos = Array.from(document.getElementById('imovel-fotos')?.files || []);
-      if(fotos.length > 30){
-        alert('Selecione no máximo 30 fotos.');
+      if(fotos.length > PHOTO_LIMIT){
+        alert(`Selecione no máximo ${PHOTO_LIMIT} fotos.`);
         return;
       }
 
@@ -447,11 +482,11 @@
       formData.append('vagas', Number.parseInt(valueOf('imovel-vagas') || '0', 10));
       formData.append('area', Number(valueOf('imovel-area') || 0));
       const dadosComplementares = [
-        `IPTU: ${valueOf('imovel-iptu') || 'Nao informado'}`,
-        `Condominio: ${valueOf('imovel-condominio') || 'Nao informado'}`,
-        `Chave do imovel: ${valueOf('imovel-chave') || 'Nao informado'}`,
-        'Autorizacao de venda: Autorizo a venda do imóvel em referência',
-        'Autorizacao comercial: nao exclusiva, validade de 180 dias',
+        `IPTU: ${valueOf('imovel-iptu') || 'Não informado'}`,
+        `Condomínio: ${valueOf('imovel-condominio') || 'Não informado'}`,
+        `Chave do imóvel: ${valueOf('imovel-chave') || 'Não informado'}`,
+        'Autorização de venda: Autorizo a venda do imóvel em referência',
+        'Autorização comercial: não exclusiva, validade de 180 dias',
         'Aceite LGPD: sim',
       ].join('\n');
       formData.append('descricao', `${valueOf('imovel-descricao')}\n\n${dadosComplementares}`);
@@ -461,7 +496,7 @@
         const apiBase = window.IMOORE_API_BASE || window.API_BASE || '/api';
         const response = await fetch(`${apiBase}/imoveis`, {
           method: 'POST',
-          headers: { Authorization: `Bearer ${token}` },
+          credentials: 'include',
           body: formData,
         });
         const data = await response.json().catch(() => ({}));
@@ -512,9 +547,28 @@
   }, 0);
 })();
 
+if(!window.__imooreReviewDelegation){
+  document.addEventListener('click', event => {
+    const button = event.target.closest?.('[data-imoore-review]');
+    if(!button) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const flow = button.dataset.imooreReview;
+    if(flow === 'broker' && typeof window.brokerGo === 'function') window.brokerGo(6);
+    if(flow === 'partner' && typeof window.brokerPublicGo === 'function') window.brokerPublicGo(5);
+    if(flow === 'public-property' && typeof window.publicCorretorGo === 'function') window.publicCorretorGo(7);
+  }, true);
+  window.__imooreReviewDelegation = true;
+}
+
 (() => {
   const state = { step: 1 };
   const v = id => document.getElementById(id)?.value?.trim() || '';
+  const bathroomLabel = value => {
+    const total = Number.parseInt(value || '0', 10);
+    if(!total) return '0 banheiros';
+    return `${total} banheiro${total > 1 ? 's' : ''}`;
+  };
   const apiBase = () => window.IMOORE_API_BASE || window.API_BASE || '/api';
 
   function takeBrokerField(id){
@@ -551,7 +605,7 @@
     if(label) label.textContent = data[0];
     if(title) title.textContent = data[1];
     if(subtitle) subtitle.textContent = data[2];
-    document.querySelector('#modal-corretor-cadastro .broker-panel')?.scrollTo({ top: 0, behavior: 'smooth' });
+    document.querySelector('#modal-corretor-cadastro .broker-panel').scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function renderBrokerPublicReview(){
@@ -645,7 +699,7 @@
         </section>
         <section class="broker-stage" data-broker-step="4">
           <div class="broker-card" id="public-broker-term"><h3><i class="ti ti-file-check"></i> Termo de parceria</h3></div>
-          <div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.brokerPublicGo(3)">Voltar</button><button class="broker-primary" type="button" onclick="window.brokerPublicGo(5)">REVISAR</button></div>
+          <div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.brokerPublicGo(3)">Voltar</button><button class="broker-primary" type="button" data-imoore-review="partner">REVISAR</button></div>
         </section>
         <section class="broker-stage" data-broker-step="5">
           <div id="public-broker-review"></div>
@@ -674,7 +728,7 @@
 
   function addPublicItems(id, items){
     const target = document.getElementById(id);
-    items.filter(Boolean).forEach(item => target?.appendChild(item));
+    items.filter(Boolean).forEach(item => target.appendChild(item));
   }
 
   async function enviarCorretorPublico(){
@@ -691,17 +745,16 @@
       return;
     }
     try{
+      const payload = new FormData();
+      payload.append('nome', nome);
+      payload.append('telefone', tel);
+      payload.append('email', email);
+      payload.append('cidade', v('cor-cidade'));
+      payload.append('interesse', 'corretor_trabalhe_conosco');
+      payload.append('observacoes', `Creci/SP: ${creci}\nExperiencia: ${v('cor-exp')}\nTermo aceito: sim`);
       const response = await fetch(`${apiBase()}/leads/public`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          nome,
-          telefone: tel,
-          email,
-          cidade: v('cor-cidade'),
-          interesse: 'corretor_trabalhe_conosco',
-          observacoes: `Creci/SP: ${creci}\nExperiência: ${v('cor-exp')}\nTermo aceito: sim`,
-        }),
+        body: payload,
       });
       const data = await response.json().catch(() => ({}));
       if(!response.ok) throw new Error(data.error || 'Erro ao enviar cadastro');
@@ -738,6 +791,12 @@
   const v = id => document.getElementById(id)?.value?.trim() || '';
   const apiBase = () => window.IMOORE_API_BASE || window.API_BASE || '/api';
 
+  function bathroomLabel(value){
+    const total = Number.parseInt(value || '0', 10);
+    if(!total) return '0 banheiros';
+    return `${total} banheiro${total > 1 ? 's' : ''}`;
+  }
+
   function field(label, id, type = 'text', placeholder = ''){
     return `<div class="broker-field"><label>${label}</label><input type="${type}" id="${id}" placeholder="${placeholder}"/></div>`;
   }
@@ -772,7 +831,7 @@
     if(labelEl) labelEl.textContent = data[0];
     if(titleEl) titleEl.textContent = data[1];
     if(subtitleEl) subtitleEl.textContent = data[2];
-    document.querySelector('#modal-corretor-cadastro .broker-panel')?.scrollTo({ top: 0, behavior: 'smooth' });
+    document.querySelector('#modal-corretor-cadastro .broker-panel').scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function syncPublicCorretorPhotos(){
@@ -784,9 +843,9 @@
   }
 
   function addPublicCorretorPhotos(files){
-    const selected = Array.from(files || []).filter(file => /^image\//.test(file.type));
-    const available = Math.max(0, 30 - state.photos.length);
-    if(selected.length > available) alert('Selecione no máximo 30 fotos.');
+    const selected = validPhotoFiles(files);
+    const available = Math.max(0, PHOTO_LIMIT - state.photos.length);
+    if(selected.length > available) alert(`Selecione no máximo ${PHOTO_LIMIT} fotos.`);
     state.photos = state.photos.concat(selected.slice(0, available));
     if(state.cover >= state.photos.length) state.cover = 0;
     syncPublicCorretorPhotos();
@@ -843,7 +902,7 @@
           <div class="broker-review-price">${v('cor-imovel-valor') || 'Valor sob consulta'}</div>
           <div class="broker-review-meta">
             <span>${v('cor-quartos') || 0} quartos</span>
-            <span>${v('cor-banheiros') || 0} banheiros</span>
+            <span>${bathroomLabel(v('cor-banheiros'))}</span>
             <span>${v('cor-suites') || 0} suítes</span>
             <span>${v('cor-vagas') || 0} vagas</span>
             <span>${v('cor-area-total') || 0} m²</span>
@@ -908,12 +967,12 @@
         <div class="broker-step-labels" aria-hidden="true" style="grid-template-columns:repeat(8,1fr)"><small>Início</small><small>Dados</small><small>Carac.</small><small>Comercial</small><small>Chaves</small><small>Fotos</small><small>Revisão</small><small>Envio</small></div>
       </div>
       <div class="broker-body">
-        <section class="broker-stage on" data-broker-step="1"><div class="broker-welcome"><h2>Vamos cadastrar um novo imóvel.</h2><p>O processo leva menos de 3 minutos.</p><div class="broker-checklist"><div>✓ Dados do imóvel</div><div>✓ Características</div><div>✓ Informações comerciais</div><div>✓ Fotos</div><div>✓ Revisão</div></div><button class="broker-primary" type="button" onclick="window.publicCorretorGo(2)">COMEÇAR</button></div></section>
-        <section class="broker-stage" data-broker-step="2"><div class="broker-card"><h3><i class="ti ti-user"></i> Dados do corretor</h3><div class="broker-grid">${field('Nome completo','cor-nome','text','Seu nome')}${field('WhatsApp','cor-tel','text','(13) 99999-9999')}${field('E-mail','cor-email','email','seu@email.com')}${field('Creci/SP','cor-creci','text','Ex: SP-123456')}</div></div><div class="broker-card"><h3><i class="ti ti-home-edit"></i> Dados do imóvel</h3><div class="broker-grid">${field('Título','cor-imovel-titulo','text','Ex: Apartamento 2 quartos em Santos')}${select('Tipo','cor-imovel-tipo',['Apartamento','Casa','Terreno','Cobertura','Comercial','Studio'])}${select('Finalidade','cor-imovel-finalidade',['Venda','Aluguel','Lançamento'])}${select('Cidade','cor-imovel-cidade',['Santos','São Vicente','Guarujá','Praia Grande','Cubatão','Bertioga','Itanhaém','Mongaguá','Peruíbe','Itariri','Pedro de Toledo','Ana Dias'])}${field('Bairro','cor-imovel-bairro','text','Ex: Gonzaga')}${field('Endereço','cor-imovel-endereco','text','Rua, número e complemento')}</div></div><div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.publicCorretorGo(1)">Voltar</button><button class="broker-primary" type="button" onclick="window.publicCorretorGo(3)">CONTINUAR</button></div></section>
-        <section class="broker-stage" data-broker-step="3"><div class="broker-card"><h3><i class="ti ti-ruler-measure"></i> Características</h3><div class="broker-feature-grid"><div class="broker-feature"><i class="ti ti-bed"></i>${field('Quartos','cor-quartos','number','2')}</div><div class="broker-feature"><i class="ti ti-bath"></i>${field('Banheiros','cor-banheiros','number','1')}</div><div class="broker-feature"><i class="ti ti-door"></i>${field('Suítes','cor-suites','number','1')}</div><div class="broker-feature"><i class="ti ti-car"></i>${field('Vagas','cor-vagas','number','1')}</div><div class="broker-feature"><i class="ti ti-ruler"></i>${field('Área construída','cor-area-construida','number','80')}</div><div class="broker-feature"><i class="ti ti-crop"></i>${field('Área total','cor-area-total','number','120')}</div></div></div><div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.publicCorretorGo(2)">Voltar</button><button class="broker-primary" type="button" onclick="window.publicCorretorGo(4)">CONTINUAR</button></div></section>
+        <section class="broker-stage on" data-broker-step="1"><div class="broker-welcome"><h2>Vamos cadastrar um novo imóvel.</h2><p>Em poucos passos, seu imóvel ficará pronto para análise.</p><div class="broker-checklist"><div>✓ Dados do imóvel</div><div>✓ Características</div><div>✓ Informações comerciais</div><div>✓ Fotos</div><div>✓ Revisão</div></div><button class="broker-primary" type="button" onclick="window.publicCorretorGo(2)">COMEÇAR</button></div></section>
+        <section class="broker-stage" data-broker-step="2"><div class="broker-card"><h3><i class="ti ti-user"></i> Dados do corretor</h3><div class="broker-grid">${field('Nome completo','cor-nome','text','Seu nome')}${field('WhatsApp','cor-tel','text','(13) 99999-9999')}${field('E-mail','cor-email','email','seu@email.com')}${field('Creci/SP','cor-creci','text','Ex: SP-123456')}</div></div><div class="broker-card"><h3><i class="ti ti-home-edit"></i> Dados do imóvel</h3><div class="broker-grid">${field('Título','cor-imovel-titulo','text','Ex: Apartamento 2 quartos em Santos')}${select('Tipo','cor-imovel-tipo',['Apartamento','Casa','Terreno','Cobertura','Comercial','Studio'])}${select('Finalidade','cor-imovel-finalidade',['Venda','Aluguel','Lançamento'])}${select('Cidade','cor-imovel-cidade',['Santos','São Vicente','Praia Grande','Itanhaém','Mongaguá','Peruíbe','Itariri','Pedro de Toledo','Ana Dias'])}${field('Bairro','cor-imovel-bairro','text','Ex: Gonzaga')}${field('Endereço','cor-imovel-endereco','text','Rua, número e complemento')}</div></div><div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.publicCorretorGo(1)">Voltar</button><button class="broker-primary" type="button" onclick="window.publicCorretorGo(3)">CONTINUAR</button></div></section>
+        <section class="broker-stage" data-broker-step="3"><div class="broker-card"><h3><i class="ti ti-ruler-measure"></i> Características</h3><div class="broker-feature-grid"><div class="broker-feature"><i class="ti ti-bed"></i>${field('Quartos','cor-quartos','number','2')}</div><div class="broker-feature"><i class="ti ti-bath"></i><div class="broker-field"><label>Banheiros</label><select id="cor-banheiros"><option value="0">0</option><option value="1">1 banheiro</option><option value="2">2 banheiros</option><option value="3">3 banheiros</option><option value="4">4 banheiros</option><option value="5">5+ banheiros</option></select></div></div><div class="broker-feature"><i class="ti ti-door"></i>${field('Suítes','cor-suites','number','1')}</div><div class="broker-feature"><i class="ti ti-car"></i>${field('Vagas','cor-vagas','number','1')}</div><div class="broker-feature"><i class="ti ti-ruler"></i>${field('Área construída','cor-area-construida','number','80')}</div><div class="broker-feature"><i class="ti ti-crop"></i>${field('Área total','cor-area-total','number','120')}</div></div></div><div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.publicCorretorGo(2)">Voltar</button><button class="broker-primary" type="button" onclick="window.publicCorretorGo(4)">CONTINUAR</button></div></section>
         <section class="broker-stage" data-broker-step="4"><div class="broker-card"><h3><i class="ti ti-cash"></i> Informações comerciais</h3><div class="broker-grid">${field('Valor do imóvel','cor-imovel-valor','text','R$ 550.000')}${field('IPTU','cor-iptu','text','Ex: 180,00')}${field('Condomínio','cor-condominio','text','Ex: 650,00')}${field('Comissão','cor-comissao','text','Ex: 6%')}${select('Situação','cor-situacao',['Disponível','Em negociação','Ocupado','Desocupado','Exclusivo'])}${select('Experiência do corretor','cor-exp',['Menos de 1 ano','1 a 3 anos','3 a 5 anos','Mais de 5 anos'])}</div></div><div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.publicCorretorGo(3)">Voltar</button><button class="broker-primary" type="button" onclick="window.publicCorretorGo(5)">CONTINUAR</button></div></section>
         <section class="broker-stage" data-broker-step="5"><div class="broker-card"><h3><i class="ti ti-key"></i> Chaves do imóvel</h3><input type="hidden" id="cor-chave"/><div class="broker-choice-group"><label class="broker-choice"><input type="radio" name="cor-chave-opcao" value="Proprietário" onchange="window.handlePublicCorretorKey()"> Proprietário</label><label class="broker-choice"><input type="radio" name="cor-chave-opcao" value="Portaria" onchange="window.handlePublicCorretorKey()"> Portaria</label><label class="broker-choice"><input type="radio" name="cor-chave-opcao" value="Imobiliária" onchange="window.handlePublicCorretorKey()"> Imobiliária</label><label class="broker-choice"><input type="radio" name="cor-chave-opcao" value="Corretor" onchange="window.handlePublicCorretorKey()"> Corretor</label><label class="broker-choice"><input type="radio" name="cor-chave-opcao" value="Outro" onchange="window.handlePublicCorretorKey()"> Outro</label></div><div class="broker-field" id="cor-chave-outro-wrap" style="display:none;margin-top:12px"><label>Informe onde estão as chaves</label><input type="text" id="cor-chave-outro" placeholder="Ex: Cofre na recepção" oninput="window.handlePublicCorretorKey()"/></div></div><div class="broker-card"><h3><i class="ti ti-notes"></i> Observações</h3><div class="broker-field"><label>Descrição do imóvel</label><textarea id="cor-imovel-descricao" placeholder="Descreva diferenciais, localização e condições de negociação."></textarea></div></div><div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.publicCorretorGo(4)">Voltar</button><button class="broker-primary" type="button" onclick="window.publicCorretorGo(6)">CONTINUAR</button></div></section>
-        <section class="broker-stage" data-broker-step="6"><div class="broker-upload" id="public-corretor-drop" onclick="document.getElementById('cor-imovel-fotos').click()"><div><i class="ti ti-photo-plus"></i><h3>Adicione as fotos do imóvel.</h3><p>Arraste as imagens aqui ou clique para selecionar.</p><small>Quanto mais fotos, maiores as chances de venda. Máximo de 30 fotos.</small></div></div><input type="file" id="cor-imovel-fotos" multiple accept="image/*" hidden onchange="window.addPublicCorretorPhotos(this.files)"/><div id="cor-imovel-fotos-preview" class="broker-photo-grid"></div><div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.publicCorretorGo(5)">Voltar</button><button class="broker-primary" type="button" onclick="window.publicCorretorGo(7)">REVISAR</button></div></section>
+        <section class="broker-stage" data-broker-step="6"><div class="broker-upload" id="public-corretor-drop" onclick="document.getElementById('cor-imovel-fotos').click()"><div><i class="ti ti-photo-plus"></i><h3>Adicione as fotos do imóvel.</h3><p>Arraste as imagens aqui ou clique para selecionar.</p><small>Máximo de 8 fotos. ${PHOTO_TIPS}</small></div></div><input type="file" id="cor-imovel-fotos" multiple accept="image/jpeg,image/png,image/webp" hidden onchange="window.addPublicCorretorPhotos(this.files)"/><div id="cor-imovel-fotos-preview" class="broker-photo-grid"></div><div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.publicCorretorGo(5)">Voltar</button><button class="broker-primary" type="button" data-imoore-review="public-property">REVISAR</button></div></section>
         <section class="broker-stage" data-broker-step="7"><div id="public-corretor-review"></div><div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.publicCorretorGo(2)">EDITAR</button><button class="broker-primary" type="button" onclick="window.enviarCorretor()">ENVIAR PARA ANÁLISE</button></div></section>
         <section class="broker-stage" data-broker-step="8"><div class="broker-success"><div class="broker-success-icon">✓</div><h2>Cadastro enviado com sucesso.</h2><p>Nossa equipe fará a análise e entrará em contato.</p><div class="broker-status">Em análise.</div><div class="broker-actions" style="justify-content:center"><button class="broker-primary" type="button" onclick="window.fecharPublicCorretorImovel()">FINALIZAR</button></div></div></section>
       </div>`;
@@ -934,38 +993,63 @@
       const observacoes = [
         `Creci/SP: ${creci}`,
         `Experiência: ${v('cor-exp') || 'Nao informada'}`,
-        `Imovel: ${v('cor-imovel-titulo') || 'Nao informado'}`,
-        `Tipo: ${v('cor-imovel-tipo') || 'Nao informado'}`,
+        `Imóvel: ${v('cor-imovel-titulo') || 'Não informado'}`,
+        `Tipo: ${v('cor-imovel-tipo') || 'Não informado'}`,
         `Finalidade: ${v('cor-imovel-finalidade') || 'Nao informada'}`,
         `Cidade: ${v('cor-imovel-cidade') || 'Nao informada'}`,
-        `Bairro: ${v('cor-imovel-bairro') || 'Nao informado'}`,
-        `Endereco: ${v('cor-imovel-endereco') || 'Nao informado'}`,
-        `Valor: ${v('cor-imovel-valor') || 'Nao informado'}`,
-        `IPTU: ${v('cor-iptu') || 'Nao informado'}`,
-        `Condominio: ${v('cor-condominio') || 'Nao informado'}`,
+        `Bairro: ${v('cor-imovel-bairro') || 'Não informado'}`,
+        `Endereço: ${v('cor-imovel-endereco') || 'Não informado'}`,
+        `Valor: ${v('cor-imovel-valor') || 'Não informado'}`,
+        `IPTU: ${v('cor-iptu') || 'Não informado'}`,
+        `Condomínio: ${v('cor-condominio') || 'Não informado'}`,
         `Comissao: ${v('cor-comissao') || 'Nao informada'}`,
         `Situacao: ${v('cor-situacao') || 'Nao informada'}`,
-        `Quartos: ${v('cor-quartos') || 'Nao informado'}`,
-        `Banheiros: ${v('cor-banheiros') || 'Nao informado'}`,
-        `Suites: ${v('cor-suites') || 'Nao informado'}`,
-        `Vagas: ${v('cor-vagas') || 'Nao informado'}`,
-        `Area construida: ${v('cor-area-construida') || 'Nao informada'} m2`,
+        `Quartos: ${v('cor-quartos') || 'Não informado'}`,
+        `Banheiros: ${v('cor-banheiros') || 'Não informado'}`,
+        `Suítes: ${v('cor-suites') || 'Não informado'}`,
+        `Vagas: ${v('cor-vagas') || 'Não informado'}`,
+        `Área construída: ${v('cor-area-construida') || 'Nao informada'} m2`,
         `Area total: ${v('cor-area-total') || 'Nao informada'} m2`,
-        `Chaves: ${v('cor-chave') || 'Nao informado'}`,
-        `Descricao: ${v('cor-imovel-descricao') || 'Nao informada'}`,
+        `Chaves: ${v('cor-chave') || 'Não informado'}`,
+        `Descrio: ${v('cor-imovel-descricao') || 'Nao informada'}`,
         `Fotos selecionadas: ${state.photos.length}`,
       ].join('\n');
+      const imovelPayload = new FormData();
+      imovelPayload.append('titulo', v('cor-imovel-titulo') || `${v('cor-imovel-tipo') || 'Imovel'} em ${v('cor-imovel-bairro') || v('cor-imovel-cidade') || 'cidade nao informada'}`);
+      imovelPayload.append('tipo', v('cor-imovel-tipo') || 'Apartamento');
+      imovelPayload.append('finalidade', v('cor-imovel-finalidade') || 'Venda');
+      imovelPayload.append('preco', v('cor-imovel-valor'));
+      imovelPayload.append('cidade', v('cor-imovel-cidade') || v('cor-cidade'));
+      imovelPayload.append('bairro', v('cor-imovel-bairro'));
+      imovelPayload.append('quartos', Number.parseInt(v('cor-quartos') || '0', 10));
+      imovelPayload.append('banheiros', Number.parseInt(v('cor-banheiros') || '0', 10));
+      imovelPayload.append('vagas', Number.parseInt(v('cor-vagas') || '0', 10));
+      imovelPayload.append('area', Number.parseInt(v('cor-area-total') || v('cor-area-construida') || '0', 10));
+      imovelPayload.append('corretor_email', email);
+      imovelPayload.append('descricao', [
+        v('cor-imovel-descricao') || '',
+        '',
+        observacoes,
+      ].join('\n'));
+      state.photos.forEach(file => imovelPayload.append('fotos', file));
+      const imovelResponse = await fetch(`${apiBase()}/imoveis`, {
+        method: 'POST',
+        body: imovelPayload,
+      });
+      const imovelData = await imovelResponse.json().catch(() => ({}));
+      if(!imovelResponse.ok) throw new Error(imovelData.error || 'Erro ao cadastrar imovel com fotos');
+
+      const payload = new FormData();
+      payload.append('nome', nome);
+      payload.append('telefone', tel);
+      payload.append('email', email);
+      payload.append('cidade', v('cor-imovel-cidade') || v('cor-cidade'));
+      payload.append('interesse', 'corretor_cadastro_imovel');
+      payload.append('observacoes', `${observacoes}\nImovel pendente vinculado: ${imovelData.id || 'nao informado'}`);
+      state.photos.forEach(file => payload.append('arquivos', file));
       const response = await fetch(`${apiBase()}/leads/public`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          nome,
-          telefone: tel,
-          email,
-          cidade: v('cor-imovel-cidade') || v('cor-cidade'),
-          interesse: 'corretor_cadastro_imovel',
-          observacoes,
-        }),
+        body: payload,
       });
       const data = await response.json().catch(() => ({}));
       if(!response.ok) throw new Error(data.error || 'Erro ao enviar cadastro');
@@ -1016,6 +1100,12 @@
   const v = id => document.getElementById(id)?.value?.trim() || '';
   const apiBase = () => window.IMOORE_API_BASE || window.API_BASE || '/api';
 
+  function bathroomLabel(value){
+    const total = Number.parseInt(value || '0', 10);
+    if(!total) return '0 banheiros';
+    return `${total} banheiro${total > 1 ? 's' : ''}`;
+  }
+
   function money(value){
     const parsed = Number(String(value || '').replace(/[^\d,.-]/g, '').replace(/\./g, '').replace(',', '.'));
     return Number.isFinite(parsed) && parsed > 0 ? parsed.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : 'Valor sob consulta';
@@ -1041,6 +1131,13 @@
     const wrap = document.createElement('div');
     wrap.className = 'broker-field';
     wrap.innerHTML = `<label>${label}</label><select id="${id}">${options.map(item => `<option>${item}</option>`).join('')}</select>`;
+    return wrap;
+  }
+
+  function bathroomSelect(label, id){
+    const wrap = document.createElement('div');
+    wrap.className = 'broker-field';
+    wrap.innerHTML = `<label>${label}</label><select id="${id}"><option value="0">0</option><option value="1">1 banheiro</option><option value="2">2 banheiros</option><option value="3">3 banheiros</option><option value="4">4 banheiros</option><option value="5">5+ banheiros</option></select>`;
     return wrap;
   }
 
@@ -1085,9 +1182,9 @@
   }
 
   function addPanelPhotos(files){
-    const selected = Array.from(files || []).filter(file => /^image\//.test(file.type));
-    const available = Math.max(0, 30 - state.photos.length);
-    if(selected.length > available) alert('Selecione no máximo 30 fotos.');
+    const selected = validPhotoFiles(files);
+    const available = Math.max(0, PHOTO_LIMIT - state.photos.length);
+    if(selected.length > available) alert(`Selecione no máximo ${PHOTO_LIMIT} fotos.`);
     state.photos = state.photos.concat(selected.slice(0, available));
     if(state.cover >= state.photos.length) state.cover = 0;
     syncInput();
@@ -1130,7 +1227,7 @@
           <div class="broker-review-price">${money(v('im-preco'))}</div>
           <div class="broker-review-meta">
             <span>${v('im-quartos') || 0} quartos</span>
-            <span>${v('im-banheiros') || 0} banheiros</span>
+            <span>${bathroomLabel(v('im-banheiros'))}</span>
             <span>${v('im-suites') || 0} suítes</span>
             <span>${v('im-vagas') || 0} vagas</span>
             <span>${v('im-area') || 0} m²</span>
@@ -1149,11 +1246,19 @@
   }
 
   function panelGo(step){
-    if(step === 7) renderPanelReview();
     state.step = step;
     document.querySelectorAll('#page-novo-imovel .broker-stage').forEach(stage => {
       stage.classList.toggle('on', Number(stage.dataset.brokerStep) === step);
     });
+    if(step === 7){
+      try{
+        renderPanelReview();
+      }catch(error){
+        console.error('Falha ao montar revisão do imóvel:', error);
+        const target = document.getElementById('panel-review-card');
+        if(target) target.innerHTML = '<div class="broker-card"><h3>Revisão do imóvel</h3><p>Os dados foram preservados. Você já pode enviar o cadastro para aprovação.</p></div>';
+      }
+    }
     const progress = Math.max(1, Math.min(8, step));
     document.querySelectorAll('#panel-broker-progress span').forEach((item, index) => {
       item.classList.toggle('on', index + 1 <= progress);
@@ -1175,7 +1280,7 @@
     if(label) label.textContent = data[0];
     if(title) title.textContent = data[1];
     if(subtitle) subtitle.textContent = data[2];
-    document.getElementById('page-novo-imovel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('page-novo-imovel').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   function setupPanelDrop(){
@@ -1235,7 +1340,7 @@
     const submitRow = Array.from(page.querySelectorAll('button')).find(button => button.textContent.includes('Enviar para'));
     if(submitRow?.parentElement) submitRow.parentElement.removeChild(submitRow);
     page.querySelectorAll('.card').forEach(card => {
-      if(card.parentElement) card.parentElement.removeChild(card);
+      if(card?.parentElement) card.parentElement.removeChild(card);
     });
 
     shell.innerHTML = `
@@ -1250,12 +1355,12 @@
           <div class="broker-step-labels" aria-hidden="true" style="grid-template-columns:repeat(8,1fr)"><small>Início</small><small>Dados</small><small>Carac.</small><small>Comercial</small><small>Chaves</small><small>Fotos</small><small>Revisão</small><small>Envio</small></div>
         </div>
         <div class="broker-body">
-          <section class="broker-stage on" data-broker-step="1"><div class="broker-welcome"><h2>Vamos cadastrar um novo imóvel.</h2><p>O processo leva menos de 3 minutos.</p><div class="broker-checklist"><div>✓ Dados básicos</div><div>✓ Características</div><div>✓ Informações comerciais</div><div>✓ Fotos</div><div>✓ Revisão</div></div><button class="broker-primary" type="button" onclick="window.panelBrokerGo(2)">COMEÇAR</button></div></section>
+          <section class="broker-stage on" data-broker-step="1"><div class="broker-welcome"><h2>Vamos cadastrar um novo imóvel.</h2><p>Em poucos passos, você terá um anúncio completo e pronto para envio.</p><div class="broker-checklist"><div>✓ Dados básicos</div><div>✓ Características</div><div>✓ Informações comerciais</div><div>✓ Fotos</div><div>✓ Revisão</div></div><button class="broker-primary" type="button" onclick="window.panelBrokerGo(2)">COMEÇAR</button></div></section>
           <section class="broker-stage" data-broker-step="2"><div class="broker-card"><h3><i class="ti ti-home-edit"></i> Dados do imóvel</h3><div class="broker-grid" id="panel-basic-grid"></div></div><div class="broker-card" id="panel-desc-card"><h3><i class="ti ti-notes"></i> Descrição</h3></div><div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.panelBrokerGo(1)">Voltar</button><button class="broker-primary" type="button" onclick="window.panelBrokerGo(3)">CONTINUAR</button></div></section>
           <section class="broker-stage" data-broker-step="3"><div class="broker-grid" style="grid-template-columns:minmax(0,1fr) 280px"><div class="broker-card"><h3><i class="ti ti-ruler-measure"></i> Características</h3><div class="broker-feature-grid" id="panel-feature-grid"></div></div><aside class="broker-summary"><h3>Resumo</h3><div><span>Quartos</span><strong id="panel-sum-quartos">0</strong></div><div><span>Banheiros</span><strong id="panel-sum-banheiros">0</strong></div><div><span>Suítes</span><strong id="panel-sum-suites">0</strong></div><div><span>Vagas</span><strong id="panel-sum-vagas">0</strong></div><div><span>Área total</span><strong id="panel-sum-area">0 m²</strong></div></aside></div><div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.panelBrokerGo(2)">Voltar</button><button class="broker-primary" type="button" onclick="window.panelBrokerGo(4)">CONTINUAR</button></div></section>
           <section class="broker-stage" data-broker-step="4"><div class="broker-card"><h3><i class="ti ti-cash"></i> Informações comerciais</h3><div class="broker-grid" id="panel-commercial-grid"></div></div><div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.panelBrokerGo(3)">Voltar</button><button class="broker-primary" type="button" onclick="window.panelBrokerGo(5)">CONTINUAR</button></div></section>
           <section class="broker-stage" data-broker-step="5"><div class="broker-card" id="panel-key-card"><h3><i class="ti ti-key"></i> Onde estão as chaves</h3><div class="broker-choice-group"><label class="broker-choice"><input type="radio" name="im-chave-opcao" value="Proprietário" onchange="window.handlePanelKey()"> Proprietário</label><label class="broker-choice"><input type="radio" name="im-chave-opcao" value="Portaria" onchange="window.handlePanelKey()"> Portaria</label><label class="broker-choice"><input type="radio" name="im-chave-opcao" value="Imobiliária" onchange="window.handlePanelKey()"> Imobiliária</label><label class="broker-choice"><input type="radio" name="im-chave-opcao" value="Corretor" onchange="window.handlePanelKey()"> Corretor</label><label class="broker-choice"><input type="radio" name="im-chave-opcao" value="Outro" onchange="window.handlePanelKey()"> Outro</label></div><div class="broker-field" id="im-chave-outro-wrap" style="display:none;margin-top:12px"><label>Informe onde estão as chaves</label><input type="text" id="im-chave-outro" placeholder="Ex: Cofre na recepção" oninput="window.handlePanelKey()"></div></div><div class="broker-card" id="panel-auth-card"></div><div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.panelBrokerGo(4)">Voltar</button><button class="broker-primary" type="button" onclick="window.panelBrokerGo(6)">CONTINUAR</button></div></section>
-          <section class="broker-stage" data-broker-step="6"><div class="broker-upload" id="panel-photo-drop" onclick="document.getElementById('inp-fotos').click()"><div><i class="ti ti-photo-plus"></i><h3>Adicione as fotos do imóvel.</h3><p>Arraste as imagens aqui ou clique para selecionar.</p><small>Quanto mais fotos, maiores as chances de venda. Máximo de 30 fotos.</small></div></div><div id="panel-photo-slot"></div><div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.panelBrokerGo(5)">Voltar</button><button class="broker-primary" type="button" onclick="window.panelBrokerGo(7)">REVISAR</button></div></section>
+          <section class="broker-stage" data-broker-step="6"><div class="broker-upload" id="panel-photo-drop" onclick="document.getElementById('inp-fotos').click()"><div><i class="ti ti-photo-plus"></i><h3>Adicione as fotos do imóvel.</h3><p>Arraste as imagens aqui ou clique para selecionar.</p><small>Máximo de 8 fotos. ${PHOTO_TIPS}</small></div></div><div id="panel-photo-slot"></div><div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.panelBrokerGo(5)">Voltar</button><button class="broker-primary" id="panel-review-button" type="button">REVISAR</button></div></section>
           <section class="broker-stage" data-broker-step="7"><div id="panel-review-card"></div><div class="broker-actions"><button class="broker-secondary" type="button" onclick="window.panelBrokerGo(2)">EDITAR</button><button class="broker-primary" type="button" onclick="window.panelEnviarImovel()">ENVIAR PARA APROVAÇÃO</button></div></section>
           <section class="broker-stage" data-broker-step="8"><div class="broker-success"><div class="broker-success-icon">✓</div><h2>Imóvel enviado com sucesso.</h2><p>O imóvel será analisado pela administração.</p><div class="broker-status">Pronto para aprovação.</div><div class="broker-actions" style="justify-content:center"><button class="broker-primary" type="button" onclick="window.goPage ? window.goPage('dashboard') : window.panelBrokerGo(1)">VOLTAR AO PAINEL</button></div></div></section>
         </div>
@@ -1270,29 +1375,37 @@
       box.className = 'broker-feature';
       box.innerHTML = `<i class="ti ${icons[index]}"></i>`;
       box.appendChild(field);
-      document.getElementById('panel-feature-grid')?.appendChild(box);
-      field.querySelector('input,select,textarea')?.addEventListener('input', updatePanelSummary);
+      document.getElementById('panel-feature-grid').appendChild(box);
+      field.querySelector('input,select,textarea').addEventListener('input', updatePanelSummary);
     });
     addItems(document.getElementById('panel-commercial-grid'), [fields.preco, fields.iptu, fields.condominio, comissao, situacao]);
     if(fields.chave){
       const input = fields.chave.querySelector('#im-chave');
       if(input){
         input.type = 'hidden';
-        document.getElementById('panel-key-card')?.appendChild(input);
+        document.getElementById('panel-key-card').appendChild(input);
       }
     }
-    if(termCard) document.getElementById('panel-auth-card')?.appendChild(termCard);
+    if(termCard) document.getElementById('panel-auth-card').appendChild(termCard);
     if(photoInput){
       photoInput.style.display = 'none';
       photoInput.onchange = () => addPanelPhotos(photoInput.files);
-      document.getElementById('panel-photo-slot')?.appendChild(photoInput);
+      document.getElementById('panel-photo-slot').appendChild(photoInput);
     }
     if(preview){
       preview.className = 'broker-photo-grid';
       preview.removeAttribute('style');
-      document.getElementById('panel-photo-slot')?.appendChild(preview);
+      document.getElementById('panel-photo-slot').appendChild(preview);
     }
     setupPanelDrop();
+    const reviewButton = document.getElementById('panel-review-button');
+    if(reviewButton){
+      reviewButton.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        panelGo(7);
+      });
+    }
     updatePanelSummary();
     panelGo(1);
   }
@@ -1306,7 +1419,7 @@
     if(autorizacaoVenda === 'nao_autorizo'){ alert('Não é possível enviar o imóvel para aprovação sem autorização de venda.'); return; }
     if(!v('im-titulo') || !v('im-preco')){ alert('Preencha pelo menos o título e o preço.'); return; }
     const fotos = Array.from(document.getElementById('inp-fotos')?.files || []);
-    if(fotos.length > 30){ alert('Selecione no máximo 30 fotos.'); return; }
+    if(fotos.length > PHOTO_LIMIT){ alert(`Selecione no máximo ${PHOTO_LIMIT} fotos.`); return; }
 
     const originalDesc = v('im-desc');
     const formData = new FormData();
@@ -1324,35 +1437,38 @@
     formData.append('vagas', Number.parseInt(v('im-vagas') || '0', 10));
     formData.append('area', Number.parseInt(v('im-area') || '0', 10));
     const extras = [
-      `Endereco: ${v('im-endereco') || 'Nao informado'}`,
-      `Suites: ${v('im-suites') || 'Nao informado'}`,
-      `Area construida: ${v('im-area-construida') || 'Nao informado'} m2`,
+      `Endereço: ${v('im-endereco') || 'Não informado'}`,
+      `Suítes: ${v('im-suites') || 'Não informado'}`,
+      `Área construída: ${v('im-area-construida') || 'Não informado'} m2`,
       `Comissao: ${v('im-comissao') || 'Nao informada'}`,
       `Situacao: ${v('im-situacao') || 'Nao informada'}`,
-      `IPTU: ${v('im-iptu') || 'Nao informado'}`,
-      `Condominio: ${v('im-condominio') || 'Nao informado'}`,
-      `Chave do imovel: ${v('im-chave') || 'Nao informado'}`,
-      'Autorizacao de venda: Autorizo a venda do imóvel em referência',
-      'Autorizacao comercial: nao exclusiva, validade de 180 dias',
+      `IPTU: ${v('im-iptu') || 'Não informado'}`,
+      `Condomínio: ${v('im-condominio') || 'Não informado'}`,
+      `Chave do imóvel: ${v('im-chave') || 'Não informado'}`,
+      'Autorização de venda: Autorizo a venda do imóvel em referência',
+      'Autorização comercial: não exclusiva, validade de 180 dias',
       'Aceite LGPD: sim',
     ].join('\n');
     formData.append('descricao', `${originalDesc}\n\n${extras}`);
     fotos.forEach(file => formData.append('fotos', file));
 
     try{
-      const token = localStorage.getItem('imoore_token');
       const response = await fetch(`${apiBase()}/imoveis`, {
         method: 'POST',
-        headers: { Authorization: `Bearer ${token}` },
+        credentials: 'include',
         body: formData,
       });
       const data = await response.json().catch(() => ({}));
-      if(!response.ok) throw new Error(data.error || 'Erro ao enviar imovel para aprovacao');
+      if(!response.ok) throw new Error(data.error || 'Erro ao enviar imovel para aprovao');
       if(window.carregarMeusImoveis) await window.carregarMeusImoveis();
       if(window.mostrarToast) window.mostrarToast('Imóvel enviado para aprovação!');
+      state.photos = [];
+      state.cover = 0;
+      syncInput();
+      renderPanelPhotos();
       panelGo(8);
     }catch(error){
-      alert(error.message || 'Erro ao enviar imovel para aprovacao');
+      alert(error.message || 'Erro ao enviar imovel para aprovao');
     }
   }
 

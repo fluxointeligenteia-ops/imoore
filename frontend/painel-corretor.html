@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"/>
@@ -8,8 +8,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
 <style>
 :root{
-  --or:#F26522;--or2:#d95510;--orl:#FEF0E8;--orm:#FDDCC8;
+  --or:#FF5500;--or2:#E64D00;--orl:#FFF2EA;--orm:#FFC2A3;
   --bg:#F5F4F1;--bg2:#fff;--bg3:#EDEBE6;
+  --tl:#2BBDAD;--blue:#378ADD;
   --ink:#1A1614;--ink2:#3D3530;--ink3:#6B6058;--ink4:#9C9188;
   --bdr:#E2DDD7;--bdr2:#D4CFC9;
   --ok:#1D9E75;--okl:#E1F5EE;
@@ -26,13 +27,15 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--or);border-radius:4px}
 
 .layout{display:flex;min-height:100vh}
-.sidebar{width:var(--sidebar);background:var(--ink);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sidebar{width:var(--sidebar);background:linear-gradient(180deg,#1A1614 0%,#241d18 100%);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:100;overflow-y:auto}
 .main{margin-left:var(--sidebar);flex:1;display:flex;flex-direction:column}
 .topbar{background:var(--bg2);border-bottom:1px solid var(--bdr);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:90}
 .content{padding:24px;flex:1}
 
-.sb-logo{padding:16px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px}
-.sb-logo img{height:42px;width:auto;border-radius:6px;object-fit:contain}
+.sb-logo{padding:18px 12px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.sb-logo img{height:98px;width:auto;max-width:100%;border-radius:14px;object-fit:contain;box-shadow:none;display:block}
+.sb-logo .flow-logo{height:34px;width:34px;border-radius:10px;object-fit:cover;border:1px solid rgba(255,255,255,.14);box-shadow:0 8px 20px rgba(0,0,0,.22)}
+.flow-signature{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.72);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.7px}
 .sb-logo-name{font-size:15px;font-weight:700;color:#fff}
 .sb-logo-sub{font-size:9px;color:#888;letter-spacing:.5px;text-transform:uppercase}
 
@@ -44,27 +47,45 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
 .sb-section{padding:12px 16px 4px;font-size:10px;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:1px;text-transform:uppercase}
 .sb-item{display:flex;align-items:center;gap:10px;padding:9px 16px;font-size:13px;font-weight:500;color:rgba(255,255,255,.6);cursor:pointer;transition:all .15s;border-left:3px solid transparent}
 .sb-item:hover{background:rgba(255,255,255,.06);color:#fff}
-.sb-item.on{background:rgba(242,101,34,.12);color:var(--or);border-left-color:var(--or)}
+.sb-item.on{background:rgba(255,85,0,.12);color:var(--or);border-left-color:var(--or)}
 .sb-item i{font-size:17px;flex-shrink:0}
 .sb-badge{background:var(--or);color:#fff;font-size:10px;font-weight:700;padding:1px 7px;border-radius:20px;margin-left:auto}
 
 .tb-title{font-size:16px;font-weight:700;color:var(--ink)}
 .tb-right{display:flex;align-items:center;gap:12px}
-.btn{display:inline-flex;align-items:center;gap:6px;border:none;border-radius:50px;cursor:pointer;font-family:var(--f);font-weight:600;font-size:13px;padding:8px 16px;transition:all .15s}
-.btn-p{background:var(--or);color:#fff;box-shadow:0 2px 8px rgba(242,101,34,.25)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:none;border-radius:50px;cursor:pointer;font-family:var(--f);font-weight:750;font-size:13px;padding:8px 16px;transition:all .2s;text-decoration:none;white-space:nowrap}
+.btn-p{background:var(--or);color:#fff;box-shadow:0 2px 8px rgba(255,85,0,.25)}
 .btn-p:hover{background:var(--or2)}
 .btn-o{background:var(--bg2);color:var(--ink);border:1px solid var(--bdr2)}
 .btn-o:hover{border-color:var(--or);color:var(--or)}
 .btn-err{background:var(--err);color:#fff}
+/* IMOORE STANDARD BUTTON TEST */
+.btn-p,.btn-ok,.btn-err,.btn-login,.button,.btn:not(.secondary){background:linear-gradient(90deg,#FF5500 0%,#FF7A1A 100%)!important;color:#fff!important;border:3px solid rgba(255,255,255,.96)!important;border-radius:999px!important;box-shadow:0 8px 0 rgba(26,22,20,.13),0 14px 26px rgba(26,22,20,.17)!important;text-shadow:0 1px 2px rgba(90,32,0,.24);overflow:hidden}
+.btn-p:hover,.btn-ok:hover,.btn-err:hover,.btn-login:hover,.button:hover,.btn:not(.secondary):hover{filter:saturate(1.08) brightness(1.02);transform:translateY(-1px);box-shadow:0 6px 0 rgba(26,22,20,.13),0 16px 30px rgba(26,22,20,.20)!important}
+.btn-o,.btn.secondary,.button-secondary{border-radius:999px!important}
+
 
 .page{display:none}.page.on{display:block}
 
 /* METRICS */
-.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
+.sales-hero{background:#fff;border:1px solid var(--bdr);border-radius:18px;padding:22px;box-shadow:var(--shm);margin-bottom:18px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center;position:relative;overflow:hidden}
+.sales-hero::after{content:'';position:absolute;right:-70px;top:-90px;width:230px;height:230px;border-radius:50%;background:radial-gradient(circle,rgba(255,85,0,.13),transparent 67%);pointer-events:none}
+.sales-kicker{font-size:11px;font-weight:900;color:var(--or);text-transform:uppercase;letter-spacing:.9px;margin-bottom:5px}
+.sales-hero h1{font-size:28px;line-height:1.05;letter-spacing:-.8px;margin-bottom:6px}
+.sales-hero p{font-size:13px;color:var(--ink3);max-width:640px}
+.sales-actions{display:flex;gap:9px;flex-wrap:wrap;justify-content:flex-end;position:relative;z-index:1}
+.quick-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
+.quick-card{background:#fff;border:1px solid var(--bdr);border-radius:16px;padding:15px;box-shadow:var(--sh);display:flex;gap:12px;align-items:flex-start;transition:transform .2s,box-shadow .2s,border-color .2s}
+.quick-card:hover{transform:translateY(-2px);box-shadow:var(--shm);border-color:var(--orm)}
+.quick-ic{width:38px;height:38px;border-radius:12px;background:var(--orl);color:var(--or);display:grid;place-items:center;font-size:21px;flex:0 0 auto}
+.quick-card h3{font-size:13px;margin-bottom:3px}
+.quick-card p{font-size:11px;color:var(--ink4);line-height:1.45}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
 .mcard{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--rl);padding:16px;box-shadow:var(--sh)}
 .mcard-val{font-size:26px;font-weight:800;color:var(--ink);margin-bottom:3px;letter-spacing:-1px}
 .mcard-lbl{font-size:12px;color:var(--ink4);font-weight:500}
 .mcard-sub{font-size:11px;font-weight:600;margin-top:6px;display:flex;align-items:center;gap:3px;color:var(--ok)}
+.mcard-accent{border-color:rgba(255,85,0,.28);background:linear-gradient(180deg,#fff 0%,#fff8f4 100%)}
 
 /* CARD */
 .card{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--rl);box-shadow:var(--sh);overflow:hidden}
@@ -84,7 +105,9 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
 
 /* IMOVEL CARDS (lista dos meus imóveis) */
 .icard-list{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--rl);overflow:hidden;margin-bottom:12px;box-shadow:var(--sh);display:grid;grid-template-columns:160px 1fr auto;align-items:center}
-.icard-img-sm{height:100px;background-size:cover;background-position:center;flex-shrink:0}
+.icard-img-sm{height:100px;background-size:cover;background-position:center;flex-shrink:0;position:relative;border:none;cursor:pointer}
+.icard-img-sm::after{content:'Ver fotos';position:absolute;left:8px;bottom:8px;background:rgba(26,22,20,.78);color:#fff;border-radius:999px;padding:3px 9px;font-size:10px;font-weight:800;opacity:0;transition:opacity .2s}
+.icard-img-sm:hover::after{opacity:1}
 .icard-info{padding:14px 16px}
 .icard-price{font-size:17px;font-weight:800;color:var(--ink);margin-bottom:3px}
 .icard-sub{font-size:12px;color:var(--ink4);margin-bottom:8px}
@@ -105,6 +128,36 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
 .upload-icon{font-size:32px;color:var(--or);opacity:.7;display:block;margin-bottom:8px}
 .upload-title{font-size:14px;font-weight:600;color:var(--ink2);margin-bottom:3px}
 .upload-desc{font-size:12px;color:var(--ink4)}
+.photo-strip{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.photo-thumb{width:48px;height:48px;border:1px solid var(--bdr);border-radius:8px;background:var(--bg3);padding:0;cursor:pointer;overflow:hidden;position:relative}
+.photo-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.photo-more{display:grid;place-items:center;background:var(--ink);color:#fff;font-size:11px;font-weight:800}
+.gallery-overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:1200;display:flex;align-items:center;justify-content:center;padding:22px}
+.gallery-modal{width:min(960px,96vw);max-height:92vh;background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.35);overflow:hidden;display:grid;grid-template-rows:auto 1fr auto}
+.gallery-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-bottom:1px solid var(--bdr)}
+.gallery-head h3{font-size:15px;line-height:1.25}
+.gallery-close{width:34px;height:34px;border:none;border-radius:50%;background:var(--bg3);color:var(--ink);font-size:20px;cursor:pointer}
+.gallery-main{min-height:280px;max-height:62vh;background:#111;display:grid;place-items:center;padding:12px;position:relative}
+.gallery-main img{max-width:100%;max-height:60vh;object-fit:contain;border-radius:10px}
+.gallery-empty{color:#fff;text-align:center;font-weight:700}
+.gallery-nav{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border:none;border-radius:50%;background:rgba(255,255,255,.94);color:var(--or);display:grid;place-items:center;cursor:pointer;box-shadow:0 10px 24px rgba(0,0,0,.20);transition:transform .18s,background .18s}
+.gallery-nav i{font-size:18px;font-weight:900}
+.gallery-nav:hover{background:#fff;transform:translateY(-50%) scale(1.04)}
+.gallery-nav:disabled{opacity:.35;cursor:not-allowed}
+.gallery-prev{left:14px}
+.gallery-next{right:14px}
+.gallery-thumbs{display:flex;gap:8px;padding:12px;overflow-x:auto;border-top:1px solid var(--bdr);background:var(--bg)}
+.gallery-thumbs button{width:76px;height:62px;border:2px solid transparent;border-radius:8px;background:var(--bg3);padding:0;cursor:pointer;overflow:hidden;flex:0 0 auto}
+.gallery-thumbs button.on{border-color:var(--or)}
+.gallery-thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+.edit-modal{width:min(660px,96vw);max-height:92vh;background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.35);overflow:hidden;display:grid;grid-template-rows:auto 1fr}
+.edit-body{padding:18px;overflow:auto}
+.edit-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.edit-field label{display:block;font-size:12px;font-weight:800;color:var(--ink3);margin-bottom:6px}
+.edit-field select,.edit-field textarea{width:100%;border:1.5px solid var(--bdr);border-radius:10px;background:#fff;color:var(--ink);font:inherit;padding:11px 12px;outline:none}
+.edit-field textarea{min-height:142px;resize:vertical;line-height:1.45}
+.edit-help{font-size:12px;color:var(--ink4);margin-top:6px;line-height:1.35}
+.edit-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:16px;flex-wrap:wrap}
 
 /* PORTAIS */
 .portal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px}
@@ -122,6 +175,42 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
 .lead-info{font-size:11px;color:var(--ink4)}
 .lead-wpp{background:#25D366;border:none;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:background .2s}
 .lead-wpp:hover{background:#1db954}
+.lead-actions{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.lead-template{background:#fff;border:1px solid var(--bdr);border-radius:999px;color:var(--ink3);height:32px;padding:0 10px;font-size:11px;font-weight:800;cursor:pointer;transition:all .2s}
+.lead-template:hover{border-color:#25D366;color:#16894a;background:#EAFBF1}
+.lead-row{cursor:pointer;transition:background .18s,transform .18s}
+.lead-row:hover{background:linear-gradient(90deg,#fff 0%,var(--orl) 100%);transform:translateX(2px)}
+.lead-detail-overlay{position:fixed;inset:0;background:rgba(26,22,20,.58);z-index:1300;display:flex;align-items:center;justify-content:center;padding:18px;backdrop-filter:blur(6px)}
+.lead-detail-modal{width:min(920px,96vw);max-height:92vh;background:#fff;border-radius:18px;box-shadow:0 24px 80px rgba(26,22,20,.28);overflow:hidden;display:grid;grid-template-rows:auto 1fr}
+.lead-detail-head{padding:18px 22px;border-bottom:1px solid var(--bdr);display:flex;align-items:flex-start;justify-content:space-between;gap:14px;background:linear-gradient(180deg,#fff 0%,#fff8f4 100%)}
+.lead-detail-title{display:flex;gap:13px;align-items:center;min-width:0}
+.lead-detail-avatar{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;color:#fff;font-weight:900;font-size:18px;flex:0 0 auto}
+.lead-detail-title h2{font-size:20px;line-height:1.15;margin-bottom:4px}
+.lead-detail-title p{font-size:12px;color:var(--ink4)}
+.lead-detail-close{width:36px;height:36px;border:none;border-radius:50%;background:var(--bg3);color:var(--ink);font-size:20px;cursor:pointer}
+.lead-detail-body{padding:20px 22px;overflow:auto}
+.lead-detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:16px}
+.lead-detail-box{border:1px solid var(--bdr);border-radius:12px;background:var(--bg);padding:12px;min-width:0}
+.lead-detail-box small{display:block;font-size:10px;color:var(--ink4);font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.lead-detail-box strong{display:block;font-size:13px;color:var(--ink);word-break:break-word}
+.lead-detail-section{border:1px solid var(--bdr);border-radius:14px;background:#fff;margin-top:12px;overflow:hidden}
+.lead-detail-section h3{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--ink3);padding:12px 14px;border-bottom:1px solid var(--bdr);background:var(--bg)}
+.lead-field-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0}
+.lead-field{padding:11px 14px;border-bottom:1px solid var(--bdr);min-width:0}
+.lead-field:nth-child(odd){border-right:1px solid var(--bdr)}
+.lead-field small{display:block;font-size:10px;color:var(--ink4);font-weight:800;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+.lead-field span{font-size:13px;color:var(--ink2);word-break:break-word}
+.lead-attachments{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;padding:14px}
+.lead-attachment{border:1px solid var(--bdr);border-radius:12px;background:var(--bg);min-height:92px;overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative;color:var(--ink3)}
+.lead-attachment img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0}
+.lead-attachment span{position:absolute;left:7px;right:7px;bottom:7px;background:rgba(26,22,20,.78);color:#fff;border-radius:999px;padding:3px 7px;font-size:10px;font-weight:800;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lead-detail-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.pipeline-grid{display:grid;grid-template-columns:repeat(5,minmax(130px,1fr));gap:10px;margin-bottom:18px}
+.pipe-card{background:#fff;border:1px solid var(--bdr);border-radius:14px;padding:12px;box-shadow:var(--sh)}
+.pipe-label{font-size:11px;color:var(--ink4);font-weight:800;text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px}
+.pipe-val{font-size:22px;font-weight:900;color:var(--ink)}
+.pipe-bar{height:5px;border-radius:999px;background:var(--bg3);margin-top:9px;overflow:hidden}
+.pipe-bar span{display:block;height:100%;background:var(--or);border-radius:999px}
 
 /* SUCCESS TOAST */
 .toast{
@@ -137,20 +226,31 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
 
 @media(max-width:640px){
   .metrics{grid-template-columns:1fr!important}
+  .quick-grid,.pipeline-grid{grid-template-columns:1fr!important}
+  .sales-hero{grid-template-columns:1fr;padding:18px}
+  .sales-hero h1{font-size:23px}
+  .sales-actions{justify-content:stretch}
+  .sales-actions .btn{width:100%}
   .form-grid{grid-template-columns:1fr!important}
   .icard-list{grid-template-columns:1fr!important}
+  .icard-img-sm{height:150px}
   .portal-grid{grid-template-columns:repeat(2,1fr)!important}
   .content{padding:16px!important}
   .topbar{padding:0 14px!important}
+  .lead-detail-grid,.lead-field-list{grid-template-columns:1fr}
+  .lead-field:nth-child(odd){border-right:none}
+  .edit-grid{grid-template-columns:1fr}
+  .edit-actions .btn{width:100%}
 }
 @media(max-width:768px){
   :root{--sidebar:0px}
   .sidebar{display:none}
   .main{margin-left:0}
-  .metrics{grid-template-columns:1fr 1fr}
+  .metrics,.quick-grid{grid-template-columns:1fr 1fr}
   .form-grid{grid-template-columns:1fr}
   .icard-list{grid-template-columns:120px 1fr}
-  .icard-acts{display:none}
+  .icard-acts{grid-column:1/-1;display:flex;flex-direction:row;align-items:center;justify-content:flex-end;border-left:none;border-top:1px solid var(--bdr);padding:10px 12px;flex-wrap:wrap}
+  .icard-acts .btn{min-height:34px}
   .portal-grid{grid-template-columns:repeat(3,1fr)}
 }
 </style>
@@ -162,10 +262,10 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
 <!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="sb-logo">
-    <img src="assets/imoore-logo-oficial-horizontal.jpeg" alt="imoore"/>
-    <div>
-      <div class="sb-logo-name">imoore</div>
-      <div class="sb-logo-sub">Portal do corretor</div>
+    <img src="assets/imoore-logo-ff5500-transparente.png?v=20260731-correta" alt="imoore"/>
+    <div class="flow-signature">
+      <img class="flow-logo" src="assets/fluxo-inteligente-simbolo.png" alt="Fluxo Inteligente"/>
+      <span>Fluxo Inteligente</span>
     </div>
   </div>
   <div class="sb-user">
@@ -178,8 +278,8 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
   <div class="sb-section">Menu</div>
   <div class="sb-item on" onclick="goPage('dashboard')"><i class="ti ti-layout-dashboard"></i> Dashboard</div>
   <div class="sb-item" onclick="goPage('novo-imovel')"><i class="ti ti-plus"></i> Cadastrar imóvel</div>
-  <div class="sb-item" onclick="goPage('meus-imoveis')"><i class="ti ti-building"></i> Meus imóveis <span class="sb-badge" id="count-imoveis">3</span></div>
-  <div class="sb-item" onclick="goPage('leads')"><i class="ti ti-users"></i> Meus leads <span class="sb-badge" id="count-leads">5</span></div>
+  <div class="sb-item" onclick="goPage('meus-imoveis')"><i class="ti ti-building"></i> Meus imóveis <span class="sb-badge" id="count-imoveis">0</span></div>
+  <div class="sb-item" onclick="goPage('leads')"><i class="ti ti-users"></i> Meus leads <span class="sb-badge" id="count-leads">0</span></div>
   <div class="sb-section">Conta</div>
   <div class="sb-item" onclick="goPage('perfil')"><i class="ti ti-user"></i> Meu perfil</div>
   <div class="sb-item" onclick="sair()" style="margin-top:auto"><i class="ti ti-logout"></i> Sair</div>
@@ -191,6 +291,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
     <div class="tb-title" id="tb-title">Dashboard</div>
     <div class="tb-right">
       <span style="font-size:12px;color:var(--ink4)">Creci/SP Nº 52050-J</span>
+      <a class="btn btn-o" href="/captar-imovel"><i class="ti ti-device-mobile"></i> Captação rápida</a>
       <button class="btn btn-p" onclick="goPage('novo-imovel')"><i class="ti ti-plus"></i> Novo imóvel</button>
     </div>
   </div>
@@ -199,22 +300,55 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
 
   <!-- DASHBOARD -->
   <div class="page on" id="page-dashboard">
+    <section class="sales-hero">
+      <div>
+        <div class="sales-kicker">Cockpit comercial Imoore</div>
+        <h1>Priorize leads, cadastre imóveis e acelere respostas.</h1>
+        <p>Use este painel como rotina diária: responda contatos pelo WhatsApp, acompanhe pendências de aprovação e mantenha os imóveis com informações completas.</p>
+      </div>
+      <div class="sales-actions">
+        <a class="btn btn-p" href="/captar-imovel"><i class="ti ti-device-mobile"></i> Captação rápida</a>
+        <button class="btn btn-p" onclick="goPage('leads')"><i class="ti ti-message-circle"></i> Responder leads</button>
+        <button class="btn btn-o" onclick="abrirWhatsAppAdmin('Olá! Preciso de apoio comercial no painel de corretor da Imoore.')"><i class="ti ti-brand-whatsapp"></i> Suporte Imoore</button>
+      </div>
+    </section>
+
+    <div class="quick-grid">
+      <div class="quick-card"><div class="quick-ic"><i class="ti ti-clock-bolt"></i></div><div><h3>Responder em até 5 min</h3><p>Leads respondidos rápido tendem a converter melhor.</p></div></div>
+      <div class="quick-card"><div class="quick-ic"><i class="ti ti-camera-check"></i></div><div><h3>Fotos completas</h3><p>Envie até 8 imagens nítidas e bem iluminadas.</p></div></div>
+      <div class="quick-card"><div class="quick-ic"><i class="ti ti-calendar-check"></i></div><div><h3>Agendar visita</h3><p>Transforme interesse em compromisso objetivo.</p></div></div>
+      <div class="quick-card"><div class="quick-ic"><i class="ti ti-file-check"></i></div><div><h3>Aprovação limpa</h3><p>Dados completos reduzem retrabalho do administrativo.</p></div></div>
+    </div>
+
     <div class="metrics">
-      <div class="mcard">
-        <div class="mcard-val" id="m-imoveis">3</div>
+      <div class="mcard mcard-accent">
+        <div class="mcard-val" id="m-imoveis">0</div>
         <div class="mcard-lbl">Imóveis cadastrados</div>
-        <div class="mcard-sub"><i class="ti ti-clock" style="font-size:13px"></i> 1 aguardando aprovação</div>
+        <div class="mcard-sub"><i class="ti ti-clock" style="font-size:13px"></i> Pendentes e publicados</div>
       </div>
-      <div class="mcard">
-        <div class="mcard-val" id="m-leads">5</div>
+      <div class="mcard mcard-accent">
+        <div class="mcard-val" id="m-leads">0</div>
         <div class="mcard-lbl">Leads recebidos</div>
-        <div class="mcard-sub"><i class="ti ti-trending-up" style="font-size:13px"></i> +2 esta semana</div>
+        <div class="mcard-sub"><i class="ti ti-brand-whatsapp" style="font-size:13px"></i> Responda pelo WhatsApp</div>
       </div>
       <div class="mcard">
-        <div class="mcard-val" style="color:var(--ok)">2</div>
-        <div class="mcard-lbl">Em negociação</div>
-        <div class="mcard-sub" style="color:var(--or)"><i class="ti ti-flame" style="font-size:13px"></i> Acompanhe!</div>
+        <div class="mcard-val" id="m-pendentes" style="color:var(--warn)">0</div>
+        <div class="mcard-lbl">Aguardando aprovação</div>
+        <div class="mcard-sub" style="color:var(--warn)"><i class="ti ti-alert-circle" style="font-size:13px"></i> Revise dados e fotos</div>
       </div>
+      <div class="mcard">
+        <div class="mcard-val" id="m-whatsapp" style="color:var(--ok)">0</div>
+        <div class="mcard-lbl">Ações de WhatsApp</div>
+        <div class="mcard-sub"><i class="ti ti-send" style="font-size:13px"></i> Mensagens prontas</div>
+      </div>
+    </div>
+
+    <div class="pipeline-grid">
+      <div class="pipe-card"><div class="pipe-label">Novo</div><div class="pipe-val" id="pipe-novo">0</div><div class="pipe-bar"><span style="width:20%"></span></div></div>
+      <div class="pipe-card"><div class="pipe-label">Contato</div><div class="pipe-val" id="pipe-contato">0</div><div class="pipe-bar"><span style="width:40%"></span></div></div>
+      <div class="pipe-card"><div class="pipe-label">Visita</div><div class="pipe-val" id="pipe-visita">0</div><div class="pipe-bar"><span style="width:60%"></span></div></div>
+      <div class="pipe-card"><div class="pipe-label">Proposta</div><div class="pipe-val" id="pipe-proposta">0</div><div class="pipe-bar"><span style="width:80%"></span></div></div>
+      <div class="pipe-card"><div class="pipe-label">Fechado</div><div class="pipe-val" id="pipe-fechado">0</div><div class="pipe-bar"><span style="width:100%"></span></div></div>
     </div>
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
@@ -262,17 +396,18 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
             <div class="ff"><label>Chave do imóvel</label><input type="text" id="im-chave" placeholder="Ex: Portaria, cofre, proprietário"/></div>
             <div class="ff"><label>Cidade</label>
               <select id="im-cidade">
-                <option>Santos</option><option>São Vicente</option><option>Guarujá</option>
-                <option>Praia Grande</option><option>Cubatão</option><option>Bertioga</option>
+                <option>Santos</option><option>São Vicente</option>
+                <option>Praia Grande</option>
                 <option>Itanhaém</option><option>Mongaguá</option><option>Peruíbe</option>
                 <option>Itariri</option><option>Pedro de Toledo</option><option>Ana Dias</option>
               </select>
             </div>
             <div class="ff"><label>Bairro</label><input type="text" id="im-bairro" placeholder="Ex: Gonzaga, Enseada..."/></div>
             <div class="ff"><label>Quartos</label><input type="number" id="im-quartos" min="0" placeholder="2"/></div>
-            <div class="ff"><label>Banheiros</label><input type="number" id="im-banheiros" min="0" placeholder="1"/></div>
+            <div class="ff"><label>Banheiros</label><select id="im-banheiros"><option value="0">0</option><option value="1">1 banheiro</option><option value="2">2 banheiros</option><option value="3">3 banheiros</option><option value="4">4 banheiros</option><option value="5">5+ banheiros</option></select></div>
             <div class="ff"><label>Vagas de garagem</label><input type="number" id="im-vagas" min="0" placeholder="1"/></div>
             <div class="ff"><label>Área total (m²)</label><input type="number" id="im-area" min="0" placeholder="65"/></div>
+            <div class="ff"><label>Captação</label><input type="text" id="im-captacao" placeholder="Nome de quem captou"/></div>
             <div class="ff ff-full"><label>Descrição completa</label>
               <textarea id="im-desc" rows="4" placeholder="Descreva o imóvel com detalhes: localização, características, diferenciais e condições de negociação..."></textarea>
             </div>
@@ -287,7 +422,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
             <i class="ti ti-photo-plus upload-icon"></i>
             <div class="upload-title">Clique para adicionar fotos</div>
             <div class="upload-desc">JPG, PNG até 10MB cada · Mínimo 3 fotos recomendado</div>
-            <input type="file" id="inp-fotos" multiple accept="image/*" style="display:none" onchange="mostrarFotos(this)"/>
+            <input type="file" id="inp-fotos" multiple accept="image/jpeg,image/png,image/webp" style="display:none" onchange="mostrarFotos(this)"/>
           </div>
           <div id="fotos-preview" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"></div>
         </div>
@@ -329,7 +464,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
       </div>
 
       <div style="display:flex;gap:12px">
-        <button class="btn btn-p" onclick="enviarImovel()" style="flex:1;justify-content:center;padding:13px;font-size:15px"><i class="ti ti-send"></i> Enviar para aprovação</button>
+        <button class="btn btn-p" id="btn-enviar-imovel" type="button" onclick="enviarImovel()" style="flex:1;justify-content:center;padding:13px;font-size:15px"><i class="ti ti-send"></i> Enviar para aprovação</button>
         <button class="btn btn-o" style="padding:13px 20px">Salvar rascunho</button>
       </div>
 
@@ -371,18 +506,18 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
             <div class="ff"><label>Creci/SP</label><input type="text" id="pf-creci" placeholder="SP-000000"/></div>
             <div class="ff"><label>Cidade de atuação</label>
               <select id="pf-cidade">
-                <option>Santos</option><option>São Vicente</option><option>Guarujá</option>
+                <option>Santos</option><option>São Vicente</option>
                 <option>Praia Grande</option><option>Peruíbe</option><option>Itanhaém</option>
               </select>
             </div>
-            <button class="btn btn-p" style="justify-content:center;padding:12px" onclick="mostrarToast('Perfil atualizado com sucesso!')">Salvar alterações</button>
+            <button class="btn btn-p" id="btn-salvar-perfil" style="justify-content:center;padding:12px" onclick="salvarPerfil()">Salvar alterações</button>
             <div style="border-top:1px solid var(--bdr);padding-top:14px">
               <div style="font-size:12px;font-weight:700;color:var(--ink3);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px">Alterar senha</div>
               <div style="display:flex;flex-direction:column;gap:10px">
-                <div class="ff"><label>Senha atual</label><input type="password" placeholder="Senha atual"/></div>
-                <div class="ff"><label>Nova senha</label><input type="password" placeholder="Nova senha"/></div>
-                <div class="ff"><label>Confirmar nova senha</label><input type="password" placeholder="Confirmar"/></div>
-                <button class="btn btn-o" style="justify-content:center" onclick="mostrarToast('Senha alterada com sucesso!')">Alterar senha</button>
+                <div class="ff"><label>Senha atual</label><input type="password" id="pf-senha-atual" placeholder="Senha atual" autocomplete="current-password"/></div>
+                <div class="ff"><label>Nova senha</label><input type="password" id="pf-nova-senha" placeholder="Mínimo de 12 caracteres" autocomplete="new-password"/></div>
+                <div class="ff"><label>Confirmar nova senha</label><input type="password" id="pf-confirmar-senha" placeholder="Confirmar" autocomplete="new-password"/></div>
+                <button class="btn btn-o" id="btn-alterar-senha" style="justify-content:center" onclick="alterarMinhaSenha()">Alterar senha</button>
               </div>
             </div>
           </div>
@@ -401,11 +536,11 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
   <span id="toast-msg">Operação realizada!</span>
 </div>
 
-<script src="api-config.js?v=corretor-experience-v2"></script>
+<script src="api-config.js?v=launchfix-20260711"></script>
 <script>
 // ── AUTH CHECK ──
-const token = localStorage.getItem('imoore_token');
 function getStoredUser() {
+  localStorage.removeItem('imoore_token');
   try {
     return JSON.parse(localStorage.getItem('imoore_user') || 'null');
   } catch (error) {
@@ -415,22 +550,22 @@ function getStoredUser() {
   }
 }
 const userData = getStoredUser();
-const pageAuthorized = !!(token && userData && userData.perfil === 'corretor');
+const pageAuthorized = !!(userData && userData.perfil === 'corretor');
 if (!pageAuthorized) {
-  window.location.href = 'imoore-entrar.html';
+  window.location.href = '/entrar';
 }
 const API_BASE = window.IMOORE_API_BASE || window.API_BASE || '/api';
 async function apiRequest(path, options = {}) {
   if (!pageAuthorized) {
-    throw new Error('Sessao invalida');
+    throw new Error('Sessão inválida');
   }
   const isFormData = options.body instanceof FormData;
 
   const response = await fetch(`${API_BASE}${path}`, {
     ...options,
+    credentials: 'include',
     headers: {
       ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
-      Authorization: `Bearer ${token}`,
       ...(options.headers || {}),
     },
   });
@@ -438,8 +573,8 @@ async function apiRequest(path, options = {}) {
   if (response.status === 401) {
     localStorage.removeItem('imoore_token');
     localStorage.removeItem('imoore_user');
-    window.location.href = 'imoore-entrar.html';
-    throw new Error('Sessao expirada');
+    window.location.href = '/entrar';
+    throw new Error('Sessão expirada');
   }
 
   if (!response.ok) {
@@ -451,24 +586,50 @@ async function apiRequest(path, options = {}) {
 }
 const currentUser = userData || {};
 const nomeUsuario = currentUser.nome || currentUser.email || 'Corretor';
-const WPP_ADMIN = '5513991091887';
+const WPP_ADMIN = '5513992141293';
 const inicialUsuario = nomeUsuario[0];
 document.getElementById('sb-av').textContent = inicialUsuario;
 document.getElementById('sb-nome').textContent = nomeUsuario;
 if (document.getElementById('pf-nome')) document.getElementById('pf-nome').value = nomeUsuario;
+if (document.getElementById('pf-email')) document.getElementById('pf-email').value = currentUser.email || '';
+if (document.getElementById('pf-tel')) document.getElementById('pf-tel').value = currentUser.telefone || '';
+if (document.getElementById('pf-creci')) document.getElementById('pf-creci').value = currentUser.creci || '';
 
-// ── DADOS DEMO ──
-let meusImoveis = [
-  {titulo:'Apartamento 2q Gonzaga',tipo:'Apartamento',cidade:'Santos',preco:'R$ 420.000',quartos:2,banheiros:1,area:70,status:'publicado',img:'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&q=80'},
-  {titulo:'Casa com piscina Enseada',tipo:'Casa',cidade:'Guarujá',preco:'R$ 980.000',quartos:4,banheiros:3,area:240,status:'publicado',img:'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=400&q=80'},
-  {titulo:'Studio Aviação',tipo:'Studio',cidade:'Praia Grande',preco:'R$ 285.000',quartos:1,banheiros:1,area:42,status:'pendente',img:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&q=80'},
-];
+async function salvarPerfil(){
+  const button=document.getElementById('btn-salvar-perfil');
+  try{
+    button.disabled=true;
+    const updated=await apiRequest('/auth/me',{method:'PUT',body:JSON.stringify({nome:document.getElementById('pf-nome').value.trim(),telefone:document.getElementById('pf-tel').value.trim(),creci:document.getElementById('pf-creci').value.trim()})});
+    const stored={...currentUser,...updated};
+    localStorage.setItem('imoore_user',JSON.stringify(stored));
+    mostrarToast('Perfil atualizado com sucesso!');
+  }catch(error){ alert(error.message || 'Erro ao atualizar perfil.'); }
+  finally{ button.disabled=false; }
+}
 
+async function alterarMinhaSenha(){
+  const atual=document.getElementById('pf-senha-atual').value;
+  const nova=document.getElementById('pf-nova-senha').value;
+  const confirmar=document.getElementById('pf-confirmar-senha').value;
+  if(nova.length<12){ alert('A nova senha deve ter pelo menos 12 caracteres.'); return; }
+  if(nova!==confirmar){ alert('A confirmação da nova senha não confere.'); return; }
+  const button=document.getElementById('btn-alterar-senha');
+  try{
+    button.disabled=true;
+    await apiRequest('/auth/change-password',{method:'POST',body:JSON.stringify({senhaAtual:atual,novaSenha:nova})});
+    ['pf-senha-atual','pf-nova-senha','pf-confirmar-senha'].forEach(id=>document.getElementById(id).value='');
+    mostrarToast('Senha alterada com sucesso!');
+  }catch(error){ alert(error.message || 'Erro ao alterar senha.'); }
+  finally{ button.disabled=false; }
+}
+
+// Dados reais carregados pela API apos o login.
+let meusImoveis = [];
 let meusLeads = [];
-const leadColors = ['#F26522','#2BBDAD','#BA7517','#378ADD','#639922'];
+const leadColors = ['#FF5500','#2BBDAD','#BA7517','#378ADD','#639922'];
 
 function leadInfo(lead) {
-  return `${lead.interesse || 'Interesse nao informado'} · ${lead.cidade || 'Cidade nao informada'}`;
+  return `${lead.interesse || 'Interesse não informado'} · ${lead.cidade || 'Cidade não informada'}`;
 }
 
 function leadPhone(lead) {
@@ -476,7 +637,8 @@ function leadPhone(lead) {
 }
 
 function leadColor(lead, index) {
-  return lead.cor || leadColors[index % leadColors.length];
+  const color = String(lead.cor || '');
+  return /^#[0-9a-f]{3,8}$/i.test(color) ? color : leadColors[index % leadColors.length];
 }
 
 function formatLeadDate(lead) {
@@ -484,6 +646,287 @@ function formatLeadDate(lead) {
   if (!raw) return '-';
   const date = new Date(raw);
   return Number.isFinite(date.getTime()) ? date.toLocaleDateString('pt-BR') : raw;
+}
+
+function leadTypeLabel(lead) {
+  const interesse = String(lead.interesse || '').toLowerCase();
+  if (interesse.includes('corretor_cadastro_imovel')) return 'Cadastro de imovel por corretor';
+  if (interesse.includes('corretor_trabalhe')) return 'Cadastro de corretor';
+  if (interesse.includes('contato')) return 'Contato do site';
+  return lead.interesse || 'Lead';
+}
+
+function parseLeadDetails(lead) {
+  const text = String(lead.observacoes || '');
+  const fields = [];
+  const attachments = [];
+  text.split(/\r\n/).forEach((line) => {
+    const clean = line.trim();
+    if (!clean) return;
+    const urlMatch = clean.match(/https:\/\/\S+/);
+    if (urlMatch) {
+      const url = urlMatch[0].replace(/[),.;]+$/g, '');
+      const parts = clean.split('|').map(item => item.trim());
+      attachments.push({
+        name: (parts[0] || `Anexo ${attachments.length + 1}`).replace(/^\d+\.\s*/, ''),
+        type: parts[1] || '',
+        url,
+      });
+      return;
+    }
+    const sep = clean.indexOf(':');
+    if (sep > 0) {
+      fields.push({
+        label: clean.slice(0, sep).trim(),
+        value: clean.slice(sep + 1).trim() || '-',
+      });
+    } else if (!/^anexos enviados/i.test(clean)) {
+      fields.push({ label: 'Observao', value: clean });
+    }
+  });
+  return { fields, attachments };
+}
+
+function leadAttachmentHtml(attachments) {
+  if (!attachments.length) {
+    return '<div style="padding:14px;color:var(--ink4);font-size:13px">Nenhum anexo recebido neste cadastro.</div>';
+  }
+  return `<div class="lead-attachments">${attachments.map((attachment, index) => {
+    const isImage = /\.(png|jpeg|webp|gif)$/i.test(attachment.url) || /^image\//i.test(attachment.type);
+    return `
+      <button type="button" class="lead-attachment" data-attachment-url="${escapeHtml(attachment.url)}" data-attachment-image="${isImage ? 'true' : 'false'}" title="Abrir anexo ${index + 1}">
+        ${isImage ? `<img src="${escapeHtml(attachment.url)}" alt="${escapeHtml(attachment.name)}" loading="lazy" onerror="this.style.display='none'"/>` : '<i class="ti ti-file-text" style="font-size:34px"></i>'}
+        <span>${escapeHtml(attachment.name || `Anexo ${index + 1}`)}</span>
+      </button>`;
+  }).join('')}</div>`;
+}
+
+function openWhatsApp(phone, message) {
+  const cleanPhone = String(phone || '').replace(/\D/g, '');
+  if (!cleanPhone) {
+    mostrarToast('Lead sem WhatsApp cadastrado.');
+    return;
+  }
+  const number = cleanPhone.startsWith('55') ? cleanPhone : `55${cleanPhone}`;
+  window.open(`https://wa.me/${number}?text=${encodeURIComponent(message)}`, '_blank');
+  const metric = document.getElementById('m-whatsapp');
+  if (metric) metric.textContent = String((parseInt(metric.textContent, 10) || 0) + 1);
+}
+
+function abrirWhatsAppAdmin(message) {
+  openWhatsApp(WPP_ADMIN, message);
+}
+
+function leadMessage(lead, type) {
+  const nome = lead.nome || 'tudo bem';
+  const cidade = lead.cidade || 'Baixada Santista';
+  const interesse = lead.interesse || 'imóveis';
+  const corretor = nomeUsuario || 'corretor da Imoore';
+  const templates = {
+    primeiro: `Olá, ${nome}! Aqui é ${corretor}, corretor parceiro da Imoore. Vi seu interesse em ${interesse} em ${cidade}. Posso te ajudar com algumas opções`,
+    visita: `Olá, ${nome}! Tenho opções que combinam com seu interesse em ${cidade}. Qual melhor dia e horário para conversarmos ou agendarmos uma visita`,
+    followup: `Olá, ${nome}! Passando para saber se ainda faz sentido avançarmos com sua busca por ${interesse}. Posso te enviar novas oportunidades pela Imoore.`,
+    proposta: `Olá, ${nome}! Se algum imóvel que conversamos fez sentido, posso te orientar nos próximos passos com segurança e apoio da Imoore.`,
+  };
+  return templates[type] || templates.primeiro;
+}
+
+function whatsappLead(leadIndex, type) {
+  const lead = meusLeads[leadIndex];
+  if (!lead) return;
+  openWhatsApp(leadPhone(lead), leadMessage(lead, type));
+}
+
+function abrirDetalheLead(index) {
+  const lead = meusLeads[index];
+  if (!lead) return;
+  const parsed = parseLeadDetails(lead);
+  const phone = leadPhone(lead);
+  const overlay = document.createElement('div');
+  overlay.className = 'lead-detail-overlay';
+  overlay.innerHTML = `
+    <div class="lead-detail-modal" role="dialog" aria-modal="true" aria-label="Detalhes do lead">
+      <div class="lead-detail-head">
+        <div class="lead-detail-title">
+          <div class="lead-detail-avatar" style="background:${leadColor(lead,index)}">${escapeHtml((lead.nome || 'L')[0])}</div>
+          <div>
+            <h2>${escapeHtml(lead.nome || 'Lead sem nome')}</h2>
+            <p>${escapeHtml(leadTypeLabel(lead))} - ${escapeHtml(lead.cidade || 'Cidade no informada')} - ${escapeHtml(formatLeadDate(lead))}</p>
+          </div>
+        </div>
+        <button type="button" class="lead-detail-close" aria-label="Fechar"><i class="ti ti-x"></i></button>
+      </div>
+      <div class="lead-detail-body">
+        <div class="lead-detail-grid">
+          <div class="lead-detail-box"><small>WhatsApp</small><strong>${escapeHtml(lead.telefone || lead.tel || '-')}</strong></div>
+          <div class="lead-detail-box"><small>E-mail</small><strong>${escapeHtml(lead.email || '-')}</strong></div>
+          <div class="lead-detail-box"><small>Etapa</small><strong>${escapeHtml(lead.etapa || 'novo')}</strong></div>
+        </div>
+        <div class="lead-detail-section">
+          <h3>Informacoes do cadastro</h3>
+          <div class="lead-field-list">
+            ${parsed.fields.length ? parsed.fields.map(field => `
+              <div class="lead-field"><small>${escapeHtml(field.label)}</small><span>${escapeHtml(field.value)}</span></div>
+            `).join('') : '<div class="lead-field"><small>Observao</small><span>Sem detalhes adicionais.</span></div>'}
+          </div>
+        </div>
+        <div class="lead-detail-section">
+          <h3>Fotos e anexos</h3>
+          ${leadAttachmentHtml(parsed.attachments)}
+        </div>
+        <div class="lead-detail-actions">
+          <button class="btn btn-o" onclick="abrirEdicaoLead(${index})"><i class="ti ti-edit"></i> Editar</button>
+          <button class="btn btn-p" onclick="whatsappLead(${index}, 'primeiro')"><i class="ti ti-brand-whatsapp"></i> Contato</button>
+          <button class="btn btn-o" onclick="whatsappLead(${index}, 'visita')"><i class="ti ti-calendar-check"></i> Visita</button>
+          <button class="btn btn-o" onclick="whatsappLead(${index}, 'followup')"><i class="ti ti-send"></i> Follow-up</button>
+          ${phone ? `<a class="btn btn-o" href="tel:+${escapeHtml(phone.startsWith('55') ? phone : `55${phone}`)}"><i class="ti ti-phone"></i> Ligar</a>` : ''}
+        </div>
+      </div>
+    </div>
+  `;
+  overlay.querySelectorAll('.lead-attachment').forEach((button) => {
+    button.addEventListener('click', () => {
+      const url = button.dataset.attachmentUrl;
+      if (!url) return;
+      if (button.dataset.attachmentImage === 'true') {
+        abrirFotoAmpliada(url);
+        return;
+      }
+      const opened = window.open(url, '_blank', 'noopener,noreferrer');
+      if (opened) opened.opener = null;
+    });
+  });
+  overlay.querySelector('.lead-detail-close').addEventListener('click', () => overlay.remove());
+  overlay.addEventListener('click', event => {
+    if (event.target === overlay) overlay.remove();
+  });
+  document.body.appendChild(overlay);
+}
+
+function abrirEdicaoLead(index) {
+  const lead = meusLeads[index];
+  if (!lead?.id) {
+    mostrarToast('Lead sem identificador para edicao.');
+    return;
+  }
+
+  document.querySelectorAll('.lead-detail-overlay').forEach(item => item.remove());
+  const etapaAtual = String(lead.etapa || 'novo').toLowerCase();
+  const etapas = [
+    ['novo', 'Novo'],
+    ['contato', 'Contato'],
+    ['visita', 'Visita'],
+    ['proposta', 'Proposta'],
+    ['fechado', 'Fechado'],
+  ];
+  const overlay = document.createElement('div');
+  overlay.className = 'lead-detail-overlay';
+  overlay.innerHTML = `
+    <div class="edit-modal" role="dialog" aria-modal="true" aria-label="Editar lead">
+      <div class="gallery-head">
+        <h3>Editar lead <span style="color:var(--ink4);font-weight:600">${escapeHtml(lead.nome || '')}</span></h3>
+        <button type="button" class="gallery-close" aria-label="Fechar"><i class="ti ti-x"></i></button>
+      </div>
+      <div class="edit-body">
+        <div class="edit-grid">
+          <div class="edit-field">
+            <label for="edit-lead-nome">Nome</label>
+            <input id="edit-lead-nome" type="text" value="${escapeHtml(lead.nome || '')}">
+          </div>
+          <div class="edit-field">
+            <label for="edit-lead-telefone">WhatsApp</label>
+            <input id="edit-lead-telefone" type="text" value="${escapeHtml(lead.telefone || lead.tel || '')}">
+          </div>
+          <div class="edit-field">
+            <label for="edit-lead-email">E-mail</label>
+            <input id="edit-lead-email" type="email" value="${escapeHtml(lead.email || '')}">
+          </div>
+          <div class="edit-field">
+            <label for="edit-lead-cidade">Cidade</label>
+            <input id="edit-lead-cidade" type="text" value="${escapeHtml(lead.cidade || '')}">
+          </div>
+          <div class="edit-field">
+            <label for="edit-lead-interesse">Interesse</label>
+            <input id="edit-lead-interesse" type="text" value="${escapeHtml(lead.interesse || '')}">
+          </div>
+          <div class="edit-field">
+            <label for="edit-lead-etapa">Etapa</label>
+            <select id="edit-lead-etapa">${etapas.map(([value,label]) => `<option value="${value}" ${value === etapaAtual ? 'selected' : ''}>${label}</option>`).join('')}</select>
+          </div>
+        </div>
+        <div class="edit-field">
+          <label for="edit-lead-observacoes">Observacoes</label>
+          <textarea id="edit-lead-observacoes" placeholder="Resumo do atendimento, preferencias e proximos passos.">${escapeHtml(lead.observacoes || '')}</textarea>
+          <div class="edit-help">Atualize apenas as informacoes do lead. Fotos e anexos recebidos continuam preservados no cadastro.</div>
+        </div>
+        <div class="edit-actions">
+          <button type="button" class="btn btn-o" id="lead-edit-cancelar">Cancelar</button>
+          <button type="button" class="btn btn-p" id="lead-edit-salvar"><i class="ti ti-device-floppy"></i> Salvar lead</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const fechar = () => overlay.remove();
+  overlay.querySelector('.gallery-close').addEventListener('click', fechar);
+  overlay.querySelector('#lead-edit-cancelar').addEventListener('click', fechar);
+  overlay.addEventListener('click', event => {
+    if (event.target === overlay) fechar();
+  });
+  overlay.querySelector('#lead-edit-salvar').addEventListener('click', () => salvarEdicaoLead(index, overlay));
+  document.body.appendChild(overlay);
+}
+
+async function salvarEdicaoLead(index, overlay) {
+  const lead = meusLeads[index];
+  if (!lead?.id) return;
+  const botao = overlay.querySelector('#lead-edit-salvar');
+  const payload = {
+    nome: overlay.querySelector('#edit-lead-nome').value.trim(),
+    telefone: overlay.querySelector('#edit-lead-telefone').value.trim(),
+    email: overlay.querySelector('#edit-lead-email').value.trim(),
+    cidade: overlay.querySelector('#edit-lead-cidade').value.trim(),
+    interesse: overlay.querySelector('#edit-lead-interesse').value.trim(),
+    observacoes: overlay.querySelector('#edit-lead-observacoes').value.trim(),
+    etapa: overlay.querySelector('#edit-lead-etapa').value,
+  };
+
+  if (!payload.nome) {
+    alert('Informe o nome do lead.');
+    return;
+  }
+
+  try {
+    botao.disabled = true;
+    botao.innerHTML = '<i class="ti ti-loader"></i> Salvando...';
+    const atualizado = await apiRequest(`/leads/${lead.id}`, {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+    });
+    meusLeads[index] = atualizado;
+    overlay.remove();
+    renderDash();
+    renderLeads();
+    atualizarContadores();
+    mostrarToast('Lead atualizado com sucesso.');
+  } catch (error) {
+    alert(error.message || 'Erro ao atualizar lead.');
+    botao.disabled = false;
+    botao.innerHTML = '<i class="ti ti-device-floppy"></i> Salvar lead';
+  }
+}
+
+function pipelineCounts() {
+  const counts = { novo: 0, contato: 0, visita: 0, proposta: 0, fechado: 0 };
+  meusLeads.forEach(lead => {
+    const etapa = String(lead.etapa || 'novo').toLowerCase();
+    if (etapa.includes('visit')) counts.visita += 1;
+    else if (etapa.includes('proposta')) counts.proposta += 1;
+    else if (etapa.includes('fech')) counts.fechado += 1;
+    else if (etapa.includes('contato') || etapa.includes('atendimento')) counts.contato += 1;
+    else counts.novo += 1;
+  });
+  return counts;
 }
 
 // ── RENDER DASHBOARD ──
@@ -494,40 +937,111 @@ function precoImovel(im) {
   return im.preco || 'R$ 0';
 }
 
+function escapeHtml(value) {
+  return String(value || '').replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  }[char]));
+}
+
+function descricaoPrincipal(im) {
+  return String(im?.descricao || '')
+    .split(/\r?\n/)
+    .filter(line => !/^\s*(IPTU|Condom[ií]nio|Condominio|Chave do im[oó]vel|Autorizac[aã]o de venda|Autorizacao comercial|Aceite LGPD):/i.test(line))
+    .join('\n')
+    .trim();
+}
+
+function photoUrlFrom(value) {
+  if (!value) return '';
+  if (typeof value === 'object') {
+    return photoUrlFrom(value.url || value.publicUrl || value.public_url || value.src || value.path || value.location);
+  }
+  const url = String(value).trim();
+  if (!url) return '';
+  if (/^https:\/\/(localhost|127\.0\.0\.1)(:\d+)\/uploads\//i.test(url)) {
+    try { return new URL(url).pathname; } catch (error) { return url.replace(/^https:\/\/(localhost|127\.0\.0\.1)(:\d+)/i, ''); }
+  }
+  if (url.startsWith('uploads/')) return `/${url}`;
+  return url;
+}
+
+function fotosImovel(im) {
+  const fotos = im.fotos;
+  if (!fotos) return [];
+  if (Array.isArray(fotos)) return fotos.map(photoUrlFrom).filter(Boolean);
+  if (typeof fotos === 'object') return [photoUrlFrom(fotos)].filter(Boolean);
+  if (typeof fotos === 'string') {
+    const raw = fotos.trim();
+    if (!raw) return [];
+    try {
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed.map(photoUrlFrom).filter(Boolean) : [photoUrlFrom(parsed)].filter(Boolean);
+    } catch (error) {
+      return [photoUrlFrom(raw)].filter(Boolean);
+    }
+  }
+  return [];
+}
+
 function imagemImovel(im) {
-  if (Array.isArray(im.fotos) && im.fotos[0]) return im.fotos[0];
-  return im.img || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&q=80';
+  const fotos = fotosImovel(im);
+  if (fotos[0]) return fotos[0];
+  return im.img || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2w=400&q=80';
+}
+
+function fotosThumbsImovel(im, imovelIndex) {
+  const fotos = fotosImovel(im);
+  if (!fotos.length) return '<div class="photo-strip"><span style="font-size:11px;color:var(--ink4)">Sem fotos enviadas</span></div>';
+  const visible = fotos.slice(0, 4).map((foto, index) => `
+    <button type="button" class="photo-thumb" onclick="abrirGaleriaImovel(${imovelIndex}, ${index})" title="Abrir foto ${index + 1}">
+      <img src="${escapeHtml(foto)}" alt="Foto ${index + 1}" loading="lazy" onerror="this.style.display='none'"/>
+    </button>
+  `).join('');
+  const more = fotos.length > 4
+     ? `<button type="button" class="photo-thumb photo-more" onclick="abrirGaleriaImovel(${imovelIndex}, 4)" title="Ver mais fotos">+${fotos.length - 4}</button>`
+    : '';
+  return `<div class="photo-strip">${visible}${more}</div>`;
 }
 
 function renderDash() {
   const dl = document.getElementById('dash-leads');
   dl.innerHTML = '';
   meusLeads.slice(0,3).forEach((l,index) => {
+    const leadName = escapeHtml(l.nome || 'Lead sem nome');
+    const leadInitial = escapeHtml(String(l.nome || 'L').slice(0, 1));
+    const leadSummary = escapeHtml(`${leadInfo(l)} · ${formatLeadDate(l)}`);
     dl.innerHTML += `
     <div class="lead-row">
-      <div class="lead-av" style="background:${leadColor(l,index)}">${(l.nome || 'L')[0]}</div>
+      <div class="lead-av" style="background:${leadColor(l,index)}">${leadInitial}</div>
       <div style="flex:1;min-width:0">
-        <div class="lead-name">${l.nome || 'Lead sem nome'}</div>
-        <div class="lead-info">${leadInfo(l)} · ${formatLeadDate(l)}</div>
+        <div class="lead-name">${leadName}</div>
+        <div class="lead-info">${leadSummary}</div>
       </div>
-      <button class="lead-wpp" onclick="window.open('https://wa.me/55${leadPhone(l)}?text=Olá+${encodeURIComponent(l.nome || 'lead')}!+Sou+corretor+da+imoore.','_blank')" aria-label="WhatsApp">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.528 5.855L.054 23.5l5.788-1.452A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.89 0-3.66-.5-5.19-1.373l-.37-.22-3.437.862.918-3.348-.241-.386A9.944 9.944 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
-      </button>
+      <div class="lead-actions">
+        <button class="lead-template" onclick="whatsappLead(${index}, 'primeiro')">Contato</button>
+        <button class="lead-template" onclick="whatsappLead(${index}, 'visita')">Visita</button>
+        <button class="lead-template" onclick="whatsappLead(${index}, 'followup')">Follow-up</button>
+        <button class="lead-wpp" onclick="whatsappLead(${index}, 'proposta')" aria-label="WhatsApp"><i class="ti ti-brand-whatsapp" style="font-size:18px;color:#fff"></i></button>
+      </div>
     </div>`;
   });
 
   const di = document.getElementById('dash-imoveis');
   di.innerHTML = '';
-  meusImoveis.forEach(im => {
+  meusImoveis.forEach((im, index) => {
     const badge = im.status === 'publicado'
-      ? '<span class="badge b-ok">Publicado</span>'
+       ? '<span class="badge b-ok">Publicado</span>'
       : '<span class="badge b-warn">Pendente</span>';
     di.innerHTML += `
     <div style="display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:.5px solid var(--bdr)">
-      <div loading="lazy" style="width:44px;height:44px;border-radius:8px;background:url('${imagemImovel(im)}') center/cover;flex-shrink:0"></div>
+      <button type="button" onclick="abrirGaleriaImovel(${index})" style="width:44px;height:44px;border-radius:8px;background:url('${escapeHtml(imagemImovel(im))}') center/cover;flex-shrink:0;border:1px solid var(--bdr);cursor:pointer" title="Ver fotos"></button>
       <div style="flex:1;min-width:0">
-        <div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${im.titulo}</div>
-        <div style="font-size:11px;color:var(--ink4)">${im.preco} · ${im.cidade}</div>
+        <div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escapeHtml(im.titulo || '')}</div>
+        <div style="font-size:11px;color:var(--ink4)">${im.referencia ? `Ref: ${escapeHtml(im.referencia)} · ` : ''}${escapeHtml(im.preco || '')} · ${escapeHtml(im.cidade || '')}${im.captacao ? ` · Captação: ${escapeHtml(im.captacao)}` : ''}</div>
       </div>
       ${badge}
     </div>`;
@@ -541,35 +1055,239 @@ function renderImoveis() {
   li.innerHTML = '';
   meusImoveis.forEach((im, i) => {
     const badge = im.status === 'publicado'
-      ? '<span class="badge b-ok">Publicado</span>'
+       ? '<span class="badge b-ok">Publicado</span>'
       : '<span class="badge b-warn">Aguardando aprovação</span>';
     li.innerHTML += `
     <div class="icard-list">
-      <div class="icard-img-sm" style="background-image:url('${imagemImovel(im)}')"></div>
+      <button type="button" class="icard-img-sm" onclick="abrirGaleriaImovel(${i})" style="background-image:url('${escapeHtml(imagemImovel(im))}')" title="Ver fotos"></button>
       <div class="icard-info">
         <div class="icard-price">${precoImovel(im)}</div>
-        <div class="icard-sub">${im.tipo} · ${im.cidade}</div>
+        ${im.referencia ? `<div style="font-size:12px;font-weight:700;color:var(--or)">Ref: ${escapeHtml(im.referencia)}</div>` : ''}
+        <div class="icard-sub">${escapeHtml(im.tipo || '')} · ${escapeHtml(im.cidade || '')}${im.captacao ? ` · Captação: ${escapeHtml(im.captacao)}` : ''}</div>
         <div class="icard-meta-row">
           ${im.quartos > 0 ? `<span>${im.quartos} quartos</span>` : ''}
           ${im.banheiros > 0 ? `<span>${im.banheiros} banheiros</span>` : ''}
           <span>${im.area}m²</span>
         </div>
         <div style="margin-top:8px">${badge}</div>
+        ${fotosThumbsImovel(im, i)}
       </div>
       <div class="icard-acts">
-        <button class="btn btn-o" style="font-size:12px;padding:5px 12px"><i class="ti ti-edit"></i> Editar</button>
-        <button class="btn btn-err" style="font-size:12px;padding:5px 12px" onclick="meusImoveis.splice(${i},1);renderImoveis();atualizarContadores()"><i class="ti ti-trash"></i> Remover</button>
+        <button class="btn btn-o" style="font-size:12px;padding:5px 12px" onclick="abrirGaleriaImovel(${i})"><i class="ti ti-photo"></i> Fotos</button>
+        <button class="btn btn-o" style="font-size:12px;padding:5px 12px" onclick="abrirEdicaoImovel(${i})"><i class="ti ti-edit"></i> Editar</button>
+        <button class="btn btn-err" style="font-size:12px;padding:5px 12px" onclick="removerImovelCorretor(${i})"><i class="ti ti-trash"></i> Remover</button>
       </div>
     </div>`;
   });
 }
 renderImoveis();
 
+async function removerImovelCorretor(imovelIndex) {
+  const imovel = meusImoveis[imovelIndex];
+  if (!imovel?.id) {
+    mostrarToast('Imovel sem identificador para remocao.');
+    return;
+  }
+  if (!confirm('Remover este imovel definitivamente do painel e do site?')) return;
+
+  try {
+    await apiRequest(`/imoveis/${imovel.id}`, { method: 'DELETE' });
+    await carregarMeusImoveis();
+    mostrarToast('Imovel removido com sucesso.');
+  } catch (error) {
+    alert(error.message || 'Erro ao remover imovel.');
+  }
+}
+
+function abrirGaleriaImovel(imovelIndex, fotoIndex = 0) {
+  const imovel = meusImoveis[imovelIndex];
+  if (!imovel) return;
+  const fotos = fotosImovel(imovel);
+  if (!fotos.length) {
+    mostrarToast('Este imovel ainda nao tem fotos cadastradas.');
+    return;
+  }
+
+  let current = Math.max(0, Math.min(fotoIndex, fotos.length - 1));
+  const overlay = document.createElement('div');
+  overlay.className = 'gallery-overlay';
+  overlay.innerHTML = `
+    <div class="gallery-modal" role="dialog" aria-modal="true" aria-label="Fotos do imovel">
+      <div class="gallery-head">
+        <h3>${escapeHtml(imovel.titulo || 'Fotos do imovel')} <span style="color:var(--ink4);font-weight:600">(${fotos.length})</span></h3>
+        <button type="button" class="gallery-close" aria-label="Fechar"><i class="ti ti-x"></i></button>
+      </div>
+      <div class="gallery-main">
+        <button type="button" class="gallery-nav gallery-prev" aria-label="Foto anterior"><i class="ti ti-chevron-left"></i></button>
+        <img src="${escapeHtml(fotos[current])}" alt="Foto ${current + 1}" id="gallery-main-img"/>
+        <button type="button" class="gallery-nav gallery-next" aria-label="Proxima foto"><i class="ti ti-chevron-right"></i></button>
+      </div>
+      <div class="gallery-thumbs">
+        ${fotos.map((foto, index) => `
+          <button type="button" class="${index === current ? 'on' : ''}" data-index="${index}" title="Foto ${index + 1}">
+            <img src="${escapeHtml(foto)}" alt="Foto ${index + 1}" loading="lazy" onerror="this.style.display='none'"/>
+          </button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  const selectPhoto = index => {
+    current = fotos.length > 1 ? (index + fotos.length) % fotos.length : 0;
+    const img = overlay.querySelector('#gallery-main-img');
+    if (img) {
+      img.src = fotos[current];
+      img.alt = `Foto ${current + 1}`;
+    }
+    overlay.querySelectorAll('.gallery-thumbs button').forEach((button, buttonIndex) => {
+      button.classList.toggle('on', buttonIndex === current);
+    });
+  };
+
+  overlay.querySelectorAll('.gallery-nav').forEach(button => { button.disabled = fotos.length <= 1; });
+  overlay.querySelector('.gallery-prev').addEventListener('click', () => selectPhoto(current - 1));
+  overlay.querySelector('.gallery-next').addEventListener('click', () => selectPhoto(current + 1));
+  overlay.querySelector('.gallery-close').addEventListener('click', () => overlay.remove());
+  overlay.querySelectorAll('.gallery-thumbs button').forEach(button => {
+    button.addEventListener('click', () => selectPhoto(Number(button.dataset.index || 0)));
+  });
+  overlay.addEventListener('click', event => {
+    if (event.target === overlay) overlay.remove();
+  });
+  document.addEventListener('keydown', function onKey(event) {
+    if (!document.body.contains(overlay)) {
+      document.removeEventListener('keydown', onKey);
+      return;
+    }
+    if (event.key === 'Escape') overlay.remove();
+    if (event.key === 'ArrowRight') selectPhoto(current + 1);
+    if (event.key === 'ArrowLeft') selectPhoto(current - 1);
+  });
+  document.body.appendChild(overlay);
+}
+
+function opcoesBanheiros(valorAtual) {
+  const atual = Number.parseInt(valorAtual, 10) || 0;
+  return [
+    [0, 'Sem banheiro'],
+    [1, '1 banheiro'],
+    [2, '2 banheiros'],
+    [3, '3 banheiros'],
+    [4, '4 banheiros'],
+    [5, '5+ banheiros'],
+  ].map(([valor, label]) => `<option value="${valor}" ${atual === valor ? 'selected' : ''}>${label}</option>`).join('');
+}
+
+function abrirEdicaoImovel(imovelIndex) {
+  const imovel = meusImoveis[imovelIndex];
+  if (!imovel) return;
+
+  const fotosAtuais = fotosImovel(imovel).length;
+  const vagasRestantes = Math.max(0, 8 - fotosAtuais);
+  const overlay = document.createElement('div');
+  overlay.className = 'gallery-overlay';
+  overlay.innerHTML = `
+    <div class="edit-modal" role="dialog" aria-modal="true" aria-label="Editar imovel">
+      <div class="gallery-head">
+        <h3>Editar imovel <span style="color:var(--ink4);font-weight:600">${escapeHtml(imovel.titulo || '')}</span></h3>
+        <button type="button" class="gallery-close" aria-label="Fechar"><i class="ti ti-x"></i></button>
+      </div>
+      <div class="edit-body">
+        <div class="edit-grid">
+          <div class="edit-field">
+            <label for="edit-banheiros">Banheiros</label>
+            <select id="edit-banheiros">${opcoesBanheiros(imovel.banheiros)}</select>
+          </div>
+          <div class="edit-field">
+            <label for="edit-captacao">Captação</label>
+            <input id="edit-captacao" type="text" value="${escapeHtml(imovel.captacao || '')}" placeholder="Nome de quem captou">
+          </div>
+          <div class="edit-field">
+            <label for="edit-fotos">Adicionar fotos</label>
+            <input id="edit-fotos" type="file" accept="image/jpeg,image/png,image/webp" multiple>
+            <div class="edit-help">${fotosAtuais} de 8 fotos cadastradas. Voce pode adicionar ${vagasRestantes}.</div>
+          </div>
+        </div>
+        <div class="edit-field">
+          <label for="edit-descricao">Descricao do imovel</label>
+          <textarea id="edit-descricao" placeholder="Descreva melhor o imovel, diferenciais, estado de conservacao e pontos fortes.">${escapeHtml(descricaoPrincipal(imovel))}</textarea>
+          <div class="edit-help">Use este campo para deixar a descricao mais clara. Dados tecnicos ficam organizados nos campos proprios.</div>
+        </div>
+        <div class="edit-actions">
+          <button type="button" class="btn btn-o" id="edit-cancelar">Cancelar</button>
+          <button type="button" class="btn btn-p" id="edit-salvar"><i class="ti ti-device-floppy"></i> Salvar alteracoes</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const fechar = () => overlay.remove();
+  overlay.querySelector('.gallery-close').addEventListener('click', fechar);
+  overlay.querySelector('#edit-cancelar').addEventListener('click', fechar);
+  overlay.addEventListener('click', event => {
+    if (event.target === overlay) fechar();
+  });
+  overlay.querySelector('#edit-fotos').addEventListener('change', event => {
+    const files = Array.from(event.target.files || []);
+    if (files.length > vagasRestantes) {
+      alert(`Este imovel aceita no maximo 8 fotos. Voce ainda pode adicionar ${vagasRestantes}.`);
+      event.target.value = '';
+    }
+  });
+  overlay.querySelector('#edit-salvar').addEventListener('click', () => salvarEdicaoImovel(imovelIndex, overlay));
+  document.body.appendChild(overlay);
+}
+
+async function salvarEdicaoImovel(imovelIndex, overlay) {
+  const imovel = meusImoveis[imovelIndex];
+  if (!imovel?.id) return;
+
+  const botao = overlay.querySelector('#edit-salvar');
+  const fotosAtuais = fotosImovel(imovel).length;
+  const vagasRestantes = Math.max(0, 8 - fotosAtuais);
+  const novasFotos = Array.from(overlay.querySelector('#edit-fotos').files || []);
+
+  if (novasFotos.length > vagasRestantes) {
+    alert(`Este imovel aceita no maximo 8 fotos. Voce ainda pode adicionar ${vagasRestantes}.`);
+    return;
+  }
+
+  try {
+    botao.disabled = true;
+    botao.innerHTML = '<i class="ti ti-loader"></i> Salvando...';
+    await apiRequest(`/imoveis/${imovel.id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        banheiros: Number.parseInt(overlay.querySelector('#edit-banheiros').value, 10) || 0,
+        captacao: overlay.querySelector('#edit-captacao').value.trim(),
+        descricao: overlay.querySelector('#edit-descricao').value.trim(),
+      }),
+    });
+
+    if (novasFotos.length) {
+      const formData = new FormData();
+      novasFotos.forEach(file => formData.append('fotos', file));
+      await apiRequest(`/imoveis/${imovel.id}/fotos`, {
+        method: 'POST',
+        body: formData,
+      });
+    }
+
+    overlay.remove();
+    await carregarMeusImoveis();
+    mostrarToast('Imovel atualizado com sucesso.');
+  } catch (error) {
+    alert(error.message || 'Erro ao atualizar imovel.');
+    botao.disabled = false;
+    botao.innerHTML = '<i class="ti ti-device-floppy"></i> Salvar alteracoes';
+  }
+}
+
 async function carregarMeusImoveis() {
   if (!pageAuthorized) return;
 
   try {
-    meusImoveis = await apiRequest('/imoveis');
+    meusImoveis = await apiRequest('/imoveis?scope=broker');
     renderDash();
     renderImoveis();
     atualizarContadores();
@@ -584,20 +1302,27 @@ function renderLeads() {
   const ll = document.getElementById('lista-leads');
   ll.innerHTML = '';
   meusLeads.forEach((l,index) => {
+    const leadInitial = escapeHtml(String(l.nome || 'L').slice(0, 1));
     ll.innerHTML += `
-    <div class="lead-row">
-      <div class="lead-av" style="background:${leadColor(l,index)}">${(l.nome || 'L')[0]}</div>
+    <div class="lead-row" onclick="abrirDetalheLead(${index})">
+      <div class="lead-av" style="background:${leadColor(l,index)}">${leadInitial}</div>
       <div style="flex:1;min-width:0">
-        <div class="lead-name">${l.nome || 'Lead sem nome'}</div>
-        <div class="lead-info">${leadInfo(l)} · ${l.etapa || 'novo'} · ${formatLeadDate(l)}</div>
+        <div class="lead-name">${escapeHtml(l.nome || 'Lead sem nome')}</div>
+        <div class="lead-info">${escapeHtml(leadTypeLabel(l))} - ${escapeHtml(l.cidade || 'Cidade no informada')} - ${escapeHtml(l.etapa || 'novo')} - ${escapeHtml(formatLeadDate(l))}</div>
       </div>
-      <button class="lead-wpp" onclick="window.open('https://wa.me/55${leadPhone(l)}?text=Olá+${encodeURIComponent(l.nome || 'lead')}!+Sou+corretor+da+imoore.','_blank')" aria-label="WhatsApp">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.528 5.855L.054 23.5l5.788-1.452A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.89 0-3.66-.5-5.19-1.373l-.37-.22-3.437.862.918-3.348-.241-.386A9.944 9.944 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
-      </button>
+      <div class="lead-actions">
+        <button class="lead-template" onclick="event.stopPropagation();whatsappLead(${index}, 'primeiro')">Contato</button>
+        <button class="lead-template" onclick="event.stopPropagation();whatsappLead(${index}, 'visita')">Visita</button>
+        <button class="lead-template" onclick="event.stopPropagation();whatsappLead(${index}, 'followup')">Follow-up</button>
+        <button class="lead-template" onclick="event.stopPropagation();abrirEdicaoLead(${index})">Editar</button>
+        <button class="lead-template" onclick="event.stopPropagation();abrirDetalheLead(${index})">Detalhes</button>
+        <button class="lead-wpp" onclick="event.stopPropagation();whatsappLead(${index}, 'proposta')" aria-label="WhatsApp"><i class="ti ti-brand-whatsapp" style="font-size:18px;color:#fff"></i></button>
+      </div>
     </div>`;
   });
 }
 renderLeads();
+atualizarContadores();
 
 async function carregarMeusLeads() {
   if (!pageAuthorized) return;
@@ -615,16 +1340,23 @@ carregarMeusLeads();
 
 // ── ENVIAR IMÓVEL ──
 async function enviarImovel() {
+  const submitButton = document.getElementById('btn-enviar-imovel');
+  if (submitButton?.dataset.submitting === '1') return;
   const titulo = document.getElementById('im-titulo').value.trim();
   const preco  = document.getElementById('im-preco').value.trim();
   const cidade = document.getElementById('im-cidade').value;
   const tipo   = document.getElementById('im-tipo').value;
   const autorizacaoVenda = document.querySelector('input[name="im-autorizacao-venda"]:checked')?.value || '';
   if (!autorizacaoVenda) { alert('Selecione uma opção no termo de autorização antes de enviar.'); return; }
-  if (!document.getElementById('im-lgpd')?.checked) { alert('Confirme o aceite de tratamento de dados pessoais antes de enviar.'); return; }
+  if (!document.getElementById('im-lgpd').checked) { alert('Confirme o aceite de tratamento de dados pessoais antes de enviar.'); return; }
   if (autorizacaoVenda === 'nao_autorizo') { alert('Não é possível enviar o imóvel para aprovação sem autorização de venda.'); return; }
   if (!titulo || !preco) { alert('Preencha pelo menos o título e o preço.'); return; }
   try {
+    if (submitButton) {
+      submitButton.dataset.submitting = '1';
+      submitButton.disabled = true;
+      submitButton.innerHTML = '<i class="ti ti-loader-2"></i> Enviando...';
+    }
     const formData = new FormData();
     formData.append('titulo', titulo);
     formData.append('tipo', tipo);
@@ -639,19 +1371,20 @@ async function enviarImovel() {
     formData.append('banheiros', parseInt(document.getElementById('im-banheiros').value, 10) || 0);
     formData.append('vagas', parseInt(document.getElementById('im-vagas').value, 10) || 0);
     formData.append('area', parseInt(document.getElementById('im-area').value, 10) || 0);
+    formData.append('captacao', document.getElementById('im-captacao').value.trim());
     const descricao = document.getElementById('im-desc').value.trim();
     const dadosComplementares = [
-      `IPTU: ${document.getElementById('im-iptu').value.trim() || 'Nao informado'}`,
-      `Condominio: ${document.getElementById('im-condominio').value.trim() || 'Nao informado'}`,
-      `Chave do imovel: ${document.getElementById('im-chave').value.trim() || 'Nao informado'}`,
-      'Autorizacao de venda: Autorizo a venda do imóvel em referência',
-      'Autorizacao comercial: nao exclusiva, validade de 180 dias',
+      `IPTU: ${document.getElementById('im-iptu').value.trim() || 'Não informado'}`,
+      `Condomínio: ${document.getElementById('im-condominio').value.trim() || 'Não informado'}`,
+      `Chave do imóvel: ${document.getElementById('im-chave').value.trim() || 'Não informado'}`,
+      'Autorização de venda: Autorizo a venda do imóvel em referência',
+      'Autorização comercial: não exclusiva, validade de 180 dias',
       'Aceite LGPD: sim',
     ].join('\n');
     formData.append('descricao', `${descricao}\n\n${dadosComplementares}`);
     const fotos = Array.from(document.getElementById('inp-fotos').files || []);
-    if (fotos.length > 5) {
-      alert('Selecione no maximo 5 fotos.');
+    if (fotos.length > 8) {
+      alert('Selecione no maximo 8 fotos.');
       return;
     }
     fotos.forEach(file => {
@@ -665,17 +1398,23 @@ async function enviarImovel() {
     await carregarMeusImoveis();
     document.getElementById('inp-fotos').value = '';
     document.getElementById('fotos-preview').innerHTML = '';
-    mostrarToast('Imovel enviado para aprovacao!');
+    mostrarToast('Imovel enviado para aprovao!');
     goPage('meus-imoveis');
-    ['im-titulo','im-preco','im-iptu','im-condominio','im-chave','im-bairro','im-quartos','im-banheiros','im-vagas','im-area','im-desc'].forEach(id => {
+    ['im-titulo','im-preco','im-iptu','im-condominio','im-chave','im-captacao','im-bairro','im-quartos','im-banheiros','im-vagas','im-area','im-desc'].forEach(id => {
       const el = document.getElementById(id); if(el) el.value = '';
     });
     document.querySelectorAll('input[name="im-autorizacao-venda"]').forEach(input => { input.checked = false; });
     const lgpd = document.getElementById('im-lgpd'); if(lgpd) lgpd.checked = false;
     return;
   } catch (error) {
-    alert(error.message || 'Erro ao enviar imovel para aprovacao');
+    alert(error.message || 'Erro ao enviar imóvel para aprovação');
     return;
+  } finally {
+    if (submitButton) {
+      submitButton.dataset.submitting = '0';
+      submitButton.disabled = false;
+      submitButton.innerHTML = '<i class="ti ti-send"></i> Enviar para aprovação';
+    }
   }
 }
 
@@ -684,8 +1423,8 @@ function mostrarFotos(inp) {
   const prev = document.getElementById('fotos-preview');
   prev.innerHTML = '';
   const fotos = Array.from(inp.files || []);
-  if (fotos.length > 5) {
-    alert('Selecione no maximo 5 fotos.');
+  if (fotos.length > 8) {
+    alert('Selecione no maximo 8 fotos.');
     inp.value = '';
     return;
   }
@@ -714,9 +1453,17 @@ function atualizarContadores() {
   document.getElementById('count-leads').textContent = meusLeads.length;
   document.getElementById('m-imoveis').textContent = meusImoveis.length;
   document.getElementById('m-leads').textContent = meusLeads.length;
+  const pendentes = meusImoveis.filter(im => String(im.status || '').toLowerCase() !== 'publicado').length;
+  const pendenteEl = document.getElementById('m-pendentes');
+  if (pendenteEl) pendenteEl.textContent = pendentes;
+  const pipe = pipelineCounts();
+  Object.entries(pipe).forEach(([key, value]) => {
+    const el = document.getElementById(`pipe-${key}`);
+    if (el) el.textContent = value;
+  });
 }
 
-// ── NAVIGATION ──
+// ── NAVEGAÇÃO ──
 const titles = {
   'dashboard':'Dashboard',
   'novo-imovel':'Cadastrar imóvel',
@@ -753,9 +1500,10 @@ function mostrarToast(msg) {
 
 // ── SAIR ──
 function sair() {
+  fetch('/api/auth/logout', { method: 'POST', credentials: 'include' }).catch(() => {});
   localStorage.removeItem('imoore_token');
   localStorage.removeItem('imoore_user');
-  window.location.href = 'imoore-entrar.html';
+  window.location.href = '/entrar';
 }
 </script>
 </body>

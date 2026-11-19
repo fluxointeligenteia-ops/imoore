@@ -1,14 +1,14 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>imoore — Painel Admin + CRM</title>
+<title>Imoore — Painel Admin + CRM</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
 <style>
 :root{
-  --or:#F26522;--or2:#d95510;--orl:#FEF0E8;--orm:#FDDCC8;
+  --or:#FF5500;--or2:#E64D00;--orl:#FFF2EA;--orm:#FFC2A3;
   --bg:#F5F4F1;--bg2:#FFFFFF;--bg3:#EDEBE6;
   --ink:#1A1614;--ink2:#3D3530;--ink3:#6B6058;--ink4:#9C9188;
   --bdr:#E2DDD7;--bdr2:#D4CFC9;
@@ -35,8 +35,10 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
 .content{padding:24px;flex:1}
 
 /* SIDEBAR */
-.sb-logo{padding:18px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
-.sb-logo img{height:44px;width:auto}
+.sb-logo{padding:18px 12px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.sb-logo img{height:98px;width:auto;max-width:100%;border-radius:14px;object-fit:contain;box-shadow:none;display:block}
+.sb-logo .flow-logo{height:34px;width:34px;border-radius:10px;object-fit:cover;border:1px solid rgba(255,255,255,.14);box-shadow:0 8px 20px rgba(0,0,0,.22)}
+.flow-signature{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.72);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.7px}
 .sb-admin{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px}
 .sb-av{width:36px;height:36px;border-radius:50%;background:var(--or);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0}
 .sb-name{font-size:13px;font-weight:600;color:#fff}
@@ -44,7 +46,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
 .sb-section{padding:12px 16px 4px;font-size:10px;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:1px;text-transform:uppercase}
 .sb-item{display:flex;align-items:center;gap:10px;padding:9px 16px;font-size:13px;font-weight:500;color:rgba(255,255,255,.65);cursor:pointer;transition:all .15s;border-left:3px solid transparent;position:relative}
 .sb-item:hover{background:rgba(255,255,255,.06);color:#fff}
-.sb-item.on{background:rgba(242,101,34,.12);color:var(--or);border-left-color:var(--or)}
+.sb-item.on{background:rgba(255,85,0,.12);color:var(--or);border-left-color:var(--or)}
 .sb-item i{font-size:18px;flex-shrink:0}
 .sb-badge{background:var(--or);color:#fff;font-size:10px;font-weight:700;padding:1px 7px;border-radius:20px;margin-left:auto}
 .sb-badge.warn{background:var(--warn)}
@@ -62,6 +64,11 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
 .btn-ok{background:var(--ok);color:#fff}
 .btn-err{background:var(--err);color:#fff}
 .btn-sm{padding:5px 12px;font-size:12px}
+/* IMOORE STANDARD BUTTON TEST */
+.btn-p,.btn-ok,.btn-err,.btn-login,.button,.btn:not(.secondary){background:linear-gradient(90deg,#FF5500 0%,#FF7A1A 100%)!important;color:#fff!important;border:3px solid rgba(255,255,255,.96)!important;border-radius:999px!important;box-shadow:0 8px 0 rgba(26,22,20,.13),0 14px 26px rgba(26,22,20,.17)!important;text-shadow:0 1px 2px rgba(90,32,0,.24);overflow:hidden}
+.btn-p:hover,.btn-ok:hover,.btn-err:hover,.btn-login:hover,.button:hover,.btn:not(.secondary):hover{filter:saturate(1.08) brightness(1.02);transform:translateY(-1px);box-shadow:0 6px 0 rgba(26,22,20,.13),0 16px 30px rgba(26,22,20,.20)!important}
+.btn-o,.btn.secondary,.button-secondary{border-radius:999px!important}
+
 
 /* PAGES */
 .page{display:none}
@@ -86,7 +93,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
 .tbl th{font-size:11px;font-weight:600;color:var(--ink4);text-align:left;padding:8px 12px;border-bottom:1px solid var(--bdr);text-transform:uppercase;letter-spacing:.5px;background:var(--bg3)}
 .tbl td{padding:10px 12px;border-bottom:.5px solid var(--bdr);font-size:13px;vertical-align:middle}
 .tbl tr:last-child td{border-bottom:none}
-.tbl tr:hover td{background:rgba(242,101,34,.03)}
+.tbl tr:hover td{background:rgba(255,85,0,.03)}
 
 /* BADGE */
 .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
@@ -96,19 +103,35 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
 .b-inf{background:var(--infl);color:#042C53}
 .b-gray{background:var(--bg3);color:var(--ink3)}
 .b-or{background:var(--orl);color:#8a3000}
+.b-featured{background:#FFF2EA;color:#9A3400;border:1px solid #FFC2A3}
+.b-muted{background:#F0EEE9;color:#6B6058}
+.b-hidden{background:#FCEBEB;color:#7A1D1D}
+.vitrine-box{display:flex;flex-direction:column;gap:7px;min-width:190px}
+.vitrine-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+.vitrine-actions button{border:1px solid var(--bdr);background:#fff;color:var(--ink3);border-radius:999px;padding:5px 7px;font:700 10px/1 var(--f);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:4px;min-height:27px}
+.vitrine-actions button:hover{border-color:var(--or);color:var(--or);background:var(--orl)}
+.vitrine-actions button.on{background:var(--or);border-color:var(--or);color:#fff}
+.vitrine-actions button[data-vitrine="segundo_plano"].on{background:#6B6058;border-color:#6B6058}
+.vitrine-actions button[data-vitrine="oculto_home"].on{background:var(--err);border-color:var(--err)}
+.vitrine-priority{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:800;color:var(--ink4);text-transform:uppercase;letter-spacing:.4px}
+.vitrine-priority input{width:58px;border:1px solid var(--bdr);border-radius:8px;padding:5px 6px;font:700 11px/1 var(--f);color:var(--ink);background:#fff}
+.vitrine-panel{margin-top:10px;padding-top:10px;border-top:1px dashed var(--bdr);display:flex;flex-direction:column;gap:8px}
 
 /* FUNIL CRM */
-.funil{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:0}
-.col-funil{background:var(--bg3);border-radius:var(--rl);padding:10px;min-height:400px;display:flex;flex-direction:column}
-.col-funil-hdr{font-size:12px;font-weight:700;color:var(--ink2);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
+.funil{display:grid;grid-template-columns:repeat(5,minmax(210px,1fr));gap:12px;margin-bottom:0;align-items:start}
+.col-funil{background:#F0EEE9;border:1px solid var(--bdr);border-radius:var(--rl);padding:10px;min-height:430px;display:flex;flex-direction:column}
+.col-funil-hdr{font-size:12px;font-weight:800;color:var(--ink2);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
 .col-funil-count{background:var(--bg2);border:1px solid var(--bdr);border-radius:20px;padding:2px 8px;font-size:11px;font-weight:700;color:var(--ink3)}
-.lead-card{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);padding:10px;margin-bottom:7px;cursor:pointer;transition:all .2s}
-.lead-card:hover{border-color:var(--or);box-shadow:var(--sh)}
+.lead-card{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);padding:11px;margin-bottom:8px;cursor:pointer;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.lead-card:hover{border-color:var(--or);box-shadow:var(--sh);transform:translateY(-2px)}
 .lead-name{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:3px}
 .lead-info{font-size:11px;color:var(--ink4);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lead-meta{display:flex;align-items:center;justify-content:space-between}
 .lead-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
 .lead-time{font-size:10px;color:var(--ink4)}
+.lead-actions-row{display:flex;gap:6px;margin-top:9px}
+.lead-mini-btn{flex:1;background:var(--bg);border:1px solid var(--bdr);border-radius:999px;padding:6px 7px;font-size:11px;font-weight:700;color:var(--ink3);cursor:pointer;font-family:var(--f);display:flex;align-items:center;justify-content:center;gap:4px}
+.lead-mini-btn:hover{border-color:var(--or);color:var(--or);background:var(--orl)}
 .add-lead{width:100%;padding:7px;background:transparent;border:1.5px dashed var(--bdr2);border-radius:var(--r);font-size:12px;color:var(--ink4);cursor:pointer;font-family:var(--f);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:5px;margin-top:auto}
 .add-lead:hover{border-color:var(--or);color:var(--or)}
 
@@ -131,6 +154,20 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
 .icard-rev-meta span{display:flex;align-items:center;gap:3px}
 .icard-rev-meta i{font-size:13px;color:var(--or)}
 .icard-rev-acts{display:flex;gap:8px;flex-wrap:wrap}
+.review-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px solid var(--bdr)}
+.review-actions .btn{justify-content:center}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.detail-box{background:var(--bg);border:1px solid var(--bdr);border-radius:var(--r);padding:10px}
+.detail-box small{display:block;font-size:10px;font-weight:800;color:var(--ink4);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+.detail-box strong{font-size:13px;color:var(--ink)}
+.lead-detail-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
+.lead-detail-avatar{width:44px;height:44px;border-radius:14px;background:var(--or);color:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;flex-shrink:0}
+.lead-detail-name{font-size:20px;font-weight:800;color:var(--ink);line-height:1.1;margin-bottom:4px}
+.lead-detail-sub{font-size:12px;color:var(--ink4)}
+.lead-history{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.lead-history-item{background:var(--bg);border:1px solid var(--bdr);border-radius:var(--r);padding:10px}
+.lead-history-item p{font-size:12px;color:var(--ink2);margin-bottom:4px}
+.lead-history-item small{font-size:10px;color:var(--ink4)}
 
 /* MODAL */
 .modal-bg{position:fixed;inset:0;background:rgba(26,22,20,.5);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
@@ -146,6 +183,28 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
 .admin-photo-thumb:hover{transform:translateY(-1px);border-color:var(--or)}
 .admin-photo-thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .admin-photo-count{position:absolute;left:6px;bottom:6px;background:rgba(26,22,20,.72);color:#fff;font-size:10px;font-weight:700;border-radius:999px;padding:2px 7px}
+.admin-photo-sortable{padding:10px;border:1px dashed var(--bdr);border-radius:12px;background:var(--bg3)}
+.admin-photo-sort-item{cursor:grab;user-select:none}
+.admin-photo-sort-item:active{cursor:grabbing}
+.admin-photo-sort-item.is-dragging{opacity:.42;transform:scale(.96);border-color:var(--or)}
+.admin-photo-order-label{position:absolute;left:6px;bottom:6px;background:rgba(26,22,20,.78);color:#fff;font-size:10px;font-weight:700;border-radius:999px;padding:2px 7px}
+.admin-photo-grip{position:absolute;right:6px;top:6px;width:28px;height:28px;display:grid;place-items:center;border:0;border-radius:6px;background:rgba(255,255,255,.94);color:var(--or);box-shadow:var(--sh);cursor:grab;touch-action:none}
+.admin-photo-sort-actions{position:absolute;right:6px;bottom:6px;display:flex;gap:4px}
+.admin-photo-sort-actions button{width:24px;height:24px;border:0;border-radius:6px;background:rgba(255,255,255,.94);color:var(--or);display:grid;place-items:center;cursor:pointer;box-shadow:var(--sh)}
+.admin-photo-sort-actions button:disabled{opacity:.35;cursor:default}
+.admin-photo-upload-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.admin-photo-upload-option{border:1px solid var(--bdr);border-radius:10px;background:var(--bg3);padding:10px}
+.admin-photo-upload-option label{display:block;margin-bottom:6px;font-size:12px;font-weight:700;color:var(--txt)}
+.admin-photo-upload-option input{width:100%}
+.admin-photo-upload-queue{display:grid;gap:6px;margin-top:10px}
+.admin-photo-upload-file{display:flex;align-items:center;gap:8px;min-width:0;padding:8px 10px;border:1px solid var(--bdr);border-radius:8px;background:var(--bg2);font-size:12px}
+.admin-photo-upload-file span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.admin-photo-upload-file button{border:0;background:transparent;color:var(--danger);cursor:pointer;width:28px;height:28px;display:grid;place-items:center}
+@media(max-width:620px){.admin-photo-upload-options{grid-template-columns:1fr}}
+.admin-photo-delete{position:absolute;right:6px;top:6px;width:26px;height:26px;border:none;border-radius:999px;background:rgba(255,255,255,.94);color:#b42318;font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.16)}
+.admin-photo-delete:hover{background:#fee4e2}
+.admin-photo-watermark{position:absolute;right:6px;bottom:6px;width:26px;height:26px;border:none;border-radius:999px;background:rgba(255,255,255,.94);color:var(--or);font-size:14px;font-weight:900;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.16);display:flex;align-items:center;justify-content:center}
+.admin-photo-watermark:hover{background:#fff3eb}
 .admin-photo-error{display:none;align-items:center;justify-content:center;width:100%;height:100%;padding:8px;text-align:center;font-size:11px;color:var(--ink3)}
 .admin-photo-lightbox{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px}
 .admin-photo-lightbox img{max-width:96vw;max-height:84vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.35);object-fit:contain;background:#fff}
@@ -176,8 +235,11 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
   .sidebar{display:none}
   .main{margin-left:0}
   .metrics{grid-template-columns:1fr 1fr}
-  .funil{grid-template-columns:1fr;overflow-x:auto}
+  .funil{display:flex;overflow-x:auto;gap:10px;padding-bottom:8px;scroll-snap-type:x mandatory}
+  .col-funil{min-width:82vw;scroll-snap-align:start}
   .form-grid{grid-template-columns:1fr}
+  .detail-grid{grid-template-columns:1fr}
+  .review-actions .btn{width:100%}
 }
 </style>
 </head>
@@ -187,21 +249,27 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
 
 <!-- SIDEBAR -->
 <aside class="sidebar">
-  <div class="sb-logo"><img src="assets/imoore-logo-oficial-horizontal.jpeg" alt="imoore admin"/></div>
+  <div class="sb-logo">
+    <img src="assets/imoore-logo-ff5500-transparente.png?v=20260731-correta" alt="imoore admin"/>
+    <div class="flow-signature">
+      <img class="flow-logo" src="assets/fluxo-inteligente-simbolo.png" alt="Fluxo Inteligente"/>
+      <span>Fluxo Inteligente</span>
+    </div>
+  </div>
   <div class="sb-admin">
     <div class="sb-av">R</div>
     <div><div class="sb-name">Rodrigo</div><div class="sb-role">Administrador</div></div>
   </div>
   <div class="sb-section">Principal</div>
   <div class="sb-item on" onclick="goPage('dashboard')"><i class="ti ti-layout-dashboard" aria-hidden="true"></i> Dashboard</div>
-  <div class="sb-item" onclick="goPage('aprovacao')"><i class="ti ti-building-check" aria-hidden="true"></i> Aprovação <span class="sb-badge" id="menu-pendentes">0</span></div>
+  <div class="sb-item" onclick="goPage('aprovao')"><i class="ti ti-building-check" aria-hidden="true"></i> Aprovação <span class="sb-badge" id="menu-pendentes">0</span></div>
   <div class="sb-item" onclick="goPage('imoveis')"><i class="ti ti-building" aria-hidden="true"></i> Imóveis</div>
   <div class="sb-section">CRM</div>
   <div class="sb-item" onclick="goPage('crm')"><i class="ti ti-users" aria-hidden="true"></i> Leads & Funil</div>
   <div class="sb-item" onclick="goPage('corretores')"><i class="ti ti-id-badge" aria-hidden="true"></i> Corretores</div>
   <div class="sb-section">Sistema</div>
   <div class="sb-item" onclick="goPage('configuracoes')"><i class="ti ti-settings" aria-hidden="true"></i> Configurações</div>
-  <div class="sb-item" onclick="window.open('teste-claude.html','_blank')"><i class="ti ti-external-link" aria-hidden="true"></i> Ver site</div>
+  <div class="sb-item" onclick="window.open('/','_blank')"><i class="ti ti-external-link" aria-hidden="true"></i> Ver site</div>
 </aside>
 
 <!-- MAIN -->
@@ -212,6 +280,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
   <div class="tb-title" id="tb-title">Dashboard</div>
   <div class="tb-right">
     <div class="tb-notif" onclick="goPage('notificacoes')"><i class="ti ti-bell" aria-hidden="true"></i><div class="dot"></div></div>
+    <a class="btn btn-o" href="/captar-imovel"><i class="ti ti-device-mobile" aria-hidden="true"></i> Captação rápida</a>
     <button class="btn btn-p" onclick="abrirNovoImovel()"><i class="ti ti-plus" aria-hidden="true"></i> Novo imóvel</button>
     <button class="btn btn-o" onclick="sair()"><i class="ti ti-logout" aria-hidden="true"></i> Sair</button>
   </div>
@@ -276,7 +345,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
 </div>
 
 <!-- ══ APROVAÇÃO ══ -->
-<div class="page" id="page-aprovacao">
+<div class="page" id="page-aprovao">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
     <div>
       <h2 style="font-size:18px;font-weight:800;color:var(--ink);margin-bottom:4px">Aprovação de imóveis</h2>
@@ -285,7 +354,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
     <div class="tabs">
       <div class="tab on" onclick="selTab(this,'tab-pendentes')">Pendentes <span id="tab-pendentes-count" style="background:var(--or);color:#fff;padding:1px 7px;border-radius:20px;font-size:10px;margin-left:4px">0</span></div>
       <div class="tab" onclick="selTab(this,'tab-aprovados')">Aprovados</div>
-      <div class="tab" onclick="selTab(this,'tab-rejeitados')">Rejeitados</div>
+      <div class="tab" onclick="selTab(this,'tab-rejeitados')">Fora do site</div>
     </div>
   </div>
 
@@ -304,11 +373,22 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
 <div class="page" id="page-imoveis">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
     <h2 style="font-size:18px;font-weight:800;color:var(--ink)">Imóveis cadastrados</h2>
-    <button class="btn btn-p" onclick="abrirNovoImovel()"><i class="ti ti-plus" aria-hidden="true"></i> Cadastrar imóvel</button>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end">
+      <button class="btn btn-o" onclick="aplicarMarcaDaguaLote()"><i class="ti ti-droplet" aria-hidden="true"></i> Aplicar padrão às fotos existentes</button>
+      <button class="btn btn-p" onclick="abrirNovoImovel()"><i class="ti ti-plus" aria-hidden="true"></i> Cadastrar imóvel</button>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:14px;padding:12px 14px;display:flex;align-items:center;gap:10px">
+    <i class="ti ti-search" aria-hidden="true" style="font-size:20px;color:var(--or)"></i>
+    <input id="busca-imoveis-admin" type="search" placeholder="Pesquisar por título, bairro, cidade, código ou referência interna..." oninput="filtrarImoveisAdmin(this.value)" style="flex:1;border:0;outline:0;background:transparent;font:inherit;color:var(--ink)" />
+  </div>
+  <div class="card" style="margin-bottom:14px">
+    <div class="card-hdr"><h3><i class="ti ti-arrows-sort" style="color:var(--or);margin-right:6px" aria-hidden="true"></i>Organizar imóveis da primeira página</h3><span style="font-size:12px;color:var(--ink4)">Arraste ou use as setas</span></div>
+    <div id="organizador-home" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;padding:0 14px 14px"></div>
   </div>
   <div class="card">
     <table class="tbl">
-      <thead><tr><th>Imóvel</th><th>Cidade</th><th>Tipo</th><th>Preço</th><th>Status</th><th>Corretor</th><th>Ações</th></tr></thead>
+      <thead><tr><th>Imóvel</th><th>Referência interna</th><th>Cidade</th><th>Tipo</th><th>Preço</th><th>Status</th><th>Vitrine</th><th>Captação</th><th>Ações</th></tr></thead>
       <tbody id="imoveis-tbody"></tbody>
     </table>
   </div>
@@ -331,7 +411,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
     <div>
       <h2 style="font-size:18px;font-weight:800;color:var(--ink);margin-bottom:4px">Corretores cadastrados</h2>
-      <p style="font-size:13px;color:var(--ink4)">Modo demonstração. Integração definitiva de corretores será conectada ao backend em versão futura.</p>
+      <p style="font-size:13px;color:var(--ink4)">Corretores cadastrados no sistema e autorizados a acessar o painel.</p>
     </div>
     <button class="btn btn-p" onclick="abrirNovoCorretor()"><i class="ti ti-plus" aria-hidden="true"></i> Novo Corretor</button>
   </div>
@@ -354,7 +434,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
           <div class="ff"><label>Nome</label><input type="text" value="imoore Gestão de Negócios Imobiliários Ltda"/></div>
           <div class="ff"><label>CNPJ</label><input type="text" value="61.788.646/0001-70"/></div>
           <div class="ff"><label>Creci/SP</label><input type="text" value="52050-J"/></div>
-          <div class="ff"><label>WhatsApp</label><input type="text" value="(13) 99109-1887"/></div>
+          <div class="ff"><label>WhatsApp</label><input type="text" value="(13) 99214-1293"/></div>
           <div class="ff"><label>E-mail</label><input type="email" value="contato@imoore.com.br"/></div>
           <div class="ff"><label>Endereço</label><input type="text" value="Rua Letônia, 34 — Peruíbe/SP"/></div>
           <button class="btn btn-o" style="width:100%;justify-content:center;margin-top:4px" disabled>Sem endpoint de configurações</button>
@@ -390,6 +470,15 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
           </div>
         </div>
       </div>
+      <div class="card">
+        <div class="card-hdr"><h3>Alterar minha senha</h3></div>
+        <div class="card-body" style="display:flex;flex-direction:column;gap:10px">
+          <div class="ff"><label>Senha atual</label><input type="password" id="admin-senha-atual" autocomplete="current-password"/></div>
+          <div class="ff"><label>Nova senha</label><input type="password" id="admin-nova-senha" placeholder="Mínimo de 12 caracteres" autocomplete="new-password"/></div>
+          <div class="ff"><label>Confirmar nova senha</label><input type="password" id="admin-confirmar-senha" autocomplete="new-password"/></div>
+          <button class="btn btn-o" id="admin-alterar-senha" onclick="alterarSenhaAdmin()" style="justify-content:center">Alterar senha</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -407,13 +496,13 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
 </div><!-- /layout -->
 
 <!-- MODAL APROVAÇÃO / DETALHES -->
-<div class="modal-bg" id="modal-aprovacao">
+<div class="modal-bg" id="modal-aprovao">
   <div class="modal modal-wide">
     <div class="modal-hdr">
       <h3>Revisar imóvel</h3>
-      <button class="modal-close" onclick="fecharModal('modal-aprovacao')"><i class="ti ti-x" aria-hidden="true"></i></button>
+      <button class="modal-close" onclick="fecharModal('modal-aprovao')" aria-label="Fechar"><i class="ti ti-x" aria-hidden="true"></i></button>
     </div>
-    <div class="modal-body" id="modal-aprovacao-body"></div>
+    <div class="modal-body" id="modal-aprovao-body"></div>
   </div>
 </div>
 
@@ -422,7 +511,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
   <div class="modal">
     <div class="modal-hdr">
       <h3>Cadastrar imóvel</h3>
-      <button class="modal-close" onclick="fecharModal('modal-imovel')"><i class="ti ti-x" aria-hidden="true"></i></button>
+      <button class="modal-close" onclick="fecharModal('modal-imovel')" aria-label="Fechar"><i class="ti ti-x" aria-hidden="true"></i></button>
     </div>
     <div class="modal-body">
       <div class="form-grid">
@@ -430,13 +519,15 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
         <div class="ff"><label>Tipo</label><select id="im-tipo"><option>Apartamento</option><option>Casa</option><option>Terreno</option><option>Cobertura</option><option>Comercial</option></select></div>
         <div class="ff"><label>Preço</label><input type="text" placeholder="R$ 350.000" id="im-preco"/></div>
         <div class="ff"><label>Finalidade</label><select id="im-finalidade"><option>Venda</option><option>Aluguel</option><option>Lançamento</option></select></div>
-        <div class="ff"><label>Cidade</label><select id="im-cidade"><option>Santos</option><option>São Vicente</option><option>Guarujá</option><option>Praia Grande</option><option>Peruíbe</option><option>Itanhaém</option><option>Mongaguá</option><option>Bertioga</option><option>Cubatão</option><option>Itariri</option><option>Pedro de Toledo</option><option>Ana Dias</option></select></div>
+        <div class="ff"><label>Cidade</label><select id="im-cidade"><option>Santos</option><option>São Vicente</option><option>Praia Grande</option><option>Peruíbe</option><option>Itanhaém</option><option>Mongaguá</option><option>Itariri</option><option>Pedro de Toledo</option><option>Ana Dias</option></select></div>
         <div class="ff"><label>Bairro</label><input type="text" placeholder="Ex: Gonzaga" id="im-bairro"/></div>
         <div class="ff"><label>Quartos</label><input type="number" min="0" placeholder="2" id="im-quartos"/></div>
         <div class="ff"><label>Área (m²)</label><input type="number" min="0" placeholder="65" id="im-area"/></div>
+        <div class="ff"><label>Captação</label><input type="text" placeholder="Nome de quem captou" id="im-captacao"/></div>
+        <div class="ff"><label>Referência interna <small style="color:var(--ink4)">(equipe)</small></label><input type="text" placeholder="Ex: TUPI-001" id="im-referencia-interna" maxlength="80"/></div>
       </div>
       <div class="ff" style="margin-bottom:12px"><label>Descrição</label><textarea rows="3" placeholder="Descreva o imóvel..." id="im-descricao"></textarea></div>
-      <div class="ff" style="margin-bottom:12px"><label>Fotos (até 5)</label><input type="file" id="im-fotos" multiple accept="image/*" onchange="previewFotosImovel(this)"/></div>
+      <div class="ff" style="margin-bottom:12px"><label>Fotos (até 8)</label><input type="file" id="im-fotos" multiple accept="image/jpeg,image/png,image/webp" onchange="previewFotosImovel(this)"/><small style="display:block;color:var(--ink4);font-size:11px;margin-top:6px">Dica: fachada, sala, cozinha, quarto principal e banheiro. Use luz natural.</small></div>
       <div id="im-fotos-preview" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"></div>
       <div style="display:flex;gap:10px">
         <button class="btn btn-p" style="flex:1;justify-content:center" onclick="salvarImovel()"><i class="ti ti-check" aria-hidden="true"></i> Enviar para aprovação</button>
@@ -451,7 +542,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
   <div class="modal">
     <div class="modal-hdr">
       <h3>Novo Corretor</h3>
-      <button class="modal-close" onclick="fecharModal('modal-corretor')"><i class="ti ti-x" aria-hidden="true"></i></button>
+      <button class="modal-close" onclick="fecharModal('modal-corretor')" aria-label="Fechar"><i class="ti ti-x" aria-hidden="true"></i></button>
     </div>
     <div class="modal-body">
       <div class="form-grid">
@@ -459,9 +550,10 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
         <div class="ff"><label>E-mail</label><input type="email" id="c-email" placeholder="corretor@email.com"/></div>
         <div class="ff"><label>Telefone</label><input type="text" id="c-telefone" placeholder="(13) 99999-9999"/></div>
         <div class="ff"><label>CRECI</label><input type="text" id="c-creci" placeholder="SP-000000"/></div>
+        <div class="ff"><label>Senha temporária</label><input type="password" id="c-senha" placeholder="Mínimo de 12 caracteres"/></div>
         <div class="ff"><label>Cidade</label><input type="text" id="c-cidade" placeholder="Cidade de atuação"/></div>
       </div>
-      <p style="font-size:12px;color:var(--ink4);margin:-2px 0 14px">Modo demonstração. Este cadastro fica salvo apenas neste navegador.</p>
+      <p style="font-size:12px;color:var(--ink4);margin:-2px 0 14px">O corretor será criado no sistema e poderá acessar o painel.</p>
       <div style="display:flex;gap:10px">
         <button class="btn btn-p" style="flex:1;justify-content:center" onclick="salvarCorretor()"><i class="ti ti-check" aria-hidden="true"></i> Salvar corretor</button>
         <button class="btn btn-o" onclick="fecharModal('modal-corretor')">Cancelar</button>
@@ -475,7 +567,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
   <div class="modal">
     <div class="modal-hdr">
       <h3>Corretor</h3>
-      <button class="modal-close" onclick="fecharModal('modal-corretor-detalhes')"><i class="ti ti-x" aria-hidden="true"></i></button>
+      <button class="modal-close" onclick="fecharModal('modal-corretor-detalhes')" aria-label="Fechar"><i class="ti ti-x" aria-hidden="true"></i></button>
     </div>
     <div class="modal-body" id="modal-corretor-detalhes-body"></div>
   </div>
@@ -486,14 +578,14 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
   <div class="modal">
     <div class="modal-hdr">
       <h3>Novo lead</h3>
-      <button class="modal-close" onclick="fecharModal('modal-lead')"><i class="ti ti-x" aria-hidden="true"></i></button>
+      <button class="modal-close" onclick="fecharModal('modal-lead')" aria-label="Fechar"><i class="ti ti-x" aria-hidden="true"></i></button>
     </div>
     <div class="modal-body">
       <div class="form-grid">
         <div class="ff"><label>Nome</label><input type="text" placeholder="João Silva" id="l-nome"/></div>
         <div class="ff"><label>WhatsApp</label><input type="text" placeholder="(13) 99999-9999" id="l-tel"/></div>
         <div class="ff"><label>E-mail</label><input type="email" placeholder="joao@email.com" id="l-email"/></div>
-        <div class="ff"><label>Cidade</label><select id="l-cidade"><option>Santos</option><option>Guarujá</option><option>Praia Grande</option><option>Peruíbe</option><option>Itanhaém</option><option>São Vicente</option></select></div>
+        <div class="ff"><label>Cidade</label><select id="l-cidade"><option>Santos</option><option>Praia Grande</option><option>Peruíbe</option><option>Itanhaém</option><option>São Vicente</option></select></div>
         <div class="ff"><label>Interesse</label><select id="l-interesse"><option>Comprar</option><option>Alugar</option><option>Investir</option></select></div>
         <div class="ff"><label>Etapa</label><select id="l-etapa"><option>novo</option><option>contato</option><option>visita</option><option>proposta</option><option>fechado</option></select></div>
       </div>
@@ -506,29 +598,39 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;l
   </div>
 </div>
 
-<script src="api-config.js"></script>
+<!-- MODAL DETALHES LEAD -->
+<div class="modal-bg" id="modal-lead-detalhes">
+  <div class="modal modal-wide">
+    <div class="modal-hdr">
+      <h3>Detalhes do lead</h3>
+      <button class="modal-close" onclick="fecharModal('modal-lead-detalhes')" aria-label="Fechar"><i class="ti ti-x" aria-hidden="true"></i></button>
+    </div>
+    <div class="modal-body" id="modal-lead-detalhes-body"></div>
+  </div>
+</div>
+
+<script src="api-config.js?v=launchfix-20260711"></script>
 <script>
-const authToken = localStorage.getItem('imoore_token');
 function getStoredUser() {
   try {
     return JSON.parse(localStorage.getItem('imoore_user') || 'null');
   } catch (error) {
-    localStorage.removeItem('imoore_token');
     localStorage.removeItem('imoore_user');
     return null;
   }
 }
 const authUser = getStoredUser();
-const pageAuthorized = !!(authToken && authUser && authUser.perfil === 'admin');
-if (!pageAuthorized) {
-  window.location.href = 'imoore-entrar.html';
-}
+// A sessão de autenticação é mantida no cookie HttpOnly. O localStorage serve
+// apenas para preencher a interface e não pode impedir o carregamento do painel.
+// A autorização real continua sendo feita pelo backend em cada requisição.
+const pageAuthorized = true;
 function sair() {
+  fetch('/api/auth/logout', { method: 'POST', credentials: 'include' }).catch(() => {});
   localStorage.removeItem('imoore_token');
   localStorage.removeItem('imoore_user');
   sessionStorage.removeItem('imoore_token');
   sessionStorage.removeItem('imoore_user');
-  window.location.href = 'imoore-entrar.html';
+  window.location.href = '/entrar';
 }
 const API_BASE = window.IMOORE_API_BASE || window.API_BASE || '/api';
 async function apiRequest(path, options = {}) {
@@ -539,9 +641,9 @@ async function apiRequest(path, options = {}) {
 
   const response = await fetch(`${API_BASE}${path}`, {
     ...options,
+    credentials: 'include',
     headers: {
       ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
-      Authorization: `Bearer ${authToken}`,
       ...(options.headers || {}),
     },
   });
@@ -549,7 +651,7 @@ async function apiRequest(path, options = {}) {
   if (response.status === 401) {
     localStorage.removeItem('imoore_token');
     localStorage.removeItem('imoore_user');
-    window.location.href = 'imoore-entrar.html';
+    window.location.href = '/entrar';
     throw new Error('Sessao expirada');
   }
 
@@ -565,22 +667,49 @@ document.querySelector('.sb-av').textContent = (currentUser.nome || currentUser.
 document.querySelector('.sb-name').textContent = currentUser.nome || currentUser.email || 'Admin';
 
 // ── DATA ──
-const WPP = '5513991091887';
+const WPP = '5513992141293';
 
 let imoveis = [];
+let filtroImoveisAdmin = '';
+
+function normalizarBuscaAdmin(value){
+  return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+}
+
+function filtrarImoveisAdmin(value){
+  filtroImoveisAdmin = value;
+  clearTimeout(window.__timerBuscaImoveis);
+  window.__timerBuscaImoveis = setTimeout(() => carregarImoveis(), 180);
+}
 let pendentes = [];
 let aprovados = [];
 let rejeitados = [];
 let leads = [];
 
 function escapeHtml(value){
-  return String(value ?? '').replace(/[&<>"']/g, char => ({
+  return String(value || '').replace(/[&<>"']/g, char => ({
     '&':'&amp;',
     '<':'&lt;',
     '>':'&gt;',
     '"':'&quot;',
     "'":'&#39;'
   }[char]));
+}
+
+async function alterarSenhaAdmin(){
+  const atual=document.getElementById('admin-senha-atual').value;
+  const nova=document.getElementById('admin-nova-senha').value;
+  const confirmar=document.getElementById('admin-confirmar-senha').value;
+  if(nova.length<12){alert('A nova senha deve ter pelo menos 12 caracteres.');return;}
+  if(nova!==confirmar){alert('A confirmação da nova senha não confere.');return;}
+  const button=document.getElementById('admin-alterar-senha');
+  try{
+    button.disabled=true;
+    await apiRequest('/auth/change-password',{method:'POST',body:JSON.stringify({senhaAtual:atual,novaSenha:nova})});
+    ['admin-senha-atual','admin-nova-senha','admin-confirmar-senha'].forEach(id=>document.getElementById(id).value='');
+    alert('Senha alterada com sucesso.');
+  }catch(error){alert(error.message||'Erro ao alterar senha.');}
+  finally{button.disabled=false;}
 }
 
 function formatMoney(value){
@@ -595,6 +724,59 @@ function statusClass(status){
   return 'b-gray';
 }
 
+function statusImovelLabel(status){
+  if(status==='publicado')return 'Publicado';
+  if(status==='rejeitado')return 'Fora do site';
+  if(status==='pendente')return 'Pendente';
+  return status || '-';
+}
+
+function vitrineStatus(im){
+  const status=String(im?.vitrine_status || 'normal');
+  return ['destaque','normal','segundo_plano','oculto_home'].includes(status) ? status : 'normal';
+}
+
+function vitrinePrioridade(im){
+  const parsed=Number.parseInt(im?.vitrine_prioridade,10);
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function vitrineLabel(status){
+  return ({
+    destaque:'Destaque',
+    normal:'Normal',
+    segundo_plano:'Segundo plano',
+    oculto_home:'Oculto da home'
+  })[status] || 'Normal';
+}
+
+function vitrineBadgeClass(status){
+  if(status==='destaque')return 'b-featured';
+  if(status==='segundo_plano')return 'b-muted';
+  if(status==='oculto_home')return 'b-hidden';
+  return 'b-gray';
+}
+
+function vitrineControls(im){
+  const status=vitrineStatus(im);
+  const id=escapeHtml(im.id);
+  const btn=(value,label,icon,nextPriority)=>`<button type="button" data-vitrine="${value}" class="${status===value ? 'on' : ''}" onclick="atualizarVitrineImovel('${id}','${value}',${nextPriority})"><i class="ti ${icon}" aria-hidden="true"></i>${label}</button>`;
+  return `<div class="vitrine-box">
+    <span class="badge ${vitrineBadgeClass(status)}"><i class="ti ${status==='destaque' ? 'ti-star-filled' : status==='oculto_home' ? 'ti-eye-off' : 'ti-adjustments'}" aria-hidden="true"></i> ${vitrineLabel(status)}</span>
+    <div class="vitrine-actions">
+      ${btn('destaque','Destaque','ti-star',100)}
+      ${btn('normal','Normal','ti-circle-check',0)}
+      ${btn('segundo_plano','2º plano','ti-layers-subtract',-10)}
+      ${btn('oculto_home','Ocultar','ti-eye-off',-100)}
+    </div>
+  </div>`;
+}
+
+function optionHtml(value, label, current){
+  const selected=String(value)===String(current || '') ? 'selected':'';
+  return `<option value="${escapeHtml(value)}" ${selected}>${escapeHtml(label || value)}</option>`;
+}
+
 function emptyState(text){
   return `<p style="font-size:14px;color:var(--ink4);padding:32px;text-align:center">${escapeHtml(text)}</p>`;
 }
@@ -606,7 +788,10 @@ function photoUrlFrom(value){
   }
   const url=String(value).trim();
   if(!url)return '';
-  if(/^https?:\/\//i.test(url) || url.startsWith('blob:') || url.startsWith('data:') || url.startsWith('/'))return url;
+  if(/^https:\/\/(localhost|127\.0\.0\.1)(:\d+)\/uploads\//i.test(url)){
+    try{return new URL(url).pathname;}catch(error){return url.replace(/^https:\/\/(localhost|127\.0\.0\.1)(:\d+)/i,'');}
+  }
+  if(/^https:\/\//i.test(url) || url.startsWith('blob:') || url.startsWith('data:') || url.startsWith('/'))return url;
   if(url.startsWith('uploads/'))return `/${url}`;
   return url;
 }
@@ -653,7 +838,7 @@ function fotosThumbsHtmlLegacy(fotos){
 function abrirFotoAmpliada(url){
   const finalUrl=photoUrlFrom(url);
   if(!finalUrl){
-    alert('Foto indisponivel.');
+    alert('Foto indisponvel.');
     return;
   }
 
@@ -673,7 +858,7 @@ function abrirFotoAmpliada(url){
     img.remove();
     const msg=document.createElement('div');
     msg.style.cssText='background:#fff;border-radius:12px;padding:22px;max-width:460px;text-align:center;color:var(--ink)';
-    msg.innerHTML='<strong>Imagem indisponivel</strong><br><span style="color:var(--ink3);font-size:13px">Nao foi possivel carregar esta foto. Tente abrir em nova aba.</span>';
+    msg.innerHTML='<strong>Imagem indisponvel</strong><br><span style="color:var(--ink3);font-size:13px">No foi possvel carregar esta foto. Tente abrir em nova aba.</span>';
     overlay.appendChild(msg);
   };
 
@@ -681,7 +866,7 @@ function abrirFotoAmpliada(url){
   tools.className='admin-photo-tools';
   tools.innerHTML=`
     <button type="button" class="btn btn-o" onclick="window.open(this.dataset.url,'_blank','noopener')" data-url="${escapeHtml(finalUrl)}"><i class="ti ti-external-link" aria-hidden="true"></i> Abrir em nova aba</button>
-    <button type="button" class="btn btn-p" disabled title="Recurso planejado para uma proxima etapa"><i class="ti ti-sparkles" aria-hidden="true"></i> Editar com IA em breve</button>
+    <button type="button" class="btn btn-p" disabled title="Recurso planejado para uma próxima etapa"><i class="ti ti-sparkles" aria-hidden="true"></i> Editar com IA em breve</button>
   `;
 
   overlay.appendChild(close);
@@ -699,16 +884,273 @@ function abrirFotoAmpliada(url){
   document.body.appendChild(overlay);
 }
 
-function fotosThumbsHtml(fotos){
+function fotosThumbsHtml(fotos, imovelId){
   const lista=normalizeFotos(fotos);
   if(!lista.length)return '<p style="font-size:12px;color:var(--ink4);margin:12px 0">Nenhuma foto enviada.</p>';
   return `<div class="admin-photo-grid">${lista.map((foto,index)=>`
     <button type="button" class="admin-photo-thumb" onclick="abrirFotoAmpliada(this.dataset.photo)" data-photo="${escapeHtml(foto)}" title="Ampliar foto ${index+1}">
       <img src="${escapeHtml(foto)}" alt="Foto ${index+1}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-      <span class="admin-photo-error">Foto indisponivel</span>
+      <span class="admin-photo-error">Foto indisponível</span>
       <span class="admin-photo-count">${index+1}</span>
+      ${imovelId ? `<span role="button" class="admin-photo-delete" title="Excluir foto" data-id="${escapeHtml(imovelId)}" data-index="${index}" data-photo="${escapeHtml(foto)}" onclick="event.stopPropagation();removerFotoImovel(this.dataset.id,this.dataset.photo,Number(this.dataset.index))">&times;</span>` : ''}
+      ${imovelId ? `<span role="button" class="admin-photo-watermark" title="Aplicar marca d'água nesta foto" data-id="${escapeHtml(imovelId)}" data-index="${index}" onclick="event.stopPropagation();aplicarMarcaDaguaImovel(this.dataset.id,this,[Number(this.dataset.index)])"><i class="ti ti-droplet" aria-hidden="true"></i></span>` : ''}
     </button>
   `).join('')}</div>`;
+}
+
+let fotoAdminArrastada = null;
+let fotoAdminPointerId = null;
+let fotosNovasAdmin = [];
+const LIMITE_FOTOS_ADMIN = 8;
+
+function totalFotosCadastradasAdmin(){
+  return document.querySelectorAll('#edit-im-fotos-ordem .admin-photo-sort-item').length;
+}
+
+function vagasDisponiveisFotosAdmin(){
+  return Math.max(0, LIMITE_FOTOS_ADMIN - totalFotosCadastradasAdmin() - fotosNovasAdmin.length);
+}
+
+function fotosOrdenaveisHtml(fotos){
+  const lista = normalizeFotos(fotos);
+  if(!lista.length) return '<p style="color:var(--muted);font-size:12px">Nenhuma foto cadastrada.</p>';
+  return `<div id="edit-im-fotos-ordem" class="admin-photo-grid admin-photo-sortable">
+    ${lista.map((foto,index)=>`
+      <div class="admin-photo-thumb admin-photo-sort-item" draggable="true"
+        data-photo="${escapeHtml(foto)}"
+        ondragstart="iniciarArrasteFotoAdmin(event)"
+        ondragover="moverFotoAdmin(event)"
+        ondragend="finalizarArrasteFotoAdmin()"
+        title="Arraste para mudar a ordem">
+        <img src="${escapeHtml(foto)}" alt="Foto ${index+1}" draggable="false">
+        <span class="admin-photo-order-label">${index===0?'Capa':index+1}</span>
+        <button type="button" class="admin-photo-grip" onpointerdown="iniciarArrastePonteiroFotoAdmin(event)" title="Segure e arraste para mudar a ordem"><i class="ti ti-grip-vertical"></i></button>
+        <span class="admin-photo-sort-actions">
+          <button type="button" onclick="moverFotoAdminPorBotao(event,-1)" title="Mover foto para trás"><i class="ti ti-chevron-left"></i></button>
+          <button type="button" onclick="moverFotoAdminPorBotao(event,1)" title="Mover foto para frente"><i class="ti ti-chevron-right"></i></button>
+        </span>
+      </div>
+    `).join('')}
+  </div>`;
+}
+
+function iniciarArrasteFotoAdmin(event){
+  fotoAdminArrastada = event.currentTarget;
+  fotoAdminArrastada.classList.add('is-dragging');
+  event.dataTransfer.effectAllowed = 'move';
+  event.dataTransfer.setData('text/plain', fotoAdminArrastada.dataset.photo || '');
+}
+
+function moverFotoAdmin(event){
+  event.preventDefault();
+  reposicionarFotoAdmin(event.currentTarget, event.clientX, event.clientY);
+}
+function reposicionarFotoAdmin(alvo, clientX, clientY){
+  if(!fotoAdminArrastada || !alvo || alvo === fotoAdminArrastada) return;
+  const grid = alvo.parentElement;
+  const rect = alvo.getBoundingClientRect();
+  const distanciaX = Math.abs(clientX - (rect.left + rect.width / 2));
+  const distanciaY = Math.abs(clientY - (rect.top + rect.height / 2));
+  const inserirDepois = distanciaX > distanciaY
+    ? clientX > rect.left + rect.width / 2
+    : clientY > rect.top + rect.height / 2;
+  grid.insertBefore(fotoAdminArrastada, inserirDepois ? alvo.nextSibling : alvo);
+  atualizarRotulosFotosAdmin();
+}
+function iniciarArrastePonteiroFotoAdmin(event){
+  if(event.pointerType === 'mouse' && event.button !== 0) return;
+  event.preventDefault();
+  fotoAdminArrastada = event.currentTarget.closest('.admin-photo-sort-item');
+  if(!fotoAdminArrastada) return;
+  fotoAdminPointerId = event.pointerId;
+  fotoAdminArrastada.classList.add('is-dragging');
+  event.currentTarget.setPointerCapture?.(event.pointerId);
+  document.addEventListener('pointermove', moverPonteiroFotoAdmin, {passive:false});
+  document.addEventListener('pointerup', finalizarArrastePonteiroFotoAdmin);
+  document.addEventListener('pointercancel', finalizarArrastePonteiroFotoAdmin);
+}
+function moverPonteiroFotoAdmin(event){
+  if(event.pointerId !== fotoAdminPointerId || !fotoAdminArrastada) return;
+  event.preventDefault();
+  const alvo = document.elementFromPoint(event.clientX, event.clientY)?.closest('.admin-photo-sort-item');
+  if(alvo?.parentElement?.id === 'edit-im-fotos-ordem') reposicionarFotoAdmin(alvo, event.clientX, event.clientY);
+}
+function finalizarArrastePonteiroFotoAdmin(event){
+  if(fotoAdminPointerId !== null && event.pointerId !== fotoAdminPointerId) return;
+  document.removeEventListener('pointermove', moverPonteiroFotoAdmin);
+  document.removeEventListener('pointerup', finalizarArrastePonteiroFotoAdmin);
+  document.removeEventListener('pointercancel', finalizarArrastePonteiroFotoAdmin);
+  fotoAdminPointerId = null;
+  finalizarArrasteFotoAdmin();
+}
+function moverFotoAdminPorBotao(event, direcao){
+  event.preventDefault();
+  event.stopPropagation();
+  const item = event.currentTarget.closest('.admin-photo-sort-item');
+  if(!item) return;
+  if(direcao < 0 && item.previousElementSibling) item.parentElement.insertBefore(item, item.previousElementSibling);
+  if(direcao > 0 && item.nextElementSibling) item.parentElement.insertBefore(item.nextElementSibling, item);
+  atualizarRotulosFotosAdmin();
+}
+
+function finalizarArrasteFotoAdmin(){
+  if(fotoAdminArrastada) fotoAdminArrastada.classList.remove('is-dragging');
+  fotoAdminArrastada = null;
+  atualizarRotulosFotosAdmin();
+}
+
+function atualizarRotulosFotosAdmin(){
+  const itens = [...document.querySelectorAll('#edit-im-fotos-ordem .admin-photo-sort-item')];
+  itens.forEach((item,index)=>{
+    const label = item.querySelector('.admin-photo-order-label');
+    if(label) label.textContent = index === 0 ? 'Capa' : String(index + 1);
+    const botoes = item.querySelectorAll('.admin-photo-sort-actions button');
+    if(botoes[0]) botoes[0].disabled = index === 0;
+    if(botoes[1]) botoes[1].disabled = index === itens.length - 1;
+  });
+  renderFilaFotosAdmin();
+}
+
+function obterOrdemFotosAdmin(){
+  return [...document.querySelectorAll('#edit-im-fotos-ordem .admin-photo-sort-item')]
+    .map(item=>item.dataset.photo)
+    .filter(Boolean);
+}
+
+function chaveFotoAdmin(file){
+  return `${file.name}|${file.size}|${file.lastModified}`;
+}
+
+function adicionarFotosFilaAdmin(files){
+  const recebidas = Array.from(files || []);
+  const tiposPermitidos = new Set(['image/jpeg','image/png','image/webp']);
+  const validas = recebidas.filter(file=>tiposPermitidos.has(file.type));
+  if(validas.length !== recebidas.length) alert('Use apenas imagens JPG, PNG ou WebP.');
+  const existentes = new Set(fotosNovasAdmin.map(chaveFotoAdmin));
+  const novas = validas.filter(file=>!existentes.has(chaveFotoAdmin(file)));
+  const disponiveis = vagasDisponiveisFotosAdmin();
+  if(novas.length > disponiveis){
+    alert(`Este imóvel aceita no máximo 8 fotos. Você ainda pode adicionar ${disponiveis}.`);
+  }
+  fotosNovasAdmin.push(...novas.slice(0, disponiveis));
+  renderFilaFotosAdmin();
+}
+
+function removerFotoFilaAdmin(index){
+  fotosNovasAdmin.splice(index, 1);
+  renderFilaFotosAdmin();
+}
+
+function renderFilaFotosAdmin(){
+  const fila = document.getElementById('edit-im-fotos-fila');
+  const ajuda = document.getElementById('edit-im-fotos-ajuda');
+  if(fila){
+    fila.innerHTML = fotosNovasAdmin.map((file,index)=>`
+      <div class="admin-photo-upload-file">
+        <i class="ti ti-photo" aria-hidden="true"></i>
+        <span title="${escapeHtml(file.name)}">${escapeHtml(file.name)}</span>
+        <small>${(file.size / 1024 / 1024).toFixed(1)} MB</small>
+        <button type="button" onclick="removerFotoFilaAdmin(${index})" aria-label="Remover foto" title="Remover foto"><i class="ti ti-x"></i></button>
+      </div>`).join('');
+  }
+  if(ajuda){
+    const cadastradas = totalFotosCadastradasAdmin();
+    const restantes = vagasDisponiveisFotosAdmin();
+    ajuda.textContent = fotosNovasAdmin.length
+      ? `${cadastradas} cadastrada(s) e ${fotosNovasAdmin.length} nova(s) selecionada(s). Restam ${restantes} vaga(s).`
+      : `${cadastradas} de 8 fotos cadastradas. Você pode adicionar ${restantes}.`;
+  }
+}
+
+async function removerFotoImovel(id, foto, index){
+  if(!id || !foto)return;
+  if(!confirm('Excluir esta foto do imóvel'))return;
+  try{
+    await apiRequest(`/imoveis/${id}/fotos`, {
+      method:'DELETE',
+      body: JSON.stringify({ foto, index }),
+    });
+    await carregarImoveis();
+    await abrirDetalhes(id);
+  }catch(error){
+    alert(error.message || 'Erro ao excluir foto');
+  }
+}
+
+async function aplicarMarcaDaguaImovel(id, botao = null, indices = null){
+  if(!id)return;
+  const aplicarFotoUnica = Array.isArray(indices) && indices.length === 1;
+  const mensagem = aplicarFotoUnica
+    ? "Aplicar a marca d'água padrão da Imoore apenas nesta foto? As fotos originais serão mantidas no storage como segurança."
+    : "Aplicar a marca d'água padrão da Imoore em todas as fotos deste imóvel? As fotos originais serão mantidas no storage como segurança.";
+  if(!confirm(mensagem))return;
+
+  const htmlOriginal = botao?.innerHTML;
+  try{
+    if(botao){
+      botao.disabled = true;
+      botao.innerHTML = '<i class="ti ti-loader" aria-hidden="true"></i> Aplicando...';
+    }
+
+    const result = await apiRequest(`/imoveis/${id}/marca-dagua`, {
+      method:'POST',
+      body: JSON.stringify(Array.isArray(indices) ? { indices } : {}),
+    });
+    await carregarImoveis();
+    await abrirDetalhes(id);
+    alert(`Marca d'água aplicada em ${result.total || 0} foto(s).`);
+  }catch(error){
+    alert(error.message || "Erro ao aplicar marca d'água");
+    if(botao){
+      botao.disabled = false;
+      botao.innerHTML = htmlOriginal;
+    }
+  }
+}
+
+async function removerMarcaDaguaImovel(id, botao = null){
+  if(!id)return;
+  if(!confirm("Remover a marca d'água e restaurar as fotos originais deste imóvel?"))return;
+  const htmlOriginal = botao?.innerHTML;
+  try{
+    if(botao){
+      botao.disabled = true;
+      botao.innerHTML = '<i class="ti ti-loader" aria-hidden="true"></i> Restaurando...';
+    }
+    const result = await apiRequest(`/imoveis/${id}/remover-marca-dagua`, { method:'POST', body:JSON.stringify({}) });
+    await carregarImoveis();
+    await abrirDetalhes(id);
+    alert(`Marca d'água removida de ${result.total || 0} foto(s).`);
+  }catch(error){
+    alert(error.message || 'As fotos originais não estão disponíveis para restauração segura.');
+  }finally{
+    if(botao){
+      botao.disabled = false;
+      botao.innerHTML = htmlOriginal;
+    }
+  }
+}
+
+async function aplicarMarcaDaguaLote(botao = null){
+  if(!confirm("Aplicar a marca d'água padrão da Imoore em todas as fotos existentes? As fotos originais serão mantidas no storage como segurança."))return;
+  const alvo = botao || document.querySelector('#page-imoveis button[onclick="aplicarMarcaDaguaLote()"]');
+  const htmlOriginal = alvo?.innerHTML;
+  try{
+    if(alvo){
+      alvo.disabled = true;
+      alvo.innerHTML = '<i class="ti ti-loader" aria-hidden="true"></i> Processando fotos...';
+    }
+    const result = await apiRequest('/imoveis/marca-dagua/lote', { method:'POST', body:JSON.stringify({}) });
+    await carregarImoveis();
+    alert(`Processamento concluído: ${result.fotos || 0} foto(s) em ${result.processados || 0} imóvel(is).${result.erros?.length ? ` ${result.erros.length} imóvel(is) apresentou(aram) erro.` : ''}`);
+  }catch(error){
+    alert(error.message || 'Erro ao aplicar marca d\'água em lote');
+  }finally{
+    if(alvo){
+      alvo.disabled = false;
+      alvo.innerHTML = htmlOriginal;
+    }
+  }
 }
 
 // Leads dashboard
@@ -755,10 +1197,10 @@ function renderCidadeList(){
 // ── ATIVIDADE ──
 const statusBadge={novo:'b-inf',contato:'b-warn',visita:'b-or',proposta:'b-err',fechado:'b-ok'};
 const statusLabel={novo:'Novo',contato:'Contato',visita:'Visita',proposta:'Proposta',fechado:'Fechado'};
-const leadColors=['#F26522','#2BBDAD','#BA7517','#378ADD','#639922'];
+const leadColors=['#FF5500','#2BBDAD','#BA7517','#378ADD','#639922'];
 
 function leadInfo(lead){
-  return `${lead.interesse || 'Interesse nao informado'} · ${lead.cidade || 'Cidade nao informada'}`;
+  return `${lead.interesse || 'Interesse não informado'} · ${lead.cidade || 'Cidade não informada'}`;
 }
 
 function leadPhone(lead){
@@ -782,6 +1224,23 @@ function formatLeadDate(lead){
   return Number.isFinite(date.getTime()) ? date.toLocaleDateString('pt-BR') : raw;
 }
 
+function formatDateTime(value){
+  if(!value)return '-';
+  const date=new Date(value);
+  return Number.isFinite(date.getTime()) ? date.toLocaleString('pt-BR') : value;
+}
+
+function leadHistoryItems(lead){
+  const historico=Array.isArray(lead.historico) ? lead.historico : [];
+  if(!historico.length)return '<p style="font-size:12px;color:var(--ink4);padding:10px 0">Nenhum histórico registrado.</p>';
+  return `<div class="lead-history">${historico.slice().reverse().map(item=>`
+    <div class="lead-history-item">
+      <p>${escapeHtml(item.descricao || '-')}</p>
+      <small>${escapeHtml(item.autor || 'sistema')} · ${escapeHtml(formatDateTime(item.criado_em))}</small>
+    </div>
+  `).join('')}</div>`;
+}
+
 function renderAtividades(){
 const tb=document.getElementById('atividade-tbody');
 tb.innerHTML='';
@@ -792,7 +1251,7 @@ leads.slice(0,5).forEach((a,index)=>{
     <td><span class="badge b-gray">${escapeHtml(a.cidade || '-')}</span></td>
     <td><span class="badge ${statusBadge[a.etapa] || 'b-gray'}">${statusLabel[a.etapa] || 'Sem etapa'}</span></td>
     <td style="color:var(--ink4)">${escapeHtml(formatLeadDate(a))}</td>
-    <td><button class="btn btn-o btn-sm" onclick="window.open('https://wa.me/${whatsappNumber(a)}','_blank')"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i></button></td>
+    <td><button class="btn btn-o btn-sm" onclick="abrirLeadDetalhes('${a.id}')"><i class="ti ti-eye" aria-hidden="true"></i> Abrir</button></td>
   </tr>`;
 });
 }
@@ -803,7 +1262,7 @@ async function carregarImoveis(){
 
   try{
 
-    imoveis = await apiRequest('/imoveis');
+    imoveis = await apiRequest('/imoveis?scope=admin');
     pendentes = imoveis.filter(im => (im.status || 'pendente') === 'pendente');
     aprovados = imoveis.filter(im => im.status === 'publicado');
     rejeitados = imoveis.filter(im => im.status === 'rejeitado');
@@ -811,11 +1270,16 @@ async function carregarImoveis(){
     const itb = document.getElementById('imoveis-tbody');
     itb.innerHTML = '';
 
-    if(imoveis.length===0){
-      itb.innerHTML = `<tr><td colspan="7">${emptyState('Nenhum imóvel cadastrado.')}</td></tr>`;
+    const termoBusca = normalizarBuscaAdmin(filtroImoveisAdmin);
+    const imoveisVisiveis = termoBusca ? imoveis.filter(im => normalizarBuscaAdmin([
+      im.id, im.referencia, im.titulo, im.bairro, im.cidade, im.referencia_interna, im.captacao, im.descricao,
+    ].join(' ')).includes(termoBusca)) : imoveis;
+
+    if(imoveisVisiveis.length===0){
+      itb.innerHTML = `<tr><td colspan="9">${emptyState(termoBusca ? 'Nenhum imóvel encontrado para essa pesquisa.' : 'Nenhum imóvel cadastrado.')}</td></tr>`;
     }
 
-    imoveis.forEach(im => {
+    imoveisVisiveis.forEach(im => {
 
       itb.innerHTML += `
         <tr>
@@ -824,9 +1288,11 @@ async function carregarImoveis(){
               ${escapeHtml(im.titulo || '')}
             </div>
             <div style="font-size:11px;color:var(--ink4)">
-              ${escapeHtml(im.area || 0)}m² · ${escapeHtml(im.quartos || 0)} quartos
+              ${im.referencia ? `Ref: ${escapeHtml(im.referencia)} · ` : ''}${escapeHtml(im.area || 0)}m² · ${escapeHtml(im.quartos || 0)} quartos
             </div>
           </td>
+
+          <td>${escapeHtml(im.referencia_interna || '-')}</td>
 
           <td>${escapeHtml(im.cidade || '')}</td>
 
@@ -842,16 +1308,19 @@ async function carregarImoveis(){
 
           <td>
             <span class="badge ${statusClass(im.status || 'pendente')}">
-              ${escapeHtml(im.status || 'pendente')}
+              ${escapeHtml(statusImovelLabel(im.status || 'pendente'))}
             </span>
           </td>
 
-          <td>-</td>
+          <td>${vitrineControls(im)}</td>
+
+          <td>${escapeHtml(im.captacao || '-')}</td>
 
           <td>
-            <button class="btn btn-o btn-sm" onclick="abrirDetalhes('${im.id}')">
-              <i class="ti ti-eye"></i>
-            </button>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <button class="btn btn-o btn-sm" onclick="abrirDetalhes('${im.id}')" aria-label="Ver detalhes do imóvel"><i class="ti ti-eye" aria-hidden="true"></i></button>
+              ${im.status==='publicado' ? `<button class="btn btn-err btn-sm" onclick="retirarImovel('${im.id}')"><i class="ti ti-eye-off"></i> Retirar</button>` : ''}
+            </div>
           </td>
         </tr>
 
@@ -863,9 +1332,15 @@ async function carregarImoveis(){
     renderAprovados();
     renderRejeitados();
     renderNotificacoes();
+    renderOrganizadorHome();
 
   }catch(err){
     console.error('Erro ao carregar imóveis:', err);
+    const message = err?.message || 'Não foi possível carregar os imóveis.';
+    const tabela = document.getElementById('imoveis-tbody');
+    const pendentesGrid = document.getElementById('pendentes-grid');
+    if (tabela) tabela.innerHTML = `<tr><td colspan="9"><div class="empty-state">${escapeHtml(message)}<br><button class="btn btn-o btn-sm" style="margin-top:10px" onclick="window.location.href='/entrar'">Entrar novamente</button></div></td></tr>`;
+    if (pendentesGrid) pendentesGrid.innerHTML = `<div class="empty-state">${escapeHtml(message)}<br><button class="btn btn-o btn-sm" style="margin-top:10px" onclick="window.location.href='/entrar'">Entrar novamente</button></div>`;
   }
 
 }
@@ -886,31 +1361,47 @@ function atualizarResumoImoveis(){
 
 // ── PENDENTES GRID ──
 function imovelCard(im,status){
-  const badgeClass=status==='publicado'?'b-ok':status==='rejeitado'?'b-err':'b-warn';
-  const badgeLabel=status==='publicado'?'Publicado':status==='rejeitado'?'Rejeitado':'Pendente';
+  const badgeClass=status==='publicado' ? 'b-ok':status==='rejeitado' ? 'b-err':'b-warn';
+  const badgeLabel=statusImovelLabel(status);
   const fotos=normalizeFotos(im.fotos);
   const capa=fotos[0];
-  const actions=status==='pendente' ? `
+  let actions=status==='pendente' ? `
           <button class="btn btn-ok btn-sm" style="flex:1;justify-content:center" onclick="aprovarImovel('${im.id}')"><i class="ti ti-check" aria-hidden="true"></i> Aprovar</button>
-          <button class="btn btn-err btn-sm" style="flex:1;justify-content:center" onclick="rejeitarImovel('${im.id}')"><i class="ti ti-x" aria-hidden="true"></i> Rejeitar</button>
+          <button class="btn btn-err btn-sm" style="flex:1;justify-content:center" onclick="retirarImovel('${im.id}')"><i class="ti ti-eye-off" aria-hidden="true"></i> Retirar</button>
+          <button class="btn btn-o btn-sm" onclick="abrirEdicaoImovelAdmin('${im.id}')"><i class="ti ti-edit" aria-hidden="true"></i> Editar</button>
+          <button class="btn btn-o btn-sm" onclick="aplicarMarcaDaguaImovel('${im.id}', this)"><i class="ti ti-droplet" aria-hidden="true"></i> Marca d'água</button>
+          <button class="btn btn-o btn-sm" onclick="removerMarcaDaguaImovel('${im.id}', this)"><i class="ti ti-eraser" aria-hidden="true"></i> Remover marca</button>
           <button class="btn btn-o btn-sm" onclick="abrirDetalhes('${im.id}')"><i class="ti ti-photo" aria-hidden="true"></i> Ver fotos</button>
+        ` : status==='publicado' ? `
+          <button class="btn btn-o btn-sm" style="flex:1;justify-content:center" onclick="abrirDetalhes('${im.id}')"><i class="ti ti-eye" aria-hidden="true"></i> Ver detalhes</button>
+          <button class="btn btn-o btn-sm" onclick="abrirEdicaoImovelAdmin('${im.id}')"><i class="ti ti-edit" aria-hidden="true"></i> Editar</button>
+          <button class="btn btn-o btn-sm" onclick="aplicarMarcaDaguaImovel('${im.id}', this)"><i class="ti ti-droplet" aria-hidden="true"></i> Marca d'água</button>
+          <button class="btn btn-o btn-sm" onclick="removerMarcaDaguaImovel('${im.id}', this)"><i class="ti ti-eraser" aria-hidden="true"></i> Remover marca</button>
+          <button class="btn btn-err btn-sm" style="flex:1;justify-content:center" onclick="retirarImovel('${im.id}')"><i class="ti ti-eye-off" aria-hidden="true"></i> Retirar do site</button>
         ` : `
           <button class="btn btn-o btn-sm" style="flex:1;justify-content:center" onclick="abrirDetalhes('${im.id}')"><i class="ti ti-eye" aria-hidden="true"></i> Ver detalhes</button>
+          <button class="btn btn-o btn-sm" onclick="abrirEdicaoImovelAdmin('${im.id}')"><i class="ti ti-edit" aria-hidden="true"></i> Editar</button>
+          <button class="btn btn-o btn-sm" onclick="aplicarMarcaDaguaImovel('${im.id}', this)"><i class="ti ti-droplet" aria-hidden="true"></i> Marca d'água</button>
+          <button class="btn btn-o btn-sm" onclick="removerMarcaDaguaImovel('${im.id}', this)"><i class="ti ti-eraser" aria-hidden="true"></i> Remover marca</button>
+          <button class="btn btn-ok btn-sm" style="flex:1;justify-content:center" onclick="aprovarImovel('${im.id}')"><i class="ti ti-refresh" aria-hidden="true"></i> Republicar</button>
         `;
 
   return `<div class="icard-rev">
-      <div class="icard-rev-img" style="${capa?`background:url('${capa}') center/cover`:'background:linear-gradient(135deg,#F8E2D4,#F2A36E)'}">
-        ${capa?'':'<i class="ti ti-home-2" style="font-size:44px;opacity:.18;color:#8a3000" aria-hidden="true"></i>'}
+      <div class="icard-rev-img" style="${capa ? `background:url('${capa}') center/cover` : 'background:linear-gradient(135deg,#F8E2D4,#F2A36E)'}">
+        ${capa ? '' : '<i class="ti ti-home-2" style="font-size:44px;opacity:.18;color:#8a3000" aria-hidden="true"></i>'}
         <span class="badge ${badgeClass}" style="position:absolute;top:10px;left:10px">${badgeLabel}</span>
       </div>
       <div class="icard-rev-body">
         <div class="icard-rev-price">${formatMoney(im.preco)}</div>
         <div class="icard-rev-sub">${escapeHtml(im.tipo || '-')} · ${escapeHtml(im.cidade || '-')}</div>
         <div style="font-weight:700;color:var(--ink);margin-bottom:8px">${escapeHtml(im.titulo || 'Imóvel sem título')}</div>
+        ${im.referencia ? `<div style="font-size:12px;font-weight:700;color:var(--or);margin-bottom:8px">Ref: ${escapeHtml(im.referencia)}</div>` : ''}
+        ${im.captacao ? `<div style="font-size:11px;color:var(--ink4);margin-bottom:8px">Captação: ${escapeHtml(im.captacao)}</div>` : ''}
         <div class="icard-rev-meta">
-          ${Number(im.quartos || 0)>0?`<span><i class="ti ti-bed" aria-hidden="true"></i>${escapeHtml(im.quartos)}q</span>`:''}
+          ${Number(im.quartos || 0)>0 ? `<span><i class="ti ti-bed" aria-hidden="true"></i>${escapeHtml(im.quartos)} quarto${Number(im.quartos || 0)>1 ? 's' : ''}</span>` : ''}
           <span><i class="ti ti-ruler" aria-hidden="true"></i>${escapeHtml(im.area || 0)}m²</span>
         </div>
+        <div class="vitrine-panel">${vitrineControls(im)}</div>
         <div class="icard-rev-acts">${actions}</div>
       </div>
     </div>`;
@@ -949,7 +1440,7 @@ async function aprovarImovel(id){
   try {
     await apiRequest(`/imoveis/${id}/aprovar`, { method: 'POST' });
   } catch (error) {
-    alert(error.message || 'Erro ao aprovar imovel');
+    alert(error.message || 'Erro ao aprovar imóvel');
     return;
   }
 
@@ -957,17 +1448,103 @@ async function aprovarImovel(id){
   alert('Imóvel aprovado e publicado no site!');
 }
 
-async function rejeitarImovel(id){
-  if(!confirm('Tem certeza que deseja rejeitar este imóvel?')) return;
+async function retirarImovel(id){
+  if(!confirm('Retirar este imóvel da plataforma? Ele deixa de aparecer no site, mas continua salvo no painel.')) return;
   try {
     await apiRequest(`/imoveis/${id}/rejeitar`, { method: 'POST' });
   } catch (error) {
-    alert(error.message || 'Erro ao rejeitar imovel');
+    alert(error.message || 'Erro ao retirar imóvel da plataforma');
     return;
   }
 
   await carregarImoveis();
-  alert('Imovel rejeitado.');
+  alert('Imóvel retirado da plataforma.');
+}
+
+async function atualizarVitrineImovel(id,status,prioridade){
+  if(!id)return;
+  try{
+    await apiRequest(`/imoveis/${id}`, {
+      method:'PUT',
+      body: JSON.stringify({
+        vitrine_status: status,
+        vitrine_prioridade: Number.parseInt(prioridade,10) || 0,
+      }),
+    });
+    await carregarImoveis();
+  }catch(error){
+    alert(error.message || 'Erro ao atualizar vitrine do imóvel');
+  }
+}
+
+function renderOrganizadorHome(){
+  const root=document.getElementById('organizador-home');
+  if(!root)return;
+  const grupos=['destaque','normal','segundo_plano'];
+  root.innerHTML=grupos.map(status=>{
+    const itens=aprovados.filter(im=>vitrineStatus(im)===status)
+      .sort((a,b)=>vitrinePrioridade(b)-vitrinePrioridade(a));
+    return `<section data-order-section="${status}" style="border:1px solid var(--bdr);border-radius:12px;padding:10px;min-height:72px">
+      <div style="font-weight:800;font-size:12px;color:var(--ink2);margin-bottom:8px">${vitrineLabel(status)} <span style="color:var(--ink4);font-weight:600">(${itens.length})</span></div>
+      <div class="home-order-list" data-status="${status}" ondragover="event.preventDefault()" ondrop="soltarVitrine(event,'${status}')" style="display:flex;flex-direction:column;gap:6px">
+        ${itens.length ? itens.map((im,index)=>`<div class="home-order-item" draggable="true" data-id="${escapeHtml(im.id)}" ondragstart="iniciarArrasteVitrine(event)" style="display:flex;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--bdr);border-radius:8px;padding:7px;cursor:grab;font-size:11px">
+          <i class="ti ti-grip-vertical" aria-hidden="true" style="color:var(--or)"></i><span style="flex:1;font-weight:700;line-height:1.2">${escapeHtml(im.titulo || 'Imóvel sem título')}</span>
+          <button class="btn btn-o btn-sm" type="button" title="Mover para cima" onclick="moverVitrine('${escapeHtml(im.id)}','${status}',-1)"><i class="ti ti-chevron-up" aria-hidden="true"></i></button>
+          <button class="btn btn-o btn-sm" type="button" title="Mover para baixo" onclick="moverVitrine('${escapeHtml(im.id)}','${status}',1)"><i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+        </div>`).join('') : '<small style="color:var(--ink4)">Nenhum imóvel neste grupo.</small>'}
+      </div>
+    </section>`;
+  }).join('');
+}
+
+function iniciarArrasteVitrine(event){
+  event.dataTransfer.effectAllowed='move';
+  event.dataTransfer.setData('text/plain',event.currentTarget.dataset.id);
+  event.currentTarget.classList.add('dragging');
+}
+
+async function soltarVitrine(event,status){
+  event.preventDefault();
+  const list=event.currentTarget;
+  const id=event.dataTransfer.getData('text/plain');
+  const dragged=list.querySelector(`[data-id="${CSS.escape(id)}"]`);
+  if(!dragged)return;
+  const after=[...list.querySelectorAll('.home-order-item:not(.dragging)')].find(item=>event.clientY < item.getBoundingClientRect().top + item.offsetHeight/2);
+  list.insertBefore(dragged,after || null);
+  dragged.classList.remove('dragging');
+  await salvarOrdemVitrine(status,[...list.querySelectorAll('.home-order-item')].map(item=>item.dataset.id));
+}
+
+async function moverVitrine(id,status,direcao){
+  const lista=aprovados.filter(im=>vitrineStatus(im)===status).sort((a,b)=>vitrinePrioridade(b)-vitrinePrioridade(a));
+  const atual=lista.findIndex(im=>im.id===id);
+  const destino=atual+direcao;
+  if(atual<0 || destino<0 || destino>=lista.length)return;
+  [lista[atual],lista[destino]]=[lista[destino],lista[atual]];
+  await salvarOrdemVitrine(status,lista.map(im=>im.id));
+}
+
+async function salvarOrdemVitrine(status,ids){
+  try{
+    await Promise.all(ids.map((id,index)=>apiRequest(`/imoveis/${id}`,{method:'PUT',body:JSON.stringify({vitrine_status:status,vitrine_prioridade:(ids.length-index)*10})})));
+    await carregarImoveis();
+  }catch(error){
+    alert(error.message || 'Erro ao salvar a ordem da primeira página');
+    await carregarImoveis();
+  }
+}
+
+async function rejeitarImovel(id){
+  if(!confirm('Tem certeza que deseja rejeitar este imóvel')) return;
+  try {
+    await apiRequest(`/imoveis/${id}/rejeitar`, { method: 'POST' });
+  } catch (error) {
+    alert(error.message || 'Erro ao rejeitar imóvel');
+    return;
+  }
+
+  await carregarImoveis();
+  alert('Imóvel rejeitado.');
 }
 
 // ── DETALHES MODAL ──
@@ -976,11 +1553,13 @@ async function rejeitarImovel(id){
 async function abrirDetalhes(id){
   try{
 
-    const im = await apiRequest(`/imoveis/${id}`);
-    document.getElementById('modal-aprovacao-body').innerHTML = `
+    const im = await apiRequest(`/imoveis/${id}?scope=admin`);
+    document.getElementById('modal-aprovao-body').innerHTML = `
       <h2>${escapeHtml(im.titulo || '')}</h2>
 
-      ${fotosThumbsHtml(im.fotos)}
+      <p><strong>Referência:</strong> ${escapeHtml(im.referencia || '-')}</p>
+
+      ${fotosThumbsHtml(im.fotos, im.id)}
 
       <p><strong>Tipo:</strong> ${escapeHtml(im.tipo || '-')}</p>
 
@@ -1001,7 +1580,7 @@ async function abrirDetalhes(id){
     `;
 
     document
-      .getElementById('modal-aprovacao')
+      .getElementById('modal-aprovao')
       .classList.add('on');
 
   }catch(err){
@@ -1012,6 +1591,213 @@ async function abrirDetalhes(id){
 
   }
 
+}
+
+async function abrirDetalhes(id){
+  try{
+    const im = await apiRequest(`/imoveis/${id}?scope=admin`);
+    const status=im.status || 'pendente';
+    const actions=status==='pendente' ? `
+      <button class="btn btn-ok" onclick="aprovarImovel('${im.id}');fecharModal('modal-aprovao')"><i class="ti ti-check" aria-hidden="true"></i> Aprovar e publicar</button>
+      <button class="btn btn-err" onclick="retirarImovel('${im.id}');fecharModal('modal-aprovao')"><i class="ti ti-eye-off" aria-hidden="true"></i> Retirar</button>
+    ` : status==='publicado' ? `
+      <button class="btn btn-err" onclick="retirarImovel('${im.id}');fecharModal('modal-aprovao')"><i class="ti ti-eye-off" aria-hidden="true"></i> Retirar do site</button>
+    ` : `
+      <button class="btn btn-ok" onclick="aprovarImovel('${im.id}');fecharModal('modal-aprovao')"><i class="ti ti-refresh" aria-hidden="true"></i> Republicar</button>
+    `;
+
+    document.getElementById('modal-aprovao-body').innerHTML = `
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px">
+        <div>
+          <h2 style="font-size:22px;line-height:1.15;margin-bottom:6px">${escapeHtml(im.titulo || 'Imóvel sem título')}</h2>
+          <span class="badge ${statusClass(status)}">${escapeHtml(statusImovelLabel(status))}</span>
+        </div>
+        <strong style="font-size:18px;color:var(--or);white-space:nowrap">${formatMoney(im.preco)}</strong>
+      </div>
+
+      ${fotosThumbsHtml(im.fotos, im.id)}
+
+      <div class="detail-grid">
+        <div class="detail-box"><small>Tipo</small><strong>${escapeHtml(im.tipo || '-')}</strong></div>
+        <div class="detail-box"><small>Referência</small><strong>${escapeHtml(im.referencia || '-')}</strong></div>
+        <div class="detail-box"><small>Finalidade</small><strong>${escapeHtml(im.finalidade || '-')}</strong></div>
+        <div class="detail-box"><small>Cidade</small><strong>${escapeHtml(im.cidade || '-')}</strong></div>
+        <div class="detail-box"><small>Bairro</small><strong>${escapeHtml(im.bairro || '-')}</strong></div>
+        <div class="detail-box"><small>Area</small><strong>${escapeHtml(im.area || 0)} m2</strong></div>
+        <div class="detail-box"><small>Quartos</small><strong>${escapeHtml(im.quartos || 0)}</strong></div>
+        <div class="detail-box"><small>Captação</small><strong>${escapeHtml(im.captacao || '-')}</strong></div>
+      </div>
+
+      <div class="detail-box" style="margin-top:10px">
+        <small>Descricao</small>
+        <p style="font-size:13px;color:var(--ink2);line-height:1.6">${escapeHtml(im.descricao || 'Sem descrição.')}</p>
+      </div>
+
+      <div class="review-actions">
+        ${actions}
+        <button class="btn btn-p" onclick="abrirEdicaoImovelAdmin('${im.id}')"><i class="ti ti-edit" aria-hidden="true"></i> Editar imóvel</button>
+        <button class="btn btn-o" onclick="aplicarMarcaDaguaImovel('${im.id}', this)"><i class="ti ti-droplet" aria-hidden="true"></i> Aplicar marca d'água</button>
+        <button class="btn btn-o" onclick="removerMarcaDaguaImovel('${im.id}', this)"><i class="ti ti-eraser" aria-hidden="true"></i> Remover marca</button>
+        <button class="btn btn-o" onclick="excluirImovel('${im.id}')"><i class="ti ti-trash" aria-hidden="true"></i> Excluir definitivo</button>
+      </div>
+    `;
+
+    document.getElementById('modal-aprovao').classList.add('on');
+  }catch(err){
+    console.error(err);
+    alert('Erro ao abrir imóvel');
+  }
+}
+
+async function abrirEdicaoImovelAdmin(id){
+  try{
+    const im = await apiRequest(`/imoveis/${id}?scope=admin`);
+    fotosNovasAdmin = [];
+    const fotosAtuais = normalizeFotos(im.fotos).length;
+    const vagasRestantes = Math.max(0, LIMITE_FOTOS_ADMIN - fotosAtuais);
+    const tipos = ['Apartamento','Casa','Terreno','Cobertura','Comercial','Studio'];
+    const finalidades = ['Venda','Aluguel','Lançamento'];
+    const cidades = ['Santos','São Vicente','Praia Grande','Peruíbe','Itanhaém','Mongaguá','Itariri','Pedro de Toledo','Ana Dias'];
+
+    document.getElementById('modal-aprovao-body').innerHTML = `
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px">
+        <div>
+          <h2 style="font-size:22px;line-height:1.15;margin-bottom:6px">Editar imóvel</h2>
+          <span class="badge ${statusClass(im.status || 'pendente')}">${escapeHtml(statusImovelLabel(im.status || 'pendente'))}</span>
+        </div>
+        <button class="btn btn-o btn-sm" onclick="abrirDetalhes('${im.id}')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Voltar</button>
+      </div>
+
+      <div class="form-grid">
+        <div class="ff"><label>Título</label><input type="text" id="edit-im-titulo" value="${escapeHtml(im.titulo || '')}"/></div>
+        <div class="ff"><label>Tipo</label><select id="edit-im-tipo">${tipos.map(tipo=>optionHtml(tipo,tipo,im.tipo)).join('')}</select></div>
+        <div class="ff"><label>Preço</label><input type="text" id="edit-im-preco" value="${escapeHtml(im.preco || '')}"/></div>
+        <div class="ff"><label>Finalidade</label><select id="edit-im-finalidade">${finalidades.map(item=>optionHtml(item,item,im.finalidade)).join('')}</select></div>
+        <div class="ff"><label>Cidade</label><select id="edit-im-cidade">${cidades.map(cidade=>optionHtml(cidade,cidade,im.cidade)).join('')}</select></div>
+        <div class="ff"><label>Bairro</label><input type="text" id="edit-im-bairro" value="${escapeHtml(im.bairro || '')}"/></div>
+        <div class="ff"><label>Quartos</label><input type="number" min="0" id="edit-im-quartos" value="${escapeHtml(im.quartos || 0)}"/></div>
+        <div class="ff"><label>Banheiros</label><input type="number" min="0" id="edit-im-banheiros" value="${escapeHtml(im.banheiros || 0)}"/></div>
+        <div class="ff"><label>Vagas</label><input type="number" min="0" id="edit-im-vagas" value="${escapeHtml(im.vagas || 0)}"/></div>
+        <div class="ff"><label>Área (m²)</label><input type="number" min="0" id="edit-im-area" value="${escapeHtml(im.area || 0)}"/></div>
+        <div class="ff"><label>Captação</label><input type="text" id="edit-im-captacao" value="${escapeHtml(im.captacao || '')}" placeholder="Nome de quem captou"/></div>
+        <div class="ff"><label>Referência interna <small style="color:var(--ink4)">(equipe)</small></label><input type="text" id="edit-im-referencia-interna" value="${escapeHtml(im.referencia_interna || '')}" maxlength="80" placeholder="Ex: TUPI-001"/></div>
+      </div>
+
+      <div class="ff" style="margin:12px 0"><label>Descrição</label><textarea rows="5" id="edit-im-descricao">${escapeHtml(im.descricao || '')}</textarea></div>
+      ${fotosAtuais ? `<div class="ff" style="margin-bottom:12px">
+        <label>Ordem das fotos</label>
+        <small style="display:block;color:var(--ink4);font-size:11px;margin:4px 0 8px">Arraste pela alça laranja com o mouse ou toque. Use as setas como alternativa. A primeira foto será a capa.</small>
+        ${fotosOrdenaveisHtml(im.fotos)}
+      </div>` : ''}
+      <div class="ff" style="margin-bottom:12px">
+        <label>Adicionar fotos</label>
+        <div class="admin-photo-upload-options">
+          <div class="admin-photo-upload-option">
+            <label for="edit-im-foto-unica">Adicionar uma foto</label>
+            <input type="file" id="edit-im-foto-unica" accept="image/jpeg,image/png,image/webp"/>
+          </div>
+          <div class="admin-photo-upload-option">
+            <label for="edit-im-fotos">Adicionar várias fotos</label>
+            <input type="file" id="edit-im-fotos" multiple accept="image/jpeg,image/png,image/webp"/>
+          </div>
+        </div>
+        <div id="edit-im-fotos-fila" class="admin-photo-upload-queue"></div>
+        <small id="edit-im-fotos-ajuda" style="display:block;color:var(--ink4);font-size:11px;margin-top:6px">${fotosAtuais} de ${LIMITE_FOTOS_ADMIN} fotos cadastradas. Você pode adicionar ${vagasRestantes}.</small>
+      </div>
+
+      <div class="review-actions">
+        <button class="btn btn-p" id="btn-salvar-edicao-imovel" onclick="salvarEdicaoImovelAdmin('${im.id}')"><i class="ti ti-device-floppy" aria-hidden="true"></i> Salvar e atualizar site</button>
+        <button class="btn btn-o" onclick="abrirDetalhes('${im.id}')">Cancelar</button>
+      </div>
+    `;
+
+    const inputsFotos = [
+      document.getElementById('edit-im-foto-unica'),
+      document.getElementById('edit-im-fotos'),
+    ];
+    inputsFotos.forEach(input => input.addEventListener('change', () => {
+      adicionarFotosFilaAdmin(input.files);
+      input.value = '';
+    }));
+    atualizarRotulosFotosAdmin();
+    renderFilaFotosAdmin();
+    document.getElementById('modal-aprovao').classList.add('on');
+  }catch(error){
+    console.error(error);
+    alert(error.message || 'Erro ao abrir edição do imóvel');
+  }
+}
+
+async function salvarEdicaoImovelAdmin(id){
+  const fotos = fotosNovasAdmin.slice();
+  const vagasRestantes = Math.max(0, LIMITE_FOTOS_ADMIN - totalFotosCadastradasAdmin());
+  if(fotos.length > vagasRestantes){
+    alert(`Este imóvel aceita no máximo 8 fotos. Você ainda pode adicionar ${vagasRestantes}.`);
+    return;
+  }
+
+  const payload = {
+    titulo: document.getElementById('edit-im-titulo').value.trim(),
+    tipo: document.getElementById('edit-im-tipo').value,
+    finalidade: document.getElementById('edit-im-finalidade').value,
+    preco: document.getElementById('edit-im-preco').value.trim(),
+    cidade: document.getElementById('edit-im-cidade').value,
+    bairro: document.getElementById('edit-im-bairro').value.trim(),
+    quartos: Number.parseInt(document.getElementById('edit-im-quartos').value || '0', 10),
+    banheiros: Number.parseInt(document.getElementById('edit-im-banheiros').value || '0', 10),
+    vagas: Number.parseInt(document.getElementById('edit-im-vagas').value || '0', 10),
+    area: Number.parseInt(document.getElementById('edit-im-area').value || '0', 10),
+    captacao: document.getElementById('edit-im-captacao').value.trim(),
+    referencia_interna: document.getElementById('edit-im-referencia-interna').value.trim(),
+    descricao: document.getElementById('edit-im-descricao').value.trim(),
+  };
+  const fotosOrdenadasEl = document.getElementById('edit-im-fotos-ordem');
+  if(fotosOrdenadasEl) payload.fotos = obterOrdemFotosAdmin();
+
+  if(!payload.titulo || !payload.preco || !payload.cidade){
+    alert('Preencha título, preço e cidade.');
+    return;
+  }
+
+  const botao = document.getElementById('btn-salvar-edicao-imovel');
+  try{
+    botao.disabled = true;
+    botao.innerHTML = '<i class="ti ti-loader" aria-hidden="true"></i> Salvando...';
+    await apiRequest(`/imoveis/${id}`, {
+      method:'PUT',
+      body: JSON.stringify(payload),
+    });
+
+    if(fotos.length){
+      const formData = new FormData();
+      fotos.forEach(file => formData.append('fotos', file));
+      await apiRequest(`/imoveis/${id}/fotos`, {
+        method:'POST',
+        body: formData,
+      });
+      fotosNovasAdmin = [];
+    }
+
+    await carregarImoveis();
+    await abrirDetalhes(id);
+    alert('Imóvel atualizado no painel e no site.');
+  }catch(error){
+    alert(error.message || 'Erro ao salvar edição do imóvel');
+    botao.disabled = false;
+    botao.innerHTML = '<i class="ti ti-device-floppy" aria-hidden="true"></i> Salvar e atualizar site';
+  }
+}
+
+async function excluirImovel(id){
+  if(!confirm('Excluir definitivamente este imóvel e remover as fotos vinculadas? Esta ação não pode ser desfeita.'))return;
+  try{
+    await apiRequest(`/imoveis/${id}`, { method:'DELETE' });
+    fecharModal('modal-aprovao');
+    await carregarImoveis();
+    alert('Imóvel excluído definitivamente.');
+  }catch(error){
+    alert(error.message || 'Erro ao excluir imóvel');
+  }
 }
 
 function fecharModal(id){
@@ -1037,6 +1823,7 @@ function renderFunil(){
     lista.forEach((l,i)=>{
       const card=document.createElement('div');
       card.className='lead-card';
+      card.onclick=()=>abrirLeadDetalhes(l.id);
       card.innerHTML=`
         <div class="lead-name">${escapeHtml(l.nome || 'Lead sem nome')}</div>
         <div class="lead-info">${escapeHtml(leadInfo(l))}</div>
@@ -1055,7 +1842,8 @@ function renderFunil(){
         option.selected=l.etapa===stage.key;
         stageSelect.appendChild(option);
       });
-      stageSelect.addEventListener('change',()=>atualizarEtapaLead(l.id,stageSelect.value));
+      stageSelect.addEventListener('click',event=>event.stopPropagation());
+      stageSelect.addEventListener('change',event=>{event.stopPropagation();atualizarEtapaLead(l.id,stageSelect.value);});
       card.appendChild(stageSelect);
       div.appendChild(card);
     });
@@ -1068,6 +1856,96 @@ function renderFunil(){
   });
 }
 renderFunil();
+
+async function abrirLeadDetalhes(id){
+  const lead=leads.find(item=>item.id===id) || await apiRequest(`/leads/${id}`);
+  const etapa=lead.etapa || 'novo';
+  const wpp=whatsappNumber(lead);
+  document.getElementById('modal-lead-detalhes-body').innerHTML=`
+    <div class="lead-detail-head">
+      <div class="lead-detail-avatar" style="background:${leadColor(lead,0)}">${escapeHtml((lead.nome || 'L')[0])}</div>
+      <div style="min-width:0">
+        <div class="lead-detail-name">${escapeHtml(lead.nome || 'Lead sem nome')}</div>
+        <div class="lead-detail-sub">${escapeHtml(leadInfo(lead))} · ${escapeHtml(formatLeadDate(lead))}</div>
+      </div>
+    </div>
+
+    <div class="detail-grid">
+      <div class="detail-box"><small>WhatsApp</small><strong>${escapeHtml(lead.telefone || '-')}</strong></div>
+      <div class="detail-box"><small>E-mail</small><strong>${escapeHtml(lead.email || '-')}</strong></div>
+      <div class="detail-box"><small>Cidade</small><strong>${escapeHtml(lead.cidade || '-')}</strong></div>
+      <div class="detail-box"><small>Etapa atual</small><strong>${escapeHtml(statusLabel[etapa] || etapa)}</strong></div>
+    </div>
+
+    <div class="detail-box" style="margin-bottom:12px">
+      <small>Observação</small>
+      <p style="font-size:13px;color:var(--ink2);line-height:1.6">${escapeHtml(lead.observacoes || 'Sem observação.')}</p>
+    </div>
+
+    <div class="form-grid">
+      <div class="ff">
+        <label>Classificar etapa</label>
+        <select id="lead-detail-etapa">
+          ${colunas.map(col=>`<option value="${col.key}" ${col.key===etapa ? 'selected':''}>${col.label}</option>`).join('')}
+        </select>
+      </div>
+      <div class="ff">
+        <label>Prxima anotao</label>
+        <input type="text" id="lead-detail-nota" placeholder="Ex: pediu retorno amanha as 10h"/>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 16px">
+      <button class="btn btn-p" onclick="salvarLeadDetalhes('${lead.id}')"><i class="ti ti-check" aria-hidden="true"></i> Salvar atendimento</button>
+      <button class="btn btn-o" onclick="window.open('https://wa.me/${wpp}?text=Ola ${encodeURIComponent(lead.nome || 'Lead')}, vim falar sobre seu interesse na Imoore.','_blank')"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i> WhatsApp</button>
+      <button class="btn btn-err" onclick="excluirLead('${lead.id}')"><i class="ti ti-trash" aria-hidden="true"></i> Excluir lead</button>
+    </div>
+
+    <h4 style="font-size:13px;font-weight:800;color:var(--ink);margin-bottom:6px">Historico</h4>
+    ${leadHistoryItems(lead)}
+  `;
+  document.getElementById('modal-lead-detalhes').classList.add('on');
+}
+
+async function salvarLeadDetalhes(id){
+  const etapa=document.getElementById('lead-detail-etapa').value || 'novo';
+  const nota=(document.getElementById('lead-detail-nota').value || '').trim();
+  try{
+    let updated=await apiRequest(`/leads/${id}`,{
+      method:'PUT',
+      body:JSON.stringify({etapa})
+    });
+    if(nota){
+      updated=await apiRequest(`/leads/${id}/historico`,{
+        method:'POST',
+        body:JSON.stringify({descricao:nota})
+      });
+    }
+    const index=leads.findIndex(lead=>lead.id===id);
+    if(index>=0)leads[index]=updated;
+    fecharModal('modal-lead-detalhes');
+    renderFunil();
+    renderAtividades();
+    atualizarResumoLeads();
+  }catch(error){
+    alert(error.message || 'Erro ao salvar atendimento');
+  }
+}
+
+async function excluirLead(id){
+  if(!confirm('Excluir este lead definitivamente do CRM'))return;
+  try{
+    await apiRequest(`/leads/${id}`,{method:'DELETE'});
+    leads=leads.filter(lead=>lead.id!==id);
+    fecharModal('modal-lead-detalhes');
+    renderFunil();
+    renderAtividades();
+    atualizarResumoLeads();
+    renderNotificacoes();
+  }catch(error){
+    alert(error.message || 'Erro ao excluir lead');
+  }
+}
 
 async function carregarLeads(){
   if(!pageAuthorized)return;
@@ -1113,29 +1991,23 @@ function atualizarResumoLeads(){
 carregarLeads();
 
 // ── CORRETORES ──
-const CORRETORES_STORAGE_KEY = 'imoore_demo_corretores';
+let corretoresDemo = [];
 
-function carregarCorretoresDemo(){
+async function carregarCorretoresReais(){
   try{
-    const saved=JSON.parse(localStorage.getItem(CORRETORES_STORAGE_KEY) || '[]');
-    return Array.isArray(saved) ? saved : [];
+    const usuarios = await apiRequest('/auth/users');
+    corretoresDemo = usuarios.filter(usuario => usuario.perfil === 'corretor');
+    renderCorretores();
   }catch(error){
-    localStorage.removeItem(CORRETORES_STORAGE_KEY);
-    return [];
+    console.error('Erro ao carregar corretores:', error);
   }
-}
-
-let corretoresDemo = carregarCorretoresDemo();
-
-function salvarCorretoresDemo(){
-  localStorage.setItem(CORRETORES_STORAGE_KEY, JSON.stringify(corretoresDemo));
 }
 
 function renderCorretores(){
   const ctb=document.getElementById('corretores-tbody');
   ctb.innerHTML='';
   if(corretoresDemo.length===0){
-    ctb.innerHTML=`<tr><td colspan="6">${emptyState('Nenhum corretor cadastrado no modo demonstração.')}</td></tr>`;
+    ctb.innerHTML=`<tr><td colspan="6">${emptyState('Nenhum corretor cadastrado no sistema.')}</td></tr>`;
     return;
   }
 
@@ -1148,37 +2020,40 @@ function renderCorretores(){
       <td>${escapeHtml(c.cidade || '-')}</td>
       <td>
         <div style="display:flex;gap:6px">
-          <button class="btn btn-o btn-sm" onclick="visualizarCorretor('${c.id}')"><i class="ti ti-eye" aria-hidden="true"></i></button>
-          <button class="btn btn-err btn-sm" onclick="removerCorretor('${c.id}')"><i class="ti ti-trash" aria-hidden="true"></i></button>
+          <button class="btn btn-o btn-sm" onclick="visualizarCorretor('${c.id}')" aria-label="Ver corretor"><i class="ti ti-eye" aria-hidden="true"></i></button>
+          <button class="btn btn-err btn-sm" onclick="removerCorretor('${c.id}')" aria-label="Remover corretor"><i class="ti ti-trash" aria-hidden="true"></i></button>
         </div>
       </td>
     </tr>`;
   });
 }
 renderCorretores();
+carregarCorretoresReais();
 
 function abrirNovoCorretor(){
   document.getElementById('modal-corretor').classList.add('on');
 }
 
 function limparFormularioCorretor(){
-  ['c-nome','c-email','c-telefone','c-creci','c-cidade'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['c-nome','c-email','c-telefone','c-creci','c-cidade','c-senha'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
 }
 
-function salvarCorretor(){
+async function salvarCorretor(){
   const nome=document.getElementById('c-nome').value.trim();
   const email=document.getElementById('c-email').value.trim();
   const telefone=document.getElementById('c-telefone').value.trim();
   const creci=document.getElementById('c-creci').value.trim();
   const cidade=document.getElementById('c-cidade').value.trim();
-  if(!nome || !email){alert('Preencha nome e e-mail do corretor.');return;}
-
-  const id=(window.crypto && window.crypto.randomUUID) ? window.crypto.randomUUID() : String(Date.now());
-  corretoresDemo.unshift({id,nome,email,telefone,creci,cidade,criado_em:new Date().toISOString()});
-  salvarCorretoresDemo();
-  renderCorretores();
-  limparFormularioCorretor();
-  fecharModal('modal-corretor');
+  const senha=document.getElementById('c-senha').value;
+  if(!nome || !email || !senha){alert('Preencha nome, e-mail e senha temporária.');return;}
+  if(senha.length < 12){alert('A senha temporária deve ter pelo menos 12 caracteres.');return;}
+  try{
+    await apiRequest('/auth/register',{method:'POST',body:JSON.stringify({nome,email,senha,telefone,creci,perfil:'corretor'})});
+    await carregarCorretoresReais();
+    limparFormularioCorretor();
+    fecharModal('modal-corretor');
+    alert('Corretor criado com sucesso. Oriente-o a trocar a senha temporária.');
+  }catch(error){ alert(error.message || 'Erro ao criar corretor.'); }
 }
 
 function visualizarCorretor(id){
@@ -1191,16 +2066,14 @@ function visualizarCorretor(id){
     <p><strong>CRECI:</strong> ${escapeHtml(corretor.creci || '-')}</p>
     <p><strong>Cidade:</strong> ${escapeHtml(corretor.cidade || '-')}</p>
     <hr style="margin:15px 0">
-    <p style="font-size:12px;color:var(--ink4)">Modo demonstração. Este registro está salvo apenas no navegador.</p>
+    <p style="font-size:12px;color:var(--ink4)">Usuário ativo no sistema Imoore.</p>
   `;
   document.getElementById('modal-corretor-detalhes').classList.add('on');
 }
 
 function removerCorretor(id){
-  if(!confirm('Remover este corretor do modo demonstração?'))return;
-  corretoresDemo=corretoresDemo.filter(c=>c.id!==id);
-  salvarCorretoresDemo();
-  renderCorretores();
+  if(!confirm('Remover este corretor do sistema?'))return;
+  apiRequest(`/auth/users/${id}`,{method:'DELETE'}).then(carregarCorretoresReais).catch(error=>alert(error.message));
 }
 
 // ── NOTIFICAÇÕES ──
@@ -1233,7 +2106,7 @@ function renderNotificacoes(){
 }
 
 // ── NAVEGAÇÃO ──
-const titles={dashboard:'Dashboard',aprovacao:'Aprovação de imóveis',imoveis:'Imóveis cadastrados',crm:'CRM — Funil de Leads',corretores:'Corretores',configuracoes:'Configurações',notificacoes:'Notificações'};
+const titles={dashboard:'Dashboard',aprovao:'Aprovação de imóveis',imoveis:'Imóveis cadastrados',crm:'CRM — Funil de Leads',corretores:'Corretores',configuracoes:'Configurações',notificacoes:'Notificações'};
 function goPage(p){
   document.querySelectorAll('.page').forEach(x=>x.classList.remove('on'));
   document.querySelectorAll('.sb-item').forEach(x=>x.classList.remove('on'));
@@ -1250,7 +2123,7 @@ function selTab(el,activeId){
   el.classList.add('on');
   ['tab-pendentes','tab-aprovados','tab-rejeitados'].forEach(id=>{
     const el=document.getElementById(id);
-    if(el)el.style.display=id===activeId?'block':'none';
+    if(el)el.style.display=id===activeId ? 'block':'none';
   });
 }
 
@@ -1263,8 +2136,8 @@ async function salvarImovel(){
   const cidade=document.getElementById('im-cidade').value;
   if(!titulo || !preco || !cidade){alert('Preencha título, preço e cidade.');return;}
 
-  const fotos=Array.from(document.getElementById('im-fotos')?.files || []);
-  if(fotos.length > 5){alert('Selecione no máximo 5 fotos.');return;}
+  const fotos=Array.from(document.getElementById('im-fotos').files || []);
+  if(fotos.length > 8){alert('Selecione no máximo 8 fotos.');return;}
 
   const payload=new FormData();
   payload.append('titulo', titulo);
@@ -1275,6 +2148,8 @@ async function salvarImovel(){
   payload.append('bairro', document.getElementById('im-bairro').value.trim());
   payload.append('quartos', document.getElementById('im-quartos').value);
   payload.append('area', document.getElementById('im-area').value);
+  payload.append('captacao', document.getElementById('im-captacao').value.trim());
+  payload.append('referencia_interna', document.getElementById('im-referencia-interna').value.trim());
   payload.append('descricao', document.getElementById('im-descricao').value.trim());
   fotos.forEach(file=>payload.append('fotos', file));
 
@@ -1285,7 +2160,8 @@ async function salvarImovel(){
     });
     await carregarImoveis();
     fecharModal('modal-imovel');
-    ['im-titulo','im-preco','im-bairro','im-quartos','im-area','im-descricao','im-fotos'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+    goPage('aprovao');
+    ['im-titulo','im-preco','im-bairro','im-quartos','im-area','im-captacao','im-referencia-interna','im-descricao','im-fotos'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
     const preview=document.getElementById('im-fotos-preview'); if(preview) preview.innerHTML='';
     alert('Imóvel enviado para aprovação.');
   }catch(error){
@@ -1319,8 +2195,8 @@ function previewFotosImovel(input){
   if(!preview)return;
   preview.innerHTML='';
   const fotos=Array.from(input.files || []);
-  if(fotos.length > 5){
-    alert('Selecione no máximo 5 fotos.');
+  if(fotos.length > 8){
+    alert('Selecione no máximo 8 fotos.');
     input.value='';
     return;
   }

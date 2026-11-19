@@ -1,18 +1,18 @@
 const API_BASE = window.IMOORE_API_BASE || window.API_BASE || '/api';
+localStorage.removeItem('imoore_token');
 
 function getAuthHeaders() {
-  const token = localStorage.getItem('imoore_token');
-  return token ? { Authorization: `Bearer ${token}` } : {};
+  return {};
 }
 
 function handleError(error) {
   console.error(error);
-  return error?.message || 'Erro inesperado';
+  return error.message || 'Erro inesperado';
 }
 
-function requireLogin(redirect = 'imoore-entrar.html') {
-  const token = localStorage.getItem('imoore_token');
-  if (!token) {
+function requireLogin(redirect = '/entrar') {
+  const user = getUser();
+  if (!user) {
     window.location.href = redirect;
   }
 }
@@ -20,14 +20,15 @@ function requireLogin(redirect = 'imoore-entrar.html') {
 function requireRole(...roles) {
   const user = getUser();
   if (!user || !roles.includes(user.perfil)) {
-    window.location.href = 'imoore-entrar.html';
+    window.location.href = '/entrar';
   }
 }
 
 function logout() {
+  fetch(`${API_BASE}/auth/logout`, { method: 'POST', credentials: 'include' }).catch(() => {});
   localStorage.removeItem('imoore_token');
   localStorage.removeItem('imoore_user');
-  window.location.href = 'imoore-entrar.html';
+  window.location.href = '/entrar';
 }
 
 function getUser() {
@@ -62,11 +63,11 @@ async function apiFetch(path, options = {}) {
     ...getAuthHeaders(),
     ...(options.headers || {}),
   };
-  const response = await fetch(`${API_BASE}${path}`, { ...options, headers });
+  const response = await fetch(`${API_BASE}${path}`, { ...options, credentials: 'include', headers });
   if (response.status === 401) {
     localStorage.removeItem('imoore_token');
     localStorage.removeItem('imoore_user');
-    window.location.href = 'imoore-entrar.html';
+    window.location.href = '/entrar';
     throw new Error('Sessao expirada. Faça login novamente.');
   }
   if (!response.ok) {

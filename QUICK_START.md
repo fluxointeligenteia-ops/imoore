@@ -150,7 +150,7 @@ imoore-backend running on port 3001
 ```
 
 ### 6.2 Testar no navegador
-Abre: **http://localhost:3001/imoore-login.html**
+Abre: **http://localhost:3001/imoore-entrar.html**
 
 - Email: `crm@imoore.com`
 - Senha: `crm@2026`
@@ -226,7 +226,7 @@ Your app is live at: https://imoore-railway.up.railway.app
 
 ### 8.1 Abrir no navegador
 ```
-https://imoore-railway.up.railway.app/imoore-login.html
+https://imoore-railway.up.railway.app/imoore-entrar.html
 ```
 
 - Email: `crm@imoore.com`
